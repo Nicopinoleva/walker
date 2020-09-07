@@ -311,7 +311,7 @@ if not "Login" in OPTION_FILENAME:
         send_action_simple(0, 0)
         matrix_set("INICIADO", True)
         # Update cuelogs
-        if EXTRA == 'DAILY' or EXTRA == 'WEEKLY':
+        if EXTRA == 'DAILY' or EXTRA == 'WEEKLY' or OPTION_FILENAME == '/Sikulix/Pcfactory.py':
             tcp_send("UPDATE cuelogs set files = "+str(NUM_LOCALES)+" where log_id = "+OPTION_LOG_ID+";")
         else:
             tcp_send("UPDATE cuelogs set files = "+str(int(NUM_LOCALES)+int(NUM_SSHOTS))+" where log_id = "+OPTION_LOG_ID+";")
