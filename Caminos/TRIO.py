@@ -152,8 +152,6 @@ class TRIO:
         press(ENTER)
 
     def change_store(self,store):
-        print(store)
-        print(imgs_tiendas[store])
         image_click(imgs_tiendas[store])
         press(DOWN)
         press(ENTER)
@@ -211,7 +209,6 @@ class TRIO:
         time_wait(1500)
 
     def cycle(self,start,files_downloaded,num_stores,U_M):
-        print(start,files_downloaded,num_stores)
         for x in range (start + files_downloaded, start + num_stores):
             self.change_store(x)
             self.download()

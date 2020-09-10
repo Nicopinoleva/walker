@@ -171,5 +171,4 @@ else:
     obj.rut = RUT_EMPRESA
 obj.fecha1 = date_to_string(subtract_days(today(),get_weekday_as_int()),"%Y%m%d")
 obj.fecha2 = date_to_string(previous_day(today()),"%Y%m%d")
-print(imgs_tiendas[279])
 obj.run()
