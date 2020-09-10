@@ -22,7 +22,8 @@ tiendas = ["ACCESORIOS DE AUTOMOVILES", "ARRIENDO HERRAMIENTA IMP TALCA", "ARRIE
 			"HC 713 SAN ANTONIO", "HC 714 MELIPILLA", "HC 716 SANTA CRUZ", "HC 723 QUILICURA", "HC 724 BIO BIO RIBERA NORTE", 
 			"HC 725 QUINTA VERGARA", "HC 726 TOBALABA", "HC 727 TALCA PONIENTE", "HC 728 ALTO HOSPICIO", "HC 729 OVALLE", 
 			"HC 730 CORONEL", "HC 734 QUILLOTA", "HC 735 HOMY PLAZA EGANA", "HC 737 TALAGANTE", "HC 738 LOS DOMINICOS", "HC 739 COPIAPO CORDILLERA", 
-			"HC 74 EL BOSQUE", "HC 743 ANTOFAGASTA II", "HC 745 INDEPENDENCIA", "HC 746 QUILIN", "HC 747 TEMUCO LOS PABLOS","HC 75 PUENTE ALTO", "HC 79 PARQUE ARAUCO", 
+			"HC 74 EL BOSQUE", "HC 743 ANTOFAGASTA II", "HC 745 INDEPENDENCIA", "HC 746 QUILIN", "HC 747 TEMUCO LOS PABLOS","HC 748 CHICUREO EXPRESS","HC 75 PUENTE ALTO", 
+                        "HC 79 PARQUE ARAUCO", 
 			"HC 81 CONCEPCION", "HC 83 RANCAGUA", "HC 88 MAIPU", "HC 90 QUILPUE", "HC 93 ELTREBOL", "HC 95 LA FLORIDA-VESPUCIO", "HC 96 CERRILLOS", 
 			"HC 97 RENACA", "HC 98 COQUIMBO", "HC EL QUISCO", "HC LA SERENA II", "HC SAN FERNANDO", "HO 732 PLAZA VESPUCIO", "HO 733 PLAZA OESTE", 
 			"KV ANGOL", "KV HUECHURABA", "KV ANTOFAGASTA", "KV ARICA", "KV CERRILLOS", "KV COPIAPO","KV PUERTO MONTT", "KV PUNTA ARENAS 1", 
@@ -31,27 +32,34 @@ tiendas = ["ACCESORIOS DE AUTOMOVILES", "ARRIENDO HERRAMIENTA IMP TALCA", "ARRIE
             "LL T COYHAIQUE", "LL T HUECHURABA", "LLT LOS ANGELES", "LLT OSORNO", "LLT PLAZA OESTE", "LL T PUERTO MONTT", "LL T PUNTA ARENAS", 
 			"LL T SAN FELIPE", "LABORATORIO CUTCASE-L_A", "LLENANDO HC MELIPILLA", "LLENANDO SAN ANTONIO", "LOGRONO", "OF APOYO A TIENDAS", 
 			"OPERACION EL SOLDADO", "OPERACION LOS BRONCES", "PE CON SALDO EN BODEGA", "PUNTO DE RETIRO ALDERETE T", "PUNTO RETIRO COSTANERA CENTER F",
-			"PUNTO RETIRO PENAFLOR F", "PROYECTO CIERRE DE CC28", "PUNTO ENTREGA CHICUREO", "PUNTO ENTREGA OFICINA DE APOYO", 
+			"PROYECTO CIERRE DE CC28", "PUNTO ENTREGA CHICUREO", "PUNTO ENTREGA OFICINA DE APOYO", "PUNTO RETIRO AHUMADA F",
 			"PUNTO RETIRO ALAMEDA M","PUNTO RETIRO ALTO LAS CONDES F", "PUNTO RETIRO ANTOFAGASTA F", "PUNTO RETIRO ARAUCO MAIPU F", 
-            "PUNTO RETIRO ARICA F", "PUNTO RETIRO BILBAO T", "PUNTO RETIRO BUIN T", "PUNTO RETIRO CASTRO F", "PUNTO RETIRO CATEDRAL T", 
-			"PUNTO RETIRO CERRILLOS F", "PUNTO RETIRO CERRO BLANCO", "PUNTO RETIRO CHAMISERO T", "PUNTO RETIRO COLINA T", "PUNTO RETIRO CON CON T", 
-			"PUNTO RETIRO COPIAPO F", "PUNTO RETIRO COPIAPO LOS CARRERA T", "PUNTO RETIRO CURICO NORTE T", "PUNTO RETIRO FONTOVA T", 
-			"PUNTO RETIRO HUECHURABA T", "PUNTO RETIRO INDEPENDENCIA F", "PUNTO RETIRO IQUIQUE F", "PUNTO RETIRO LA CISTERNA T", 
-			"PUNTO RETIRO LA DEHESA F", "PUNTO RETIRO LA FLORIDA T", "PUNTO RETIRO LA SERENA F", "PUNTO RETIRO LOS ANGELES T", 
+            "PUNTO RETIRO ARICA F", "PUNTO RETIRO BILBAO T","PUNTO RETIRO BIO-BIO T", "PUNTO RETIRO BUIN T", "PUNTO RETIRO CASTRO F", "PUNTO RETIRO CATEDRAL T", 
+			"PUNTO RETIRO CERRILLOS F", "PUNTO RETIRO CERRO BLANCO", "PUNTO RETIRO CHAMISERO T", "PUNTO RETIRO CHILLAN F","PUNTO RETIRO COLINA T", "PUNTO RETIRO CON CON T", 
+			"PUNTO RETIRO COPIAPO F", "PUNTO RETIRO COPIAPO LOS CARRERA T", "PUNTO RETIRO CURAUMA T","PUNTO RETIRO CURICO NORTE T", "PUNTO RETIRO DRIVE THRU KENNEDY F",
+			"PUNTO RETIRO EL MONTE", "PUNTO RETIRO FALABELLA CALAMA", "PUNTO RETIRO FALABELLA CONCEPCION", "PUNTO RETIRO FALABELLA CURICO", "PUNTO RETIRO FALABELLA LA CALERA",
+			"PUNTO RETIRO FALABELLA LOS ANGELES", "PUNTO RETIRO FALABELLA OSORNO", "PUNTO RETIRO FALABELLA OVALLE", "PUNTO RETIRO FALABELLA QUILPUE", "PUNTO RETIRO FALABELLA SAN FELIPE",
+			"PUNTO RETIRO FALABELLA SAN FERNANDO", "PUNTO RETIRO FALABELLA TALCA", "PUNTO RETIRO FALABELLA VALDIVIA", "PUNTO RETIRO FALABELLA VINA DEL MAR",
+			"PUNTO RETIRO FONTOVA T", 
+			"PUNTO RETIRO HUECHURABA T", "PUNTO RETIRO INDEPENDENCIA F", "PUNTO RETIRO IQUIQUE F", "PUNTO RETIRO KENNEDY T","PUNTO RETIRO LA CISTERNA T", 
+			"PUNTO RETIRO LA DEHESA F", "PUNTO RETIRO LA FLORIDA T", "PUNTO RETIRO LA SERENA BALMACEDA T","PUNTO RETIRO LA SERENA F", "PUNTO RETIRO LOS ANGELES T", 
 			"PUNTO RETIRO LOS DOMINICOS F", "PUNTO RETIRO LOS DOMINICOS M", "PUNTO RETIRO LOS DOMINICOS T", "PUNTO RETIRO LYON F", 
-			"PUNTO RETIRO MACHALI T", "PUNTO RETIRO MAITENCILLO T", "PUNTO RETIRO MALL ALAMEDA F", "PUNTO RETIRO MALL COPIAPO F", 
+			"PUNTO RETIRO MACHALI T", "PUNTO RETIRO MAITENCILLO T", "PUNTO RETIRO MALL ALAMEDA F", "PUNTO RETIRO MALL COPIAPO F", "PUNTO RETIRO MALL PLAZA ALAMEDA T",
+			"PUNTO RETIRO MALL PLAZA ANTOFAGASTA T","PUNTO RETIRO MALL PLAZA COPIAPO T",
 			"PUNTO RETIRO MALL PLAZA TOBALABA F", "PUNTO RETIRO MANQUEHUE F", "PUNTO RETIRO MELIPILLA F", 
             "PUNTO RETIRO NATANIEL T", "PUNTO RETIRO OVALLE T", "PUNTO RETIRO PADRE HURTADO T", "PUNTO RETIRO PARQUE ARAUCO F","PUNTO RETIRO PENAFLOR T", 
-			"PUNTO RETIRO PIEDRA ROJA T", "PUNTO RETIRO PLAZA EL TREBOL F", "PUNTO RETIRO PLAZA NORTE F","PUNTO RETIRO PLAZA OESTE T", 
-			"PUNTO RETIRO PLAZA VESPUCIO", "PUNTO RETIRO PUCON F", "PUNTO RETIRO PUENTE ALTO EYZAGUIRRE", "PUNTO RETIRO PUENTE F", 
-			"PUNTO RETIRO PUERTO MONTT F", "PUNTO RETIRO PUNTA ARENAS F", "PUNTO RETIRO QUILLOTA T", "PUNTO RETIRO QUILPUE T", 
-			"PUNTO RETIRO RANCAGUA F", "PUNTO RETIRO RENGO T", "PUNTO RETIRO SAN ANTONIO T", "PUNTO RETIRO SAN BERNARDO F", "PUNTO RETIRO SAN FERNANDO T", 
-			"PUNTO RETIRO TALAGANTE T", "PUNTO RETIRO TEMUCO F", "PUNTO RETIRO VALLENAR T", "PUNTO RETIRO VALPARAISO F", "PUNTO RETIRO VICUNA MACKENNA T", 
+			"PUNTO RETIRO PIEDRA ROJA T", "PUNTO RETIRO PLAZA EGANA T","PUNTO RETIRO PLAZA EL TREBOL F", "PUNTO RETIRO PLAZA NORTE F","PUNTO RETIRO PLAZA OESTE T", 
+			"PUNTO RETIRO PLAZA VESPUCIO", "PUNTO RETIRO PUCON F", "PUNTO RETIRO PUENTE ALTO EYZAGUIRRE", "PUNTO RETIRO PUENTE ALTO T","PUNTO RETIRO PUENTE F", 
+			"PUNTO RETIRO PUERTO MONTT F", "PUNTO RETIRO PUNTA ARENAS F", "PUNTO RETIRO QUILICURA T", "PUNTO RETIRO QUILIN T","PUNTO RETIRO QUILLOTA T", "PUNTO RETIRO QUILPUE T", 
+			"PUNTO RETIRO RANCAGUA F", "PUNTO RETIRO RENACA T","PUNTO RETIRO RENGO T", "PUNTO RETIRO SAN ANTONIO T", "PUNTO RETIRO SAN BERNARDO ESTACION T","PUNTO RETIRO SAN BERNARDO F", "PUNTO RETIRO SAN FERNANDO T", 
+			"PUNTO RETIRO TALAGANTE T", "PUNTO RETIRO TALCA ALAMEDA T", "PUNTO RETIRO TEMUCO F", "PUNTO RETIRO TOTTUS ANTOFAGASTA CENTRO", "PUNTO RETIRO TOTTUS CALAMA",
+			"PUNTO RETIRO TOTTUS CHILLAN", "PUNTO RETIRO TOTTUS CIUDAD EMPRESARIAL", "PUNTO RETIRO TOTTUS COQUIMBO", "PUNTO RETIRO TOTTUS EL BOSQUE", "PUNTO RETIRO TOTTUS LA SERENA", 
+			"PUNTO RETIRO TOTTUS LOS ANDES", "PUNTO RETIRO TOTTUS SAN BERNARDO PLAZA", "PUNTO RETIRO TOTTUS SANTA JULIA RENACA", "PUNTO RETIRO TOTTUS TALAGANTE CORD", "PUNTO RETIRO TOTTUS TALCA COLIN",
+			"PUNTO RETIRO TOTTUS TREBOL", "PUNTO RETIRO TOTTUS VIVACETA", "PUNTO RETIRO TOTTUS WALKER MARTINEZ",
+			"PUNTO RETIRO VALLENAR T", "PUNTO RETIRO VALPARAISO F", "PUNTO RETIRO VICUNA MACKENNA T", 
             "PUNTO RETIRO VITACURA T", "PUNTO RETIRO LA PLAZA EGANA F", "PUNTO DE ENTREGA BUIN", "PUNTO DE ENTREGA MAINTECILLO", "PUNTO DE ENTREGA PUCON", 
-            "PUNTO DE RETIRO MANQUEHUE F", "RECONSTRUCTOR CAUQUENES", "REMODELACION HC-NUBLE","TVIRTUAL CONTROL PROVEEDORES",
-            "","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",
-            "TRIANG. SAN ANTONIO", 
-            "USE 06 ANTOFAGASTA", "USE 22 CONCEPCION", "USE 52 SANTIAGO", "USE 73 VINA DEL MAR"]
+            "PUNTO DE RETIRO MANQUEHUE F", "RECONSTRUCTOR CAUQUENES", "REMODELACION HC-NUBLE","TVIRTUAL CONTROL PROVEEDORES",            
+            "TRIANG. SAN ANTONIO", "USE 06 ANTOFAGASTA", "USE 22 CONCEPCION", "USE 52 SANTIAGO", "USE 73 VINA DEL MAR"]
 
 imgs_tiendas = ["Tienda.png","AccesoriosDeAutomoviles.png","ArriendoHerramientaIMPTalca.png","ArriendoHerramientasIMPMaipu.png","ArriendoHerramientasIMPPuertoMontt.png",
 			"ArriendoHerramientasIMPConcepcion.png","ArriendoHerramientasIMPHuechuraba.png", "ArriendoHerramientasIMPLaSerena.png",
@@ -71,7 +79,8 @@ imgs_tiendas = ["Tienda.png","AccesoriosDeAutomoviles.png","ArriendoHerramientaI
 			"HC713SanAntonio.png","HC714Melipilla.png","HC716SantaCruz.png","HC723Quilicura.png","HC724BioBioRiberaNorte.png","HC725QuintaVergara.png",
 			"HC726Tobalaba.png","HC727TalcaPoniente.png","HC728AltoHospicio.png","HC729Ovalle.png","HC730Coronel.png","HC734Quillota.png", 
 			"HC735HomyPlazaEgana.png","HC737Talagante.png","HC738LosDominicos.png","HC739CopiapoCordillera.png","HC74ElBosque.png","HC743AntofagastaII.png",
-			"HC745Independencia.png","HC746Quilin.png","HC747TemucoLosPablos.png","HC75PuenteAlto.png","HC79ParqueArauco.png","HC81Concepcion.png","HC83Rancagua.png","HC88Maipu.png",
+			"HC745Independencia.png","HC746Quilin.png","HC747TemucoLosPablos.png","HC748ChicureoExpress.png","HC75PuenteAlto.png","HC79ParqueArauco.png",
+                        "HC81Concepcion.png","HC83Rancagua.png","HC88Maipu.png",
 			"HC90Quilpue.png","HC93ElTrebol.png","HC95LaFlorida-Vespucio.png","HC96Cerrillos.png","HC97Renaca.png","HC98Coquimbo.png","HCElQuisco.png",
 			"HCLaSerenaII.png","HCSanFernando.png","HO732PlazaVespucio.png","HO733PlazaOeste.png","KVAngol.png","KVHuechuraba.png","KVAntofagasta.png",
 			"KVArica.png","KVCerrillos.png","KVCopiapo.png","KVPuertoMontt.png","KVPuntaArenas1.png","KV823VirtualRemodelacionCerrillos.png","KVCalama.png",
@@ -79,26 +88,32 @@ imgs_tiendas = ["Tienda.png","AccesoriosDeAutomoviles.png","ArriendoHerramientaI
 			"LLPatioHC-Angol.png","LLRenaca.png","LLTArica.png","LLTAntofagasta.png","LLTCopiapo.png","LLTCoyhaique.png","LLTHuechuraba.png",
 			"LLTLosAngeles.png","LLTOsorno.png","LLTPlazaOeste.png","LLTPuertoMontt.png","LLTPuntaArenas.png","LLTSanFelipe.png","LaboratorioCutCase-L_A.png",
 			"LlenadoHCMelipilla.png","LlenadoSanAntonio.png","Logrono.png","OfApoyoATiendas.png","OperacionElSoldado.png","OperacionLosBronces.png",
-			"PeConSaldoEnBodega.png", "PuntoDeRetiroAldereteT.png","PuntoRetiroCostaneraCenterF.png","PuntoRetiroPenaflorF.png","ProyectoCierredeCC28.png",
-			"PuntoEntregaChicureo.png","PuntoEntregaOficinaDeApoyo.png", "PuntoRetiroAlamedaM.png","PuntoRetiroAltoLasCondesF.png",
-			"PuntoRetiroAntofagastaF.png","PuntoRetiroAraucoMaipuF.png","PuntoRetiroAricaF.png","PuntoRetiroBilbaoT.png","PuntoRetiroBuinT.png",
-			"PuntoRetiroCastroF.png","PuntoRetiroCatedralT.png","PuntoRetiroCerrillosF.png","PuntoRetiroCerroBlancoT.png","PuntoRetiroChamiseroT.png",
-			"PuntoRetiroColinaT.png","PuntoRetiroConConT.png", "PuntoRetiroCopiapoF.png","PuntoRetiroCopiapoLosCarreraT.png","PuntoRetiroCuricoNorteT.png",
-			"PuntoRetiroFontovaT.png","PuntoRetiroHuechurabaT.png","PuntoRetiroIndependenciaF.png","PuntoRetiroIquiqueF.png","PuntoRetiroLaCisternaT.png",
-			"PuntoRetiroLaDehesaF.png","PuntoRetiroLaFloridaT.png","PuntoRetiroLaSerenaF.png","PuntoRetiroLosAngelesT.png","PuntoRetiroLosDominicosF.png",
+			"PeConSaldoEnBodega.png", "PuntoDeRetiroAldereteT.png","PuntoRetiroCostaneraCenterF.png","ProyectoCierredeCC28.png",
+			"PuntoEntregaChicureo.png","PuntoEntregaOficinaDeApoyo.png","PuntoRetiroAhumadaF.png","PuntoRetiroAlamedaM.png","PuntoRetiroAltoLasCondesF.png",
+			"PuntoRetiroAntofagastaF.png","PuntoRetiroAraucoMaipuF.png","PuntoRetiroAricaF.png","PuntoRetiroBilbaoT.png","PuntoRetiroBio-BioT","PuntoRetiroBuinT.png",
+			"PuntoRetiroCastroF.png","PuntoRetiroCatedralT.png","PuntoRetiroCerrillosF.png","PuntoRetiroCerroBlancoT.png","PuntoRetiroChamiseroT.png","PuntoRetiroChillanF.png",
+			"PuntoRetiroColinaT.png","PuntoRetiroConConT.png", "PuntoRetiroCopiapoF.png","PuntoRetiroCopiapoLosCarreraT.png","PuntoRetiroCuraumaT.png","PuntoRetiroCuricoNorteT.png",
+			"PuntoRetiroDriveThruKennedyF.png","PuntoRetiroElMonteT.png","PuntoRetiroFalabellaCalama.png","PuntoRetiroFalabellaConcepcion.png","PuntoRetiroFalabellaCurico.png","PuntoRetiroFalabellaLaCalera.png",
+			"PuntoRetiroFalabellaLosAngeles.png","PuntoRetiroFalabellaOsorno.png","PuntoRetiroFalabellaOvalle.png","PuntoRetiroFalabellaQuilpue.png","PuntoRetiroFalabellaSanFelipe.png","PuntoRetiroFalabellaSanFernando.png",
+			"PuntoRetiroFalabellaTalca.png","PuntoRetiroValdivia.png","PuntoRetiroFalabellaVinaDelMar.png",
+			"PuntoRetiroFontovaT.png","PuntoRetiroHuechurabaT.png","PuntoRetiroIndependenciaF.png","PuntoRetiroIquiqueF.png","PuntoRetiroKennedyT","PuntoRetiroLaCisternaT.png",
+			"PuntoRetiroLaDehesaF.png","PuntoRetiroLaFloridaT.png","PuntoRetiroLaSerenaF.png","PuntoRetiroLaSerenaBalmacedaT.png","PuntoRetiroLosAngelesT.png","PuntoRetiroLosDominicosF.png",
 			"PuntoRetiroLosDominicosM.png","PuntoRetiroLosDominicosT.png","PuntoRetiroLyonF.png", "PuntoRetiroMachaliT.png","PuntoRetiroMaitencilloT.png",
-			"PuntoRetiroMallAlamedaF.png","PuntoRetiroMallCopiapoF.png","PuntoRetiroMallPlazaTobalabaF.png","PuntoRetiroManquehueF.png",
+			"PuntoRetiroMallAlamedaF.png","PuntoRetiroMallCopiapoF.png","PuntoRetiroMallPlazaAlamedaT.png","PuntoRetiroMallPlazaAntofagastaT.png","PuntoRetiroMallPlazaCopiapoT.png",
+                        "PuntoRetiroMallPlazaTobalabaF.png","PuntoRetiroManquehueF.png",
 			"PuntoRetiroMelipillaF.png","PuntoRetiroNatanielT.png","PuntoRetiroOvalleT.png","PuntoRetiroPadreHurtadoT.png","PuntoRetiroParqueAraucoF.png",
-			"PuntoRetiroPenaflorT.png","PuntoRetiroPiedraRojaT.png","PuntoRetiroPlazaElTrebolF.png","PuntoRetiroPlazaNorteF.png","PuntoRetiroPlazaOesteT.png",
-			"PuntoRetiroPlazaVespucio.png","PuntoRetiroPuconF.png","PuntoRetiroPuenteAltoEyzaguirre.png","PuntoRetiroPuenteF.png",
-			"PuntoRetiroPuertoMonttF.png","PuntoRetiroPuntaArenasF.png","PuntoRetiroQuillotaT.png","PuntoRetiroQuilpueT.png","PuntoRetiroRancaguaF.png",
-			"PuntoRetiroRengoT.png","PuntoRetiroSanAntonioT.png","PuntoRetiroSanBernardoF.png","PuntoRetiroSanFernandoT.png","PuntoRetiroTalaganteT.png",
-			"PuntoRetiroTemucoF.png","PuntoRetiroVallenarT.png","PuntoRetiroValparaisoF.png","PuntoRetiroVicunaMackennaT.png","PuntoRetiroVitacuraT.png",
+			"PuntoRetiroPenaflorT.png","PuntoRetiroPiedraRojaT.png","PuntoRetiroPlazaEganaT.png","PuntoRetiroPlazaElTrebolF.png","PuntoRetiroPlazaNorteF.png","PuntoRetiroPlazaOesteT.png",
+			"PuntoRetiroPlazaVespucio.png","PuntoRetiroPuconF.png","PuntoRetiroPuenteAltoEyzaguirre.png","PuntoRetiroPuenteAltoT.png","PuntoRetiroPuenteF.png",
+			"PuntoRetiroPuertoMonttF.png","PuntoRetiroPuntaArenasF.png","PuntoRetiroQuilicuraT.png","PuntoRetiroQuilinT.png","PuntoRetiroQuillotaT.png","PuntoRetiroQuilpueT.png","PuntoRetiroRancaguaF.png",
+			"PuntoRetiroRenacaT.png","PuntoRetiroRengoT.png","PuntoRetiroSanAntonioT.png", "PuntoRetiroSanBernardoEstacionT.png","PuntoRetiroSanBernardoF.png","PuntoRetiroSanFernandoT.png","PuntoRetiroTalaganteT.png",
+			"PuntoRetiroTalcaAlamedaT.png",
+			"PuntoRetiroTemucoF.png","PuntoRetiroTottusAntogastaCentro.png","PuntoRetiroTottusCalama.png","PuntoRetiroTottusChillan.png","PuntoRetiroTottusCiudadEmpresarial.png","PuntoRetiroTottusCoquimbo.png",
+			"PuntoRetiroTottusElBosque.png","PuntoRetiroTottusLaSerena.png","PuntoRetiroTottusLosAndes.png","PuntoRetiroTottusSanBernardoPlaza.png","PuntoRetiroTottusSantaJuliaRenaca.png","PuntoRetiroTottusTalaganteCord.png",
+			"PuntoRetiroTottusTalcaColin.png","PuntoRetiroTottusTrebol.png","PuntoRetiroTottusVivaceta.png","PuntoRetiroTottusWalkerMartinez.png",
+			"PuntoRetiroVallenarT.png","PuntoRetiroValparaisoF.png","PuntoRetiroVicunaMackennaT.png","PuntoRetiroVitacuraT.png",
 			"PuntoRetiroLaPlazaEganaF.png","PuntoDeEntregaBuin.png", "PuntoDeEntregaMaintencillo.png","PuntoDeEntregaPucon.png","PuntoDeRetiroManquehueF.png",
 			"ReconstructorCauquenes.png","RemodelacionHC-Nuble.png","TVirtualControlProveedores.png",
-                        "","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",
-                        "Triang.SanAntonio.png",
-			"USE06Antofagasta.png", "USE22Concepcion.png","USE52santiago.png","USE73VinaDdelMar.png"]
+            "Triang.SanAntonio.png","USE06Antofagasta.png", "USE22Concepcion.png","USE52santiago.png","USE73VinaDdelMar.png"]
 
 def jerarquia_method(): 
     image_click("Jerarquia.png")
@@ -125,14 +140,14 @@ def multi_run():
     if not matrix_get("DOWNLOAD_STARTED"):
         obj.get_to_dashboard()
         obj.dashboard()
-    if get_downloads_count() < 142:
+    if get_downloads_count() < 144:
         obj.get_files(43,get_downloads_count(),int(NUM_LOCALES)-17)
-    elif get_downloads_count() < 166:
-        obj.get_files(17,get_downloads_count()-142,int(NUM_LOCALES)-76)
-    elif get_downloads_count() < 174:
-        obj.get_files(278,get_downloads_count()-166,int(NUM_LOCALES)-84)
+    elif get_downloads_count() < 168:
+        obj.get_files(17,get_downloads_count()-144,int(NUM_LOCALES)-77)
     elif get_downloads_count() < 176:
-        obj.get_files(34,get_downloads_count()-174,int(NUM_LOCALES)-87)
+        obj.get_files(279,get_downloads_count()-168,int(NUM_LOCALES)-85)
+    elif get_downloads_count() < 178:
+        obj.get_files(34,get_downloads_count()-176,int(NUM_LOCALES)-88)
     if get_downloads_count() != int(NUM_LOCALES)*2:
         obj.run()
     else:
@@ -156,4 +171,5 @@ else:
     obj.rut = RUT_EMPRESA
 obj.fecha1 = date_to_string(subtract_days(today(),get_weekday_as_int()),"%Y%m%d")
 obj.fecha2 = date_to_string(previous_day(today()),"%Y%m%d")
+print(imgs_tiendas[279])
 obj.run()

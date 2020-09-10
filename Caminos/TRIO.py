@@ -152,6 +152,8 @@ class TRIO:
         press(ENTER)
 
     def change_store(self,store):
+        print(store)
+        print(imgs_tiendas[store])
         image_click(imgs_tiendas[store])
         press(DOWN)
         press(ENTER)
@@ -186,17 +188,17 @@ class TRIO:
         time_wait(2500)
         if not matrix_get("SSHOT_1"):
             if isinstance(self.rut, basestring):
-                filename = "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut,self.fecha1,self.fecha2,self.fecha2,"U","FALABELLA",NOMBRE_EMPRESA,"B2B","DIA","INV")
+                filename = "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut,self.fecha1,self.fecha2,self.fecha2,"U",self.PORTAL,NOMBRE_EMPRESA,"B2B","DIA","INV")
             else:
-                filename = "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut[0],self.fecha1,self.fecha2,self.fecha2,"U","FALABELLA",NOMBRE_EMPRESA,"B2B","DIA","INV")
+                filename = "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut[0],self.fecha1,self.fecha2,self.fecha2,"U",self.PORTAL,NOMBRE_EMPRESA,"B2B","DIA","INV")
             screenshot_save_crop(filename,0,0,1360,1020)
             tcp_send("SNDSHO1 " + str(get_downloads_count()) + "     " + filename + ".png")
             matrix_set("SSHOT_1", True)
         elif not matrix_get("SSHOT_2"):
             if isinstance(self.rut, basestring):
-                filename = "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut,self.fecha1,self.fecha2,self.fecha2,"M","FALABELLA",NOMBRE_EMPRESA,"B2B","DIA","INV")
+                filename = "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut,self.fecha1,self.fecha2,self.fecha2,"M",self.PORTAL,NOMBRE_EMPRESA,"B2B","DIA","INV")
             else:
-                filename = "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut[0],self.fecha1,self.fecha2,self.fecha2,"M","FALABELLA",NOMBRE_EMPRESA,"B2B","DIA","INV")
+                filename = "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut[0],self.fecha1,self.fecha2,self.fecha2,"M",self.PORTAL,NOMBRE_EMPRESA,"B2B","DIA","INV")
             screenshot_save_crop(filename,0,0,1360,1020)
             tcp_send("SNDSHO2 " + str(get_downloads_count()) + "     " + filename + ".png")
             matrix_set("SSHOT_2", True)
@@ -209,6 +211,7 @@ class TRIO:
         time_wait(1500)
 
     def cycle(self,start,files_downloaded,num_stores,U_M):
+        print(start,files_downloaded,num_stores)
         for x in range (start + files_downloaded, start + num_stores):
             self.change_store(x)
             self.download()
