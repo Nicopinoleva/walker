@@ -131,7 +131,7 @@ class BBR:
             time_wait(2000)
             if image_appeared("invalid.png"):
                 send_action_simple(1,14)
-                tcp_send("FAILED")
+                tcp_send("FAILED14")
                 manual_finish()
             else:
                 send_action_simple(1,13)
@@ -173,7 +173,7 @@ class BBR:
         press(ENTER)
         if image_appeared("invalid.png"):
             send_action_simple(1,14)
-            tcp_send("FAILED")
+            tcp_send("FAILED14")
             abort("Captcha incorrecto")
         else:
             send_action_simple(1,13)

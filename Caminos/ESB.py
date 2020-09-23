@@ -27,7 +27,7 @@ class ESB:
         elif result == "captcha_err.png":
             send_action_simple(9,14)
             close_explorer()
-            tcp_send("FAILED")
+            tcp_send("FAILED14")
             abort("Captcha incorrecto")
         else:
             log("INFO", "Captcha no aparece")
@@ -63,7 +63,7 @@ class ESB:
         elif result == "captcha_err.png":
             send_action_simple(9,14)
             close_explorer()
-            tcp_send("FAILED")
+            tcp_send("FAILED14")
             abort("Captcha incorrecto")
         else:
             log("INFO", "Captcha no aparece")
