@@ -21,7 +21,7 @@ def finish_method():
     tcp_send("FINISH0")
 
 def account_special():
-    result = image_wait_multiple("bloqueado.png", "desactivado.png")
+    result = image_wait_multiple("bloqueado.png", "desactivado.png", "comercial.png")
     log_sshot = "{}_{}".format("PRELOGIN", "ABCDIN")
     if result == "bloqueado.png":
         send_action_simple(1,15)
@@ -39,6 +39,8 @@ def account_special():
         tcp_send("SNDPIC1 /home/seluser/Screenshots/" + log_sshot + ".png")
         tcp_send("FINISH16")
         abort("Credencial login desactivada.")
+    else:
+        pass
 
 ABCDin = BBR()
 ABCDin.PORTAL = "ABCDIN"

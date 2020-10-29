@@ -16,11 +16,18 @@ class BBR:
         self.enable_SalesClick = False
         self.enable_customRename = False
         self.enable_extraDownload = False
+        self._portal_loaded = False
         self.login_verify = False
+        self.custom_date = False
         self.site_key = ""
+        self.marca = ""
+        self.date1 = ""
+        self.date2 = ""
         self.checker_data = {}
         self.checker_data["mouse_move"] = (240, -5) #(x, y)
         self.checker_data["screenshot_save_crop"] = (0, 0, 70, 15) #(xoffset, yoffset, w, h)
+        self.issued_day = today()-timedelta(days=1)
+        self.files_downloaded_extension = ".zip"
         self.account_procedure = self.account_procedure_method
         self.marca_procedure = self.marca_procedure_method
         self.marca_inv_procedure = self.marca_inv_procedure_method
@@ -32,11 +39,6 @@ class BBR:
         self.sshot2_procedure = self.sshot2_procedure_method
         self.finish_procedure = self.finish_procedure_method
         self.pre_checker_procedure = self.empty_procedure
-        self.issued_day = today()-timedelta(days=1)
-        self._portal_loaded = False
-        self.files_downloaded_extension = ".zip"
-        self.desc = 0
-        self.marca = ""
 
     def empty_procedure(self):
         pass
@@ -196,16 +198,35 @@ class BBR:
                 press(RIGHT)
 
     def date_go_first(self):
-        if self.enable_newBBR:
+        hoy = self.issued_day
+        if self.enable_newBBR or not self.custom_date:
             press(ENTER)
         else:
             time_wait(100)
             press(RIGHT)
             time_wait(100)
             press(LEFT)
-            for i in range(31):
+            for i in range(hoy-1):
                 time_wait(100)
                 press(LEFT)
+
+    def date_click(self, num_dias):
+        time_wait(1000)
+        hoy = self.issued_day
+        if hoy.day-num_dias <= 0:
+            image_click("left.png")
+            self.date_go_last()
+            for i in range(num_dias - hoy.day - 1):
+                time_wait(100)
+                press(LEFT)
+        else:
+            nueva_fecha = subtract_days(hoy, num_dias)
+            for i in range(nueva_fecha.day):
+                press(RIGHT)
+                time_wait(100)
+            if self.enable_newBBR:
+                press(ENTER)
+        press(TAB)
 
     def date_click_inverse(self, num_dias):
         image_click("dias.png")
@@ -223,6 +244,32 @@ class BBR:
                 time_wait(100)
                 press(LEFT)
         press(TAB)
+
+    def date_click_dynamic(self, date):
+        hoy = self.issued_day
+        if self.enable_date_inverse:
+            image_click("dias.png")
+            mouse_move(100, 0)
+            click()
+        else:
+            time_wait(1000)
+            mouse_move(30,0)
+        if date[:4] != hoy.year:
+            for x in range(int(hoy.year) - int(date[:4])):
+                image_click("year.png")
+                time_wait(5000)
+        if int(date[3:5]) - hoy.month > 0:
+            for x in range(hoy.month - int(date[3:5])):
+                image_click("right.png")
+        else:
+            for x in range(int(date[3:5]) - hoy.month):
+                image_click("left.png")
+        mouse_move(0,15)
+        click()
+        print(int(date[6:]))
+        for x in range(int(date[6:])-1):
+            press(RIGHT)
+        press(ENTER)
 
     def check_if_updated(self):
         if image_appeared("cerrar.png"):
@@ -285,31 +332,15 @@ class BBR:
         image_click("ventas.png")
         time_wait(30000)
 
-    def date_click(self, num_dias):
-        time_wait(1000)
-        hoy = self.issued_day
-        if hoy.day-num_dias <= 0:
-            image_click("left.png")
-            self.date_go_last()
-            for i in range(num_dias - hoy.day - 1):
-                time_wait(100)
-                press(LEFT)
-        else:
-            nueva_fecha = subtract_days(hoy, num_dias)
-            for i in range(nueva_fecha.day):
-                press(RIGHT)
-                time_wait(100)
-            if self.enable_newBBR:
-                press(ENTER)
-        press(TAB)
-
     def get_ventas(self,num=0):
         self.to_ventas_panel()
         image_click("fecha.png")
-        self.date_click(7)
-        hoy = today()
-        nueva_fecha = self.issued_day-timedelta(days=6)
-        nueva_fecha2 = self.issued_day
+        if self.custom_date:
+            self.date_click_dynamic(self.date1)
+            image_click("fecha2")
+            self.date_click_dynamic(self.date2)
+        else:
+            self.date_click(7)
         self.pre_ventas_procedure()
         self.marca_procedure(num)
         image_click("generar_informe.png")
@@ -322,9 +353,14 @@ class BBR:
             image_click("fuente_calendario.png")
         time_wait(1000)
         if self.enable_date_inverse:
-            self.date_click_inverse(7)
+            if self.custom_date:
+                self.date_click_dynamic(self.date1)
+            else:
+                self.date_click_inverse(7)
         self.ventas_procedure()
         image_wait("dlprompt.png")
+        nueva_fecha = self.issued_day-timedelta(days=6)
+        nueva_fecha2 = self.issued_day
         if self.enable_customRename:
             name1 = RUT_EMPRESA + "_" + date_to_string(nueva_fecha,"%Y%m%d") + "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + self.marca +  "_" + self.PORTAL + "_" + self.SIGLA +"_B2B_DIA"
         else:
@@ -347,7 +383,6 @@ class BBR:
             press(ENTER)
         time_wait(100)
         press(TAB)
-        hoy = today()
         nueva_fecha2 = self.issued_day
         self.pre_inventario_procedure()
         self.marca_inv_procedure(num)
@@ -432,7 +467,7 @@ class BBR:
         image_wait("cerrar.png")
         time_wait(500)
         press(TAB)
-        for y in range(down_num):
+        for y in range(down_num-1):
             press(DOWN)
             time_wait(500)
         press(RIGHT)
@@ -444,6 +479,18 @@ class BBR:
         time_wait(500)
         press(SPACE)
         time_wait(500)
+        image_hover("extradownload.png")
+        mouse_move(10,-10)
+        screenshot_save_crop(str(down_num) + str(extra_down+1),mouse_get_x(),mouse_get_y(),200,20)
+        temp = get_string_from_image(get_screenshot_directory() + str(down_num) + str(extra_down+1) + ".png")
+        print(temp)
+        name = str(temp)
+        if "/" in name:
+            name = name.split("/")[0]
+        if not name[1].isupper():
+            print("Entré!")
+            name = "SUBRUBRO"
+        print(name)
         image_click("seleccionar.png")
         image_click("generar_informe.png")
         self.waiter()
@@ -459,8 +506,6 @@ class BBR:
             time_wait(500)
             press(DOWN)
             time_wait(500)
-            press(DOWN)
-            time_wait(500)
             press(TAB)
             time_wait(500)
             press(ENTER)
@@ -470,15 +515,12 @@ class BBR:
             time_wait(500)
             press(ENTER)
             image_wait("dlprompt.png")
-            file = "ExtraFile" + str(down_num) + str(extra_down) 
-            type(get_download_directory() + file)
+            type(get_download_directory() + str(down_num) + str(extra_down+1) + str(name))
             image_click("save.png")
             time_wait(4000)
-            tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + file + self.files_downloaded_extension + "'")
+            tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + str(down_num) + str(extra_down+1)+ name + self.files_downloaded_extension + "'")
             image_click("cerrar.png")
-        if extra_down == 0:
-            matrix_set("CYCLE_COUNT",matrix_get("CYCLE_COUNT")+1)
-
+                
     def extraDownloads(self):
         subRubroDict = {}
         rubro = ""
@@ -490,15 +532,31 @@ class BBR:
                 subRubroDict[temp2[0]] = temp2[1]
         else:
             rubro = EXTRA
-        file_start = matrix_get("CYCLE_COUNT")
+        file_start = matrix_get("CYCLE_COUNT")+1
+        print("El ciclo principal parte de {}".format(file_start))
         for x in range(file_start,int(rubro)+1):
-            self.downloadSpecial(x)
+            print("El ciclo principal va en {}".format(matrix_get("CYCLE_COUNT")+1))
             if str(x) in subRubroDict:
-                for y in range(1,int(subRubroDict[str(x)])):
+                print("El subsiclo parte de {}".format(matrix_get("IN_CYCLE_COUNT")))
+                for y in range(int(matrix_get("IN_CYCLE_COUNT")),int(subRubroDict[str(x)])):
                     self.downloadSpecial(x,extra_down=y)
+                    matrix_set("IN_CYCLE_COUNT",matrix_get("IN_CYCLE_COUNT")+1)
+                    print("El subsiclo va en {}".format(matrix_get("IN_CYCLE_COUNT")))
+                matrix_set("IN_CYCLE_COUNT",0)
+            else:
+                self.downloadSpecial(x)
+            matrix_set("CYCLE_COUNT",matrix_get("CYCLE_COUNT")+1)
 
     def run(self):
         if not self.login_verify:
+            if DATE != 'none':
+                self.custom_date = True
+                if "," in DATE:
+                    temp = DATE.split(",")
+                    self.date1 = temp[0]
+                    self.date2 = temp[1]
+                else:
+                    self.date1 = DATE
             self.login()
             if self.enable_checker:
                 self.check_if_updated()
@@ -508,10 +566,10 @@ class BBR:
             if not matrix_get("SSHOT_2"):
                 self.screenshot_2()
                 matrix_set("SSHOT_2", True)
-            if get_downloads_count() == 0:
+            if int(matrix_get("DOWNLOAD_COUNT")) == 0:
                 self.get_ventas()
             time_wait(5000)
-            if get_downloads_count() == 1:
+            if int(matrix_get("DOWNLOAD_COUNT")) == 1:
                 self.get_inventario()
             if self.enable_extraDownload:
                 self.extraDownloads()

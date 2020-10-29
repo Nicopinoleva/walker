@@ -15,6 +15,8 @@ import os
 import traceback
 import calendar
 import sys
+import types
+
 
 # ==== Anti-captcha Python imports ====
 ABSOLUTE_PATH_MODULES = "/usr/lib/python2.7/dist-packages"
@@ -473,6 +475,9 @@ def open_read(filename):
 
 def run_script(filename):
 	exec(_preprocess(open(filename).read()))
+
+def createBoundMethod(func, obj):
+	return types.MethodType(func, obj, obj.__class__)
 
 # ==== EXTERNAL-POWERED FUNCTIONS ====
 

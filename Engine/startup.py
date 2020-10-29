@@ -33,7 +33,8 @@ if OPTION_TRACE_EVERY == 0:
 	OPTION_TRACE_EVERY = 10
 EXTRA = OPTION_ARGS[13]
 NUM_SSHOTS = OPTION_ARGS[14]
-MATRIX = [str(char) for char in OPTION_ARGS[15]]
+DATE = OPTION_ARGS[15]
+MATRIX = [str(char) for char in OPTION_ARGS[16]]
 
 IMAGE_BASED_FUNCTIONS_TIMEOUT = int(TIMEOUT) #Timeout hook
 
@@ -73,7 +74,6 @@ def matrix_get(key):
             num = []
             num.append(MATRIX[MATRIX_KEYWORD_DICT[key]])
             num.append(str(ord(MATRIX[MATRIX_KEYWORD_DICT[key]+1]) - 97))
-            print(num)
             return int(''.join(num))
         else:
             return int(MATRIX[MATRIX_KEYWORD_DICT[key]])
@@ -304,6 +304,7 @@ if not "Login" in OPTION_FILENAME:
         matrix_register("DOWNLOAD_STARTED")
         matrix_register("DOWNLOAD_COUNT")
         matrix_register("CYCLE_COUNT")
+        matrix_register("IN_CYCLE_COUNT")
 
 # Inicio proceso
 

@@ -5,7 +5,13 @@ set_download_directory("/home/seluser/Downloads/")
 set_screenshot_directory("/home/seluser/Screenshots/")
 set_min_similarity(0.75)
 
-def boton_azul_procedure():
+def boton_azul_procedure(objectReference):
+    if objectReference.custom_date:
+        image_click("dias")
+        mouse_mouse(370,0)
+        click()
+        objectReference.date_go_first()
+        press(ENTER)
     image_click("descargar.png")
     image_wait("listo.png")
     press(TAB)
@@ -44,6 +50,7 @@ obj.enable_recaptcha = True
 obj.site_key = "6LcVYtEUAAAAALlg52jHvKf9IM8n2FvJfqHSyqxg"
 obj.account_procedure = account_special
 obj.ventas_procedure = boton_azul_procedure
+obj.ventas_procedure = createBoundMethod(boton_azul_procedure,obj)
 obj.inventario_procedure = boton_verde_procedure
 obj.finish_procedure = finish_method
 obj.checker_data["mouse_move"] = (115, -5)
