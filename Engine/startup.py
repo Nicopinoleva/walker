@@ -1,6 +1,5 @@
 # ==== VERSION 1.0.0 ==
 
-
 # ==== ARGUMENT LOAD ====
 
 def abort(message=""):
@@ -33,8 +32,8 @@ if OPTION_TRACE_EVERY == 0:
 	OPTION_TRACE_EVERY = 10
 EXTRA = OPTION_ARGS[13]
 NUM_SSHOTS = OPTION_ARGS[14]
-DATE = OPTION_ARGS[15]
-MATRIX = [str(char) for char in OPTION_ARGS[16]]
+DATE = "none"
+MATRIX = [str(char) for char in OPTION_ARGS[15]]
 
 IMAGE_BASED_FUNCTIONS_TIMEOUT = int(TIMEOUT) #Timeout hook
 
@@ -80,19 +79,6 @@ def matrix_get(key):
     else:
         return int(MATRIX[MATRIX_KEYWORD_DICT[key]])
 
-# ==== RETROCOMPATIBILITY ====
-
-def hover(img):
-	return image_hover(img)
-
-# ==== ACTIONS ====
-
-def send_action(action):
-	def placeholder():
-		pass
-	func = action(placeholder)
-	return func()
-
 def send_action_simple(action, status, num_files=0, info=0):
 	if info==0:
                 if action==1 and status==0:
@@ -104,6 +90,143 @@ def send_action_simple(action, status, num_files=0, info=0):
 	else:
 		tcp_send("INSERT into log (log_id, acc_id, stat_id, num_files, info) values ("+OPTION_LOG_ID+", "+str(action)+", "+str(status)+", "+str(num_files)+", "+str(info)+");")
 
+def generic_login(**kwargs):
+	def internal_dec(func):
+		def inner(*inargs, **inkwargs):
+			res = func(*inargs, **inkwargs)
+			result = image_wait_multiple(kwargs["incorrect"], kwargs["correct"])
+			if result == kwargs["incorrect"]:
+				#Caso de bad login
+				send_action_simple(1, 1)
+				sname = "{}_{}".format("LOGIN", kwargs["portal"])
+				screenshot_save(sname)
+				tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
+				tcp_send("FINISH1")
+				abort("Credenciales de login erroneas.")
+			elif result == kwargs["correct"]:
+				#Caso de login OK
+                                send_action_simple(1, 0)
+                                if not "Login" in OPTION_FILENAME:
+                                    if not matrix_get("LOGIN_CORRECT"):
+                                        matrix_set("LOGIN_CORRECT", True)
+                        else:
+				#Caso de timeout
+				send_action_simple(9, 3)
+				raise ImageNotPresentException(kwargs["correct"])
+			return res
+		return inner
+	return internal_dec
+
+# ==== FINAL PRE-CAMINO PROCEDURE ====
+
+SUCCESS = False
+
+def common_abort_procedure():
+	global _DOWNLOAD_TRACKER
+	_DOWNLOAD_TRACKER = False
+	if _EXPLORER_OPENED:
+		close_explorer()
+
+CUSTOM_IMAGE_MISSING_HANDLER = None
+
+def default_image_missing_handler(e):
+	log("ERROR", "Imagen no aparecio en pantalla: " + str(e))
+	filename = str(e)[:-4]
+	screenshot_save(filename)
+	time_wait(1500)
+	tcp_send("SNDPIC2 /home/seluser/Screenshots/" + filename + ".png")
+        num_files = get_downloads_count()
+	if i == OPTION_RETRIES - 1:
+		#Lo que ocurre cuando se acaban los soft resets.
+		action = 7
+		status = 5
+		tcp_send("INSERT into log (log_id, acc_id, stat_id, num_files, img) values ("+OPTION_LOG_ID+", "+str(action)+", "+str(status)+", "+str(num_files)+", '"+filename+".png')")
+		tcp_send("FAILED")
+	else:
+		action = 7
+		status = 6
+		tcp_send("INSERT into log (log_id, acc_id, stat_id, num_files, img) values ("+OPTION_LOG_ID+", "+str(action)+", "+str(status)+", "+str(num_files)+", '"+filename+".png')")
+		tcp_send("DUERMO"+ str(get_downloads_count()))
+	common_abort_procedure()
+
+tcp_connect(OPTION_HOST.encode("utf-8"))
+
+if not "Login" in OPTION_FILENAME:
+#Registro variables guardas en el agente
+    if OPTION_FILENAME == "/Sikulix/Walmart.py":
+        matrix_register("INICIADO")
+        matrix_register("LOGIN_CORRECT")
+        matrix_register("FILE_1_RUNNING")
+        matrix_register("FILE_2_RUNNING")
+        matrix_register("FILE_3_RUNNING")
+        matrix_register("FILE_4_RUNNING")
+        matrix_register("FILE_5_RUNNING")
+        matrix_register("FILE_1_DOWNLOADED")
+        matrix_register("FILE_2_DOWNLOADED")
+        matrix_register("FILE_3_DOWNLOADED")
+        matrix_register("FILE_4_DOWNLOADED")
+        matrix_register("FILE_5_DOWNLOADED")
+        matrix_register("ALL_RUNNING")
+        matrix_register("FILES_DOWNLOADED")
+
+    else:
+        matrix_register("INICIADO")
+        matrix_register("LOGIN_CORRECT")
+        matrix_register("SSHOT_1")
+        matrix_register("SSHOT_2")
+        matrix_register("DOWNLOAD_STARTED")
+        matrix_register("DOWNLOAD_COUNT")
+        matrix_register("CYCLE_COUNT")
+        matrix_register("EXTRA_CYCLE_COUNT")
+        matrix_register("IN_CYCLE_COUNT")
+
+# Inicio proceso
+
+    if not matrix_get("INICIADO"):
+        send_action_simple(0, 0)
+        matrix_set("INICIADO", True)
+        # Update cuelogs
+        if EXTRA == 'DAILY' or EXTRA == 'WEEKLY' or OPTION_FILENAME == '/Sikulix/Pcfactory.py':
+            tcp_send("UPDATE cuelogs set files = "+str(NUM_LOCALES)+" where log_id = "+OPTION_LOG_ID+";")
+        else:
+            tcp_send("UPDATE cuelogs set files = "+str(int(NUM_LOCALES)+int(NUM_SSHOTS))+" where log_id = "+OPTION_LOG_ID+";")
+
+else:
+    send_action_simple(0, 0)
+
+# Camino launch
+
+for i in range(OPTION_RETRIES):
+	log("INFO", "Intento " + str(i + 1) + "/ " + str(OPTION_RETRIES))
+	try:
+		exec(_preprocess(open(OPTION_FILENAME).read()))
+		log("INFO", "Camino finalizado correctamente.")
+		_DOWNLOAD_TRACKER = False
+		SUCCESS = True
+		break
+	except ImageNotPresentException as e:
+		#Este es el unico caso que permite un soft reset.
+		if CUSTOM_IMAGE_MISSING_HANDLER != None:
+			CUSTOM_IMAGE_MISSING_HANDLER(e)
+		else:
+			default_image_missing_handler(e)
+	except ImageNotFoundException as e:
+		log("ERROR", "Archivo no existe: " + str(e))
+		common_abort_procedure()
+		break
+	except AbortedException as e:
+		log("ERROR", "Aborted")
+		common_abort_procedure()
+		break
+	except ManualFinishException as e:
+		log("INFO", "Camino finalizado correctamente.")
+		common_abort_procedure()
+		break
+	except Exception as e:
+		log("ERROR", "Error desconocido. ")
+		traceback.print_exc()
+		common_abort_procedure()
+		break
 #File tracker
 #def _DOWNLOAD_TRACKER_start():
 	#import threading
@@ -217,139 +340,15 @@ def send_action_simple(action, status, num_files=0, info=0):
 		#return inner
 	#return internal_dec
 
-def generic_login(**kwargs):
-	def internal_dec(func):
-		def inner(*inargs, **inkwargs):
-			res = func(*inargs, **inkwargs)
-			result = image_wait_multiple(kwargs["incorrect"], kwargs["correct"])
-			if result == kwargs["incorrect"]:
-				#Caso de bad login
-				send_action_simple(1, 1)
-				sname = "{}_{}".format("LOGIN", kwargs["portal"])
-				screenshot_save(sname)
-				tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
-				tcp_send("FINISH1")
-				abort("Credenciales de login erroneas.")
-			elif result == kwargs["correct"]:
-				#Caso de login OK
-                                send_action_simple(1, 0)
-                                if not "Login" in OPTION_FILENAME:
-                                    if not matrix_get("LOGIN_CORRECT"):
-                                        matrix_set("LOGIN_CORRECT", True)
-                        else:
-				#Caso de timeout
-				send_action_simple(9, 3)
-				raise ImageNotPresentException(kwargs["correct"])
-			return res
-		return inner
-	return internal_dec
+# ==== RETROCOMPATIBILITY ====
 
-# ==== FINAL PRE-CAMINO PROCEDURE ====
+# def hover(img):
+# 	return image_hover(img)
 
-SUCCESS = False
+# ==== ACTIONS ====
 
-def common_abort_procedure():
-	global _DOWNLOAD_TRACKER
-	_DOWNLOAD_TRACKER = False
-	if _EXPLORER_OPENED:
-		close_explorer()
-
-CUSTOM_IMAGE_MISSING_HANDLER = None
-
-def default_image_missing_handler(e):
-	log("ERROR", "Imagen no aparecio en pantalla: " + str(e))
-	filename = str(e)[:-4]
-	screenshot_save(filename)
-	time_wait(1500)
-	tcp_send("SNDPIC2 /home/seluser/Screenshots/" + filename + ".png")
-        num_files = get_downloads_count()
-	if i == OPTION_RETRIES - 1:
-		#Lo que ocurre cuando se acaban los soft resets.
-		action = 7
-		status = 5
-		tcp_send("INSERT into log (log_id, acc_id, stat_id, num_files, img) values ("+OPTION_LOG_ID+", "+str(action)+", "+str(status)+", "+str(num_files)+", '"+filename+".png')")
-		tcp_send("FAILED")
-	else:
-		action = 7
-		status = 6
-		tcp_send("INSERT into log (log_id, acc_id, stat_id, num_files, img) values ("+OPTION_LOG_ID+", "+str(action)+", "+str(status)+", "+str(num_files)+", '"+filename+".png')")
-		tcp_send("DUERMO"+ str(get_downloads_count()))
-	common_abort_procedure()
-
-tcp_connect(OPTION_HOST.encode("utf-8"))
-
-if not "Login" in OPTION_FILENAME:
-#Registro variables guardas en el agente
-    if OPTION_FILENAME == "/Sikulix/Walmart.py":
-        matrix_register("INICIADO")
-        matrix_register("LOGIN_CORRECT")
-        matrix_register("FILE_1_RUNNING")
-        matrix_register("FILE_2_RUNNING")
-        matrix_register("FILE_3_RUNNING")
-        matrix_register("FILE_4_RUNNING")
-        matrix_register("FILE_5_RUNNING")
-        matrix_register("FILE_1_DOWNLOADED")
-        matrix_register("FILE_2_DOWNLOADED")
-        matrix_register("FILE_3_DOWNLOADED")
-        matrix_register("FILE_4_DOWNLOADED")
-        matrix_register("FILE_5_DOWNLOADED")
-        matrix_register("ALL_RUNNING")
-        matrix_register("FILES_DOWNLOADED")
-
-    else:
-        matrix_register("INICIADO")
-        matrix_register("LOGIN_CORRECT")
-        matrix_register("SSHOT_1")
-        matrix_register("SSHOT_2")
-        matrix_register("DOWNLOAD_STARTED")
-        matrix_register("DOWNLOAD_COUNT")
-        matrix_register("CYCLE_COUNT")
-        matrix_register("IN_CYCLE_COUNT")
-
-# Inicio proceso
-
-    if not matrix_get("INICIADO"):
-        send_action_simple(0, 0)
-        matrix_set("INICIADO", True)
-        # Update cuelogs
-        if EXTRA == 'DAILY' or EXTRA == 'WEEKLY' or OPTION_FILENAME == '/Sikulix/Pcfactory.py':
-            tcp_send("UPDATE cuelogs set files = "+str(NUM_LOCALES)+" where log_id = "+OPTION_LOG_ID+";")
-        else:
-            tcp_send("UPDATE cuelogs set files = "+str(int(NUM_LOCALES)+int(NUM_SSHOTS))+" where log_id = "+OPTION_LOG_ID+";")
-
-else:
-    send_action_simple(0, 0)
-
-# Camino launch
-
-for i in range(OPTION_RETRIES):
-	log("INFO", "Intento " + str(i + 1) + "/ " + str(OPTION_RETRIES))
-	try:
-		exec(_preprocess(open(OPTION_FILENAME).read()))
-		log("INFO", "Camino finalizado correctamente.")
-		_DOWNLOAD_TRACKER = False
-		SUCCESS = True
-		break
-	except ImageNotPresentException as e:
-		#Este es el unico caso que permite un soft reset.
-		if CUSTOM_IMAGE_MISSING_HANDLER != None:
-			CUSTOM_IMAGE_MISSING_HANDLER(e)
-		else:
-			default_image_missing_handler(e)
-	except ImageNotFoundException as e:
-		log("ERROR", "Archivo no existe: " + str(e))
-		common_abort_procedure()
-		break
-	except AbortedException as e:
-		log("ERROR", "Aborted")
-		common_abort_procedure()
-		break
-	except ManualFinishException as e:
-		log("INFO", "Camino finalizado correctamente.")
-		common_abort_procedure()
-		break
-	except Exception as e:
-		log("ERROR", "Error desconocido. ")
-		traceback.print_exc()
-		common_abort_procedure()
-		break
+# def send_action(action):
+# 	def placeholder():
+# 		pass
+# 	func = action(placeholder)
+# 	return func()

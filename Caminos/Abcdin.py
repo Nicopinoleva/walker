@@ -45,7 +45,7 @@ def account_special():
 ABCDin = BBR()
 ABCDin.PORTAL = "ABCDIN"
 ABCDin.passid = "password"
-ABCDin.enable_date_inverse = True
+ABCDin.enable_extra_calendar = True
 ABCDin.account_procedure = account_special
 ABCDin.ventas_procedure = boton_azul_procedure
 ABCDin.inventario_procedure = boton_verde_procedure

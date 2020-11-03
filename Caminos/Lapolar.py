@@ -40,8 +40,6 @@ def finish_method():
 obj = BBR()
 obj.PORTAL = "LAPOLAR"
 obj.passid = "formLogin:txt_Password"
-obj.delay_days_tolerance = 0
-obj.enable_date_inverse = False
 obj.enable_error = True
 obj.enable_SalesClick = True
 obj.account_procedure = account_special

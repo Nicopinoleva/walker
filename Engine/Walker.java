@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -378,6 +379,69 @@ public class Walker {
 		}
 		return url;
 	}
+	public void pass_text(String id) {
+		JavascriptExecutor js;
+		if (!USE_FIREFOX) {
+			js = (JavascriptExecutor) this.main_driver_c;
+		}
+		else {
+			js = (JavascriptExecutor) this.main_driver_f;
+		}
+		try {
+			js.executeScript("document.getElementById('"+id+"').setAttribute('type', 'text')");
+		} catch(Exception e){
+			System.out.println("No se pudo cambiar a text la contraseña");
+		}
+	}
+	public void captcha_sb() throws Exception {
+		Screenshot.save_crop("/home/seluser/Screenshots/captcha.png", 550, 456, 42, 45);
+		Thread.sleep(3000);
+		Region r = new Region(550,456,42,45);
+		for(int i=0;i<5;i++) {
+			if(r.exists("/home/seluser/Screenshots/captcha.png")!=null) {
+				System.out.println("Es igual");
+				int new_x = r.getX() + 50;
+				r.setX(new_x);
+			}
+			else {
+				if(i==1) {
+					System.out.println("Está entre 1ra y 2da, chequeando...");
+					int new_x = r.getX() + 50;
+					r.setX(new_x);
+					if(r.exists("/home/seluser/Screenshots/captcha.png")==null) {
+						System.out.println("Clickeando 1ra casilla");
+						new_x = r.getX() - 100;
+						System.out.println(new_x);
+						r.setX(new_x);
+						r.click();
+					}
+					else {
+						Debug.info("Clickeando 2da casilla");
+						Region r2 = new Region(600,456,42,45);
+						r2.click();
+					}
+					break;
+				}
+				else {
+					System.out.println("no es igual");
+					r.click();
+					break;	
+				}
+			}
+		}
+	}
+	public void recaptchaGoogle(String CaptchaSolution, String CaptchaPath) {
+		System.out.print("Ejecutando script recaptcha...");
+		if (!USE_FIREFOX) {
+			this.main_driver_c.executeScript("document.getElementById('g-recaptcha-response').style.display = 'block';");
+			this.main_driver_c.findElementByXPath(CaptchaPath).sendKeys(CaptchaSolution);
+		}
+		else {
+			this.main_driver_f.executeScript("document.getElementById('g-recaptcha-response').style.display = 'block';");
+			this.main_driver_f.findElementByXPath(CaptchaPath).sendKeys(CaptchaSolution);
+		}
+		System.out.print("Script recaptcha ejecutado");
+	}
 	// public static void main_with_options(String[] args) throws Exception {
 	// 	Options options = new Options();
 
@@ -463,55 +527,6 @@ public class Walker {
 			log("ERROR", "Error en entorno Jython. Detalle:\n" + e);
 		}
 		pyInterp.close();
-	}
-	public void captcha_sb() throws Exception {
-		Screenshot.save_crop("/home/seluser/Screenshots/captcha.png", 550, 456, 42, 45);
-		Thread.sleep(3000);
-		Region r = new Region(550,456,42,45);
-		for(int i=0;i<5;i++) {
-			if(r.exists("/home/seluser/Screenshots/captcha.png")!=null) {
-				System.out.println("Es igual");
-				int new_x = r.getX() + 50;
-				r.setX(new_x);
-			}
-			else {
-				if(i==1) {
-					System.out.println("Está entre 1ra y 2da, chequeando...");
-					int new_x = r.getX() + 50;
-					r.setX(new_x);
-					if(r.exists("/home/seluser/Screenshots/captcha.png")==null) {
-						System.out.println("Clickeando 1ra casilla");
-						new_x = r.getX() - 100;
-						System.out.println(new_x);
-						r.setX(new_x);
-						r.click();
-					}
-					else {
-						Debug.info("Clickeando 2da casilla");
-						Region r2 = new Region(600,456,42,45);
-						r2.click();
-					}
-					break;
-				}
-				else {
-					System.out.println("no es igual");
-					r.click();
-					break;	
-				}
-			}
-		}
-	}
-	public void recaptchaGoogle(String CaptchaSolution, String CaptchaPath) {
-		System.out.print("Ejecutando script recaptcha...");
-		if (!USE_FIREFOX) {
-			this.main_driver_c.executeScript("document.getElementById('g-recaptcha-response').style.display = 'block';");
-			this.main_driver_c.findElementByXPath(CaptchaPath).sendKeys(CaptchaSolution);
-		}
-		else {
-			this.main_driver_f.executeScript("document.getElementById('g-recaptcha-response').style.display = 'block';");
-			this.main_driver_f.findElementByXPath(CaptchaPath).sendKeys(CaptchaSolution);
-		}
-		System.out.print("Script recaptcha ejecutado");
 	}
 	public static void main(String[] args) throws Exception {
 		Walker w = new Walker();

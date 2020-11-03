@@ -36,7 +36,6 @@ def finish_method():
     tcp_send("FINISH0")
 
 def chain_run(counter):
-    obj.login()
     if obj.enable_checker:
         obj.check_if_updated()
     if not matrix_get("SSHOT_1"):
@@ -50,7 +49,8 @@ def chain_run(counter):
     time_wait(5000)
     if matrix_get("DOWNLOAD_COUNT") == 1:
         obj.get_inventario(counter)
-    close_explorer()
+    if obj.enable_extraDownload:
+        obj.extraDownloads(proveedor=int(sigla[counter][-2:]))
     matrix_set("CYCLE_COUNT",counter+1)
     print(matrix_get("CYCLE_COUNT"))
 
@@ -76,21 +76,23 @@ obj.enable_newBBR = True
 obj.site_key = "6LcVYtEUAAAAALlg52jHvKf9IM8n2FvJfqHSyqxg"
 obj.delay_days_tolerance = 1
 obj.account_procedure = account_special
-obj.ventas_procedure = boton_azul_procedure
+obj.ventas_procedure = createBoundMethod(boton_azul_procedure,obj)
 obj.inventario_procedure = boton_verde_procedure
 obj.marca_procedure = marca_ventas_inventario_procedure
 obj.marca_inv_procedure = marca_ventas_inventario_procedure
 obj.finish_procedure = finish_method
-obj.checker_data["mouse_move"] = (115, -5)
+obj.checker_data["mouse_move"] = (115, -10cd)
 obj.checker_data["screenshot_save_crop"] = (0, 0, 70, 15)
 obj.run = chain_run
 counter = matrix_get("CYCLE_COUNT")
 if "-" in NOMBRE_EMPRESA:
     obj.enable_customRename = True
     obj.marca = sufijo[0]
+obj.login()
 for x in range(counter,len(sigla)):
     obj.SIGLA = sigla[x][:2]
     obj.run(x)
+    close_explorer()
     matrix_set("SSHOT_1",False)
     matrix_set("SSHOT_2",False)
     matrix_set("DOWNLOAD_COUNT",0)

@@ -124,4 +124,3 @@ int SendRecv (int sd, char *send, int len, char *recv, int rmax)
   else
     return (Recv (sd, recv, rmax));
 }
-
