@@ -509,8 +509,10 @@ class BBR:
         screenshot_save_crop(str(down_num) + str(extra_down+1),mouse_get_x(),mouse_get_y(),200,20)
         temp = get_string_from_image(get_screenshot_directory() + str(down_num) + str(extra_down+1) + ".png")
         invalid = ('<','>',':','"','/','|',"?",'*')
-        if any (x in temp for x in invalid):
-            temp = temp.split(x)[0]
+        print(temp)
+        for x in invalid:
+            if x in temp:
+                temp = temp.split(x)[0]
         if not temp[1].isupper():
             name = "SUBRUBRO"
         name = temp[:-1]
@@ -538,10 +540,10 @@ class BBR:
             time_wait(500)
             press(ENTER)
             image_wait("dlprompt.png")
-            type(get_download_directory() + str(name) + self.SIGLA + str(down_num) + str(extra_down+1))
+            type(get_download_directory() + self.marca + str(name) + self.SIGLA + str(down_num) + str(extra_down+1))
             image_click("save.png")
             time_wait(4000)
-            tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + str(name) + self.SIGLA + str(down_num) + str(extra_down+1) + self.files_downloaded_extension + "'")
+            tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + self.marca + str(name) + self.SIGLA + str(down_num) + str(extra_down+1) + self.files_downloaded_extension + "'")
             image_click("cerrar.png")
                 
     def extraDownloads(self, proveedor = -1):

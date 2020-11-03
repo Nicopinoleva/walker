@@ -36,6 +36,7 @@ def finish_method():
     tcp_send("FINISH0")
 
 def chain_run(counter):
+    obj.login()
     if obj.enable_checker:
         obj.check_if_updated()
     if not matrix_get("SSHOT_1"):
@@ -52,7 +53,7 @@ def chain_run(counter):
     if obj.enable_extraDownload:
         obj.extraDownloads(proveedor=int(sigla[counter][-2:]))
     matrix_set("CYCLE_COUNT",counter+1)
-    print(matrix_get("CYCLE_COUNT"))
+    matrix_set("EXTRA_CYCLE_COUNT",0)
 
 
 def account_special(): 
@@ -81,6 +82,8 @@ obj.inventario_procedure = boton_verde_procedure
 obj.marca_procedure = marca_ventas_inventario_procedure
 obj.marca_inv_procedure = marca_ventas_inventario_procedure
 obj.finish_procedure = finish_method
+if EXTRA != "none" and get_weekday_as_int() == int(AVANZAR):
+    obj.enable_extraDownload = True
 obj.checker_data["mouse_move"] = (115, -10cd)
 obj.checker_data["screenshot_save_crop"] = (0, 0, 70, 15)
 obj.run = chain_run
@@ -88,7 +91,6 @@ counter = matrix_get("CYCLE_COUNT")
 if "-" in NOMBRE_EMPRESA:
     obj.enable_customRename = True
     obj.marca = sufijo[0]
-obj.login()
 for x in range(counter,len(sigla)):
     obj.SIGLA = sigla[x][:2]
     obj.run(x)

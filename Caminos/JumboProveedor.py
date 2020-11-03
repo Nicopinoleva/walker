@@ -58,6 +58,7 @@ def account_special():
         pass 
 
 def chain_run(counter):
+    obj.login()
     if obj.enable_checker:
         obj.check_if_updated()
     if not matrix_get("SSHOT_1"):
@@ -74,7 +75,7 @@ def chain_run(counter):
     if obj.enable_extraDownload:
         obj.extraDownloads(proveedor=int(sigla[counter][-2:]))
     matrix_set("CYCLE_COUNT",counter+1)
-    print(matrix_get("CYCLE_COUNT"))
+    matrix_set("EXTRA_CYCLE_COUNT",0)
 
 #Heinz
 obj = BBR()
@@ -103,7 +104,6 @@ counter = matrix_get("CYCLE_COUNT")
 if "-" in NOMBRE_EMPRESA:
     obj.enable_customRename = True
     obj.marca = sufijo[0]
-obj.login()
 for x in range(counter,len(sigla)):
     obj.SIGLA = sigla[x][:2]
     obj.run(x)
