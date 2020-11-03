@@ -545,7 +545,7 @@ class BBR:
             type(get_download_directory() + self.SIGLA + str(down_num) + str(extra_down+1) + str(name))
             image_click("save.png")
             time_wait(4000)
-            tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + str(down_num) + str(extra_down+1)+ name + self.files_downloaded_extension + "'")
+            tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + self.SIGLA + str(down_num) + str(extra_down+1)+ name + self.files_downloaded_extension + "'")
             image_click("cerrar.png")
                 
     def extraDownloads(self, proveedor = -1):
