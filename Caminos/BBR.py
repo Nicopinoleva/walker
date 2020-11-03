@@ -576,14 +576,11 @@ class BBR:
 
     def run(self):
         if not self.login_verify:
-            if DATE != 'none':
+            if DATE != '-':
                 self.custom_date = True
-                if "," in DATE:
-                    temp = DATE.split(",")
-                    self.date1 = temp[0]
-                    self.date2 = temp[1]
-                else:
-                    self.date1 = DATE
+                temp = DATE.split("-")
+                self.date1 = temp[0]
+                self.date2 = temp[1]
             self.login()
             if self.enable_checker:
                 self.check_if_updated()
