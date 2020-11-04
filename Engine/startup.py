@@ -174,6 +174,8 @@ if not "Login" in OPTION_FILENAME:
         matrix_register("LOGIN_CORRECT")
         matrix_register("SSHOT_1")
         matrix_register("SSHOT_2")
+        matrix_register("SALES")
+        matrix_register("STOCK")
         matrix_register("DOWNLOAD_STARTED")
         matrix_register("DOWNLOAD_COUNT")
         matrix_register("CYCLE_COUNT")

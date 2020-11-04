@@ -64,7 +64,7 @@ def get_detalle_inventario():
 
 obj = BBR()
 obj.PORTAL = "UNIMARC"
-obj.enable_date_inverse = True
+obj.enable_extra_calendar = True
 obj.ventas_procedure = boton_azul_procedure
 obj.inventario_procedure = boton_verde_procedure
 obj.pre_ventas_procedure = pre_ventas_procedure

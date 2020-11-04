@@ -62,7 +62,7 @@ def finish_method():
 obj = BBR()
 obj.PORTAL = "LAPOLAR"
 obj.delay_days_tolerance = 0
-obj.enable_date_inverse = False
+obj.enable_extra_calendar = True
 obj.enable_error = True
 obj.ventas_procedure = boton_azul_procedure
 obj.inventario_procedure = boton_verde_procedure

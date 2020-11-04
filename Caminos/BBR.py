@@ -210,8 +210,13 @@ class BBR:
     def date_click(self, num_days, isextraCalendar = False):
         if isextraCalendar:
             image_click("dias.png")
-            mouse_move(100, 0)
-            click()            
+            mouse_move(100,0)
+            click()
+            if not image_appeared("left.png"):
+                image_click("dias.png")
+                mouse_move(100,0)
+                click()
+                image_wait("left.png")
         time_wait(1000)
         hoy = self.issued_day
         if hoy.day-num_days <= 0:
@@ -375,6 +380,7 @@ class BBR:
         send_action_simple(4, 0, num_files=1)
         tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + name1 + self.files_downloaded_extension + "'")
         matrix_set("DOWNLOAD_COUNT",1)
+        matrix_set("SALES",True)
 
     def get_inventario(self,num=0):
         self.to_ventas_panel()
@@ -415,6 +421,7 @@ class BBR:
         send_action_simple(4, 0, num_files=2)
         tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + name2 + self.files_downloaded_extension + "'")
         matrix_set("DOWNLOAD_COUNT",2)
+        matrix_set("STOCK",True)
         image_click("cerrar.png")
 
     def screenshot_1(self,num=0):
@@ -508,14 +515,16 @@ class BBR:
         mouse_move(10,-10)
         screenshot_save_crop(str(down_num) + str(extra_down+1),mouse_get_x(),mouse_get_y(),200,20)
         temp = get_string_from_image(get_screenshot_directory() + str(down_num) + str(extra_down+1) + ".png")
-        invalid = ('<','>',':','"','/','|',"?",'*')
+        invalid = ('<','>',':','"','/','|',"?",'*',"\\")
         print(temp)
         for x in invalid:
             if x in temp:
                 temp = temp.split(x)[0]
-        if not temp[1].isupper():
-            name = "SUBRUBRO"
+        print(temp[1])
         name = temp[:-1]
+        if not name[1].isupper():
+            name = "SUBRUBRO"
+        print(name)
         image_click("seleccionar.png")
         image_click("generar_informe.png")
         self.waiter()
@@ -527,10 +536,9 @@ class BBR:
             image_wait("cerrar.png")
             press(TAB)
             time_wait(500)
-            press(DOWN)
-            time_wait(500)
-            press(DOWN)
-            time_wait(500)
+            for x in range(3):
+                press(DOWN)
+                time_wait(500)
             press(TAB)
             time_wait(500)
             press(ENTER)
@@ -558,15 +566,15 @@ class BBR:
         else:
             rubro = EXTRA
         file_start = matrix_get("EXTRA_CYCLE_COUNT")+1
-        print("El ciclo principal parte de {}".format(file_start))
+        # print("El ciclo principal parte de {}".format(file_start))
         for x in range(file_start,int(rubro)+1):
-            print("El ciclo principal va en {}".format(matrix_get("EXTRA_CYCLE_COUNT")+1))
+            # print("El ciclo principal va en {}".format(matrix_get("EXTRA_CYCLE_COUNT")+1))
             if str(x) in subRubroDict:
-                print("El subsiclo parte de {}".format(matrix_get("IN_CYCLE_COUNT")))
+                # print("El subsiclo parte de {}".format(matrix_get("IN_CYCLE_COUNT")))
                 for y in range(int(matrix_get("IN_CYCLE_COUNT")),int(subRubroDict[str(x)])):
                     self.downloadSpecial(x,proveedor,extra_down=y)
                     matrix_set("IN_CYCLE_COUNT",matrix_get("IN_CYCLE_COUNT")+1)
-                    print("El subsiclo va en {}".format(matrix_get("IN_CYCLE_COUNT")))
+                    # print("El subsiclo va en {}".format(matrix_get("IN_CYCLE_COUNT")))
                 matrix_set("IN_CYCLE_COUNT",0)
             else:
                 self.downloadSpecial(x,proveedor)
@@ -580,21 +588,25 @@ class BBR:
                 self.date1 = temp[0]
                 self.date2 = temp[1]
             self.login()
-            if self.enable_checker:
-                self.check_if_updated()
-            if not matrix_get("SSHOT_1"):
-                self.screenshot_1()
-                matrix_set("SSHOT_1", True)
-            if not matrix_get("SSHOT_2"):
-                self.screenshot_2()
-                matrix_set("SSHOT_2", True)
-            if int(matrix_get("DOWNLOAD_COUNT")) == 0:
-                self.get_ventas()
-            time_wait(5000)
-            if int(matrix_get("DOWNLOAD_COUNT")) == 1:
-                self.get_inventario()
-            if self.enable_extraDownload:
-                self.extraDownloads()
+            if self.custom_date:
+                # while(True):
+                pass
+            else:
+                if self.enable_checker:
+                    self.check_if_updated()
+                if not matrix_get("SSHOT_1"):
+                    self.screenshot_1()
+                    matrix_set("SSHOT_1", True)
+                if not matrix_get("SSHOT_2"):
+                    self.screenshot_2()
+                    matrix_set("SSHOT_2", True)
+                if not matrix_get("SALES"):
+                    self.get_ventas()
+                time_wait(5000)
+                if not matrix_get("STOCK"):
+                    self.get_inventario()
+                if self.enable_extraDownload:
+                    self.extraDownloads()
             self.finish_procedure()
             close_explorer()
         else:
