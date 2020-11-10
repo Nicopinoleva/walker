@@ -44,7 +44,7 @@ def finish_method():
 obj = BBR()
 obj.PORTAL = "FASA"
 obj.delay_days_tolerance = 1
-obj.enable_date_inverse = True
+obj.enable_extra_calendar = True
 obj.pre_ventas_procedure = pre_ventas_procedure
 obj.pre_inventario_procedure = pre_inventario_procedure
 obj.ventas_procedure = boton_azul_procedure

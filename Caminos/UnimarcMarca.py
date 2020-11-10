@@ -80,7 +80,7 @@ def chain_run(counter):
 obj = BBR()
 obj.PORTAL = "UNIMARC"
 obj.passid = "password"
-obj.enable_date_inverse = True
+obj.enable_extra_calendar = True
 obj.account_procedure = account_special
 obj.ventas_procedure = boton_azul_procedure
 obj.inventario_procedure = boton_verde_procedure
