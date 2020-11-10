@@ -1,2 +1,0 @@
-# Walker
-Proyecto Walker Zolbit

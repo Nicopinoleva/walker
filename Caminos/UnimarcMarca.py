@@ -67,10 +67,10 @@ def chain_run(counter):
 	if not matrix_get("SSHOT_2"):
 		obj.screenshot_2(counter)
 		matrix_set("SSHOT_2", True)
-	if matrix_get("DOWNLOAD_COUNT") == 0:
+	if not matrix_get("SALES"):
 		obj.get_ventas(counter)
 	time_wait(5000)
-	if matrix_get("DOWNLOAD_COUNT") == 1:
+	if not matrix_get("STOCK")::
 		obj.get_inventario(counter)
 	close_explorer()
 	matrix_set("CYCLE_COUNT",counter+1)
@@ -100,5 +100,7 @@ for x in range(counter,len(sigla)):
     obj.run(x)
     matrix_set("SSHOT_1",False)
     matrix_set("SSHOT_2",False)
+    matrix_set("SALES",False)
+    matrix_set("STOCK",False)
     matrix_set("DOWNLOAD_COUNT",0)
 obj.finish_procedure()

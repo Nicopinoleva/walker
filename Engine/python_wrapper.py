@@ -406,6 +406,9 @@ def get_screenshots_count():
 def get_clipboard():
 	return _walker.get_clipboard()
 
+def get_parameters():
+	return _walker.get_parameters()
+
 # ==== PYTHON CODE PREPROCESSING ====
 
 def _preprocess(code):

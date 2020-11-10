@@ -29,8 +29,6 @@ import java.io.*;
 import java.nio.file.*;
 import java.net.*;
 
-import org.apache.commons.cli.*;
-
 public class Walker {
 	//Variables est√°ticas. Estas son solo por clase, debido a que no cambian.
 	public static final String DOWN = Key.DOWN;
@@ -442,69 +440,23 @@ public class Walker {
 		}
 		System.out.print("Script recaptcha ejecutado");
 	}
-	// public static void main_with_options(String[] args) throws Exception {
-	// 	Options options = new Options();
-
- //        Option input = new Option("i", "input", true, "ruta del archivo de input");
- //        input.setRequired(true);
- //        options.addOption(input);
-        
- //        Option port = new Option("p", "port", true, "numero de puerto");
- //        port.setRequired(true);
- //        options.addOption(port);
-        
- //        Option log_id = new Option("l", "logid", true, "log id");
- //        log_id.setRequired(true);
- //        options.addOption(log_id);
-        
- //        Option retries = new Option("r", "retries", true, "numero de intentos");
- //        options.addOption(retries);
-        
- //        Option trace = new Option("t", "trace_every", true, "cada cuantos archivos se debe reportar");
- //        options.addOption(trace);
-
- //        CommandLineParser parser = new GnuParser();
- //        HelpFormatter formatter = new HelpFormatter();
- //        CommandLine cmd = null;
-
- //        try {
- //            cmd = parser.parse(options, args);
- //        } catch (ParseException e) {
- //            System.out.println(e.getMessage());
- //            formatter.printHelp("utility-name", options);
- //            System.exit(1);
- //        }
- //        String wrapper_filename = "python_wrapper.py";
-	// 	String filename = cmd.getOptionValue("input");
-	// 	String option_logid = cmd.getOptionValue("logid");
-	// 	String option_port = cmd.getOptionValue("port");
-	// 	int option_retries = 1;
-	// 	int option_trace_every = 100;
-	// 	if (cmd.getOptionValue("retries") != null) {
-	// 		option_retries = Integer.parseInt(cmd.getOptionValue("retries"));
-	// 	}
-	// 	if (cmd.getOptionValue("trace_every") != null) {
-	// 		option_trace_every = Integer.parseInt(cmd.getOptionValue("trace_every"));
-	// 	}
-	// 	String[] option_args = cmd.getArgs();
-	// 	String MESSAGE_EXECUTING = "Ejecutando " + filename;
-	// 	//String MESSAGE_ENDED = filename + " ha terminado correctamente.";
-	// 	PythonInterpreter pyInterp = new PythonInterpreter();
-	// 	try {
-	// 		pyInterp.set("OPTION_LOG_ID", option_logid);
-	// 		pyInterp.set("OPTION_PORT", option_port);
-	// 		pyInterp.set("OPTION_TRACE_EVERY", option_trace_every);
-	// 		pyInterp.set("OPTION_FILENAME", filename);
-	// 		pyInterp.set("OPTION_RETRIES", option_retries);
-	// 		pyInterp.set("OPTION_ARGS", option_args);
-	// 		log("INFO", MESSAGE_EXECUTING);
-	// 		pyInterp.execfile(wrapper_filename);
-	//     }
-	// 	catch (Exception e) {
-	// 		log("ERROR", "Error en entorno Jython. Detalle:\n" + e);
-	// 	}
-	// 	pyInterp.close();
-	// }
+	public String[] getArguments() {
+		System.out.print("Obteniendo par·metros...");
+		String argumentos = TCPClient.getArgumentos(c_socket);
+		String[] nombres = {"FILENAME","RUT_EMPRESA","USERNAME,PASSWORD","NOMBRE_EMPRESA","URL_PORTAL","OPTION_HOST","OPTION_LOG_ID","OPTION_RETRIES"
+				,"TIMEOUT","NUM_LOCALES","AVANZAR","OPTION_TRACE_EVERY","EXTRA","NUM_SSHOTS","DATE","MATRIX"
+		};
+		String[] parts;
+		if (argumentos.contains("\t")) {
+			 parts = argumentos.split("\t");
+		} else {
+		    throw new IllegalArgumentException("Arguments does not contain tab");
+		}
+		for (int x = 0; x < parts.length;x++) {
+			System.out.printf(nombres[x],"-->",parts[x]);
+		}
+		return parts;
+	}
 	public static String get_jar_absolute_path() throws Exception {
 		return Paths.get(Walker.class.getProtectionDomain().getCodeSource().getLocation().toURI()).getParent().toString();
 	}
@@ -513,12 +465,14 @@ public class Walker {
 		String abspath = append_slash(get_jar_absolute_path());
 		//abspath = "";
 		log("DEBUG", "Absolute path: " + abspath);
-        String wrapper_filename = abspath + "python_wrapper.py";
-        String filename = args[0];
+		String wrapper_filename = abspath + "python_wrapper.py";
+		tcp_connect(args[0])
+		String[] arguments = getArguments();
+        String filename = arguments[0];
 		String MESSAGE_EXECUTING = "Ejecutando " + filename;
 		PythonInterpreter pyInterp = new PythonInterpreter();
 		try {
-			pyInterp.set("OPTION_ARGS", args);
+			pyInterp.set("OPTION_ARGS", arguments);
 			pyInterp.set("ABSOLUTE_PATH", abspath);
 			log("INFO", MESSAGE_EXECUTING);
 			pyInterp.execfile(wrapper_filename);
@@ -532,4 +486,67 @@ public class Walker {
 		Walker w = new Walker();
 		w.run(args);
 	}
+	// public static void main_with_options(String[] args) throws Exception {
+		// 	Options options = new Options();
+
+	 //        Option input = new Option("i", "input", true, "ruta del archivo de input");
+	 //        input.setRequired(true);
+	 //        options.addOption(input);
+	        
+	 //        Option port = new Option("p", "port", true, "numero de puerto");
+	 //        port.setRequired(true);
+	 //        options.addOption(port);
+	        
+	 //        Option log_id = new Option("l", "logid", true, "log id");
+	 //        log_id.setRequired(true);
+	 //        options.addOption(log_id);
+	        
+	 //        Option retries = new Option("r", "retries", true, "numero de intentos");
+	 //        options.addOption(retries);
+	        
+	 //        Option trace = new Option("t", "trace_every", true, "cada cuantos archivos se debe reportar");
+	 //        options.addOption(trace);
+
+	 //        CommandLineParser parser = new GnuParser();
+	 //        HelpFormatter formatter = new HelpFormatter();
+	 //        CommandLine cmd = null;
+
+	 //        try {
+	 //            cmd = parser.parse(options, args);
+	 //        } catch (ParseException e) {
+	 //            System.out.println(e.getMessage());
+	 //            formatter.printHelp("utility-name", options);
+	 //            System.exit(1);
+	 //        }
+	 //        String wrapper_filename = "python_wrapper.py";
+		// 	String filename = cmd.getOptionValue("input");
+		// 	String option_logid = cmd.getOptionValue("logid");
+		// 	String option_port = cmd.getOptionValue("port");
+		// 	int option_retries = 1;
+		// 	int option_trace_every = 100;
+		// 	if (cmd.getOptionValue("retries") != null) {
+		// 		option_retries = Integer.parseInt(cmd.getOptionValue("retries"));
+		// 	}
+		// 	if (cmd.getOptionValue("trace_every") != null) {
+		// 		option_trace_every = Integer.parseInt(cmd.getOptionValue("trace_every"));
+		// 	}
+		// 	String[] option_args = cmd.getArgs();
+		// 	String MESSAGE_EXECUTING = "Ejecutando " + filename;
+		// 	//String MESSAGE_ENDED = filename + " ha terminado correctamente.";
+		// 	PythonInterpreter pyInterp = new PythonInterpreter();
+		// 	try {
+		// 		pyInterp.set("OPTION_LOG_ID", option_logid);
+		// 		pyInterp.set("OPTION_PORT", option_port);
+		// 		pyInterp.set("OPTION_TRACE_EVERY", option_trace_every);
+		// 		pyInterp.set("OPTION_FILENAME", filename);
+		// 		pyInterp.set("OPTION_RETRIES", option_retries);
+		// 		pyInterp.set("OPTION_ARGS", option_args);
+		// 		log("INFO", MESSAGE_EXECUTING);
+		// 		pyInterp.execfile(wrapper_filename);
+		//     }
+		// 	catch (Exception e) {
+		// 		log("ERROR", "Error en entorno Jython. Detalle:\n" + e);
+		// 	}
+		// 	pyInterp.close();
+		// }
 }

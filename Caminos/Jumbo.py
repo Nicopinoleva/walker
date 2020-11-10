@@ -44,6 +44,7 @@ obj.passid = "password"
 obj.delay_days_tolerance = 1
 if EXTRA != "none" and get_weekday_as_int() == int(AVANZAR):
     obj.enable_extraDownload = True
+    obj.extraDownload = EXTRA
 obj.enable_newBBR = True
 obj.enable_recaptcha = True
 obj.site_key = "6LcVYtEUAAAAALlg52jHvKf9IM8n2FvJfqHSyqxg"

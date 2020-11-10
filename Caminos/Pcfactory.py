@@ -1,6 +1,7 @@
 set_imagepath("/Sikulix/Imgs/PCFactory/")
 set_download_directory("/home/seluser/Downloads/")
 set_screenshot_directory("/home/seluser/Screenshots/")
+
 def make_filename(*args, **kwargs):
 	kwargs.setdefault("separator", "_")
 	result = ""

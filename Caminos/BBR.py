@@ -23,6 +23,7 @@ class BBR:
         self.marca = ""
         self.date1 = ""
         self.date2 = ""
+        self.extraDownload = ""
         self.checker_data = {}
         self.checker_data["mouse_move"] = (240, -5) #(x, y)
         self.checker_data["screenshot_save_crop"] = (0, 0, 70, 15) #(xoffset, yoffset, w, h)
@@ -482,6 +483,7 @@ class BBR:
     def downloadSpecial(self,down_num,proveedor,extra_down=0):
         image_click("comercial.png")
         image_click("participacion.png")
+        time_wait(2000)
         if proveedor >= 0:
             image_hover("selec_proveedor.png")
             mouse_move(200,0)
@@ -519,7 +521,7 @@ class BBR:
         print(temp)
         for x in invalid:
             if x in temp:
-                temp = temp.split(x)[0]
+                temp = "SUBRUBRO\n"
         print(temp[1])
         name = temp[:-1]
         if not name[1].isupper():
@@ -557,14 +559,14 @@ class BBR:
     def extraDownloads(self, proveedor = -1):
         subRubroDict = {}
         rubro = ""
-        if "," in EXTRA:
-            temp = EXTRA.split(",")
+        if "," in self.extraDownload:
+            temp = self.extraDownload.split(",")
             rubro = temp[0]
             for x in range (1,len(temp)):
                 temp2 = temp[x].split("+")
                 subRubroDict[temp2[0]] = temp2[1]
         else:
-            rubro = EXTRA
+            rubro = self.extraDownload
         file_start = matrix_get("EXTRA_CYCLE_COUNT")+1
         # print("El ciclo principal parte de {}".format(file_start))
         for x in range(file_start,int(rubro)+1):
@@ -590,6 +592,7 @@ class BBR:
             self.login()
             if self.custom_date:
                 # while(True):
+                #     get_history()
                 pass
             else:
                 if self.enable_checker:

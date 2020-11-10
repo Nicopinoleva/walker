@@ -81,20 +81,19 @@ def chain_run(counter):
 	if not matrix_get("SSHOT_2"):
 		obj.screenshot_2(counter)
 		matrix_set("SSHOT_2", True)
-	if matrix_get("DOWNLOAD_COUNT") == 0:
+	if not matrix_get("SALES"):
 		obj.get_ventas(counter)
 	time_wait(5000)
-	if matrix_get("DOWNLOAD_COUNT") == 1:
+	if not matrix_get("STOCK"):
 		obj.get_inventario(counter)
 	close_explorer()
 	matrix_set("CYCLE_COUNT",counter+1)
-	print(matrix_get("CYCLE_COUNT"))
 
 #Heinz
 obj = BBR()
 obj.PORTAL = "UNIMARC"
 obj.passid = "password"
-obj.enable_date_inverse = True
+obj.enable_extra_calendar = True
 obj.account_procedure = account_special
 obj.ventas_procedure = boton_azul_procedure
 obj.inventario_procedure = boton_verde_procedure
@@ -114,5 +113,7 @@ for x in range(counter,len(sigla)):
     obj.run(x)
     matrix_set("SSHOT_1",False)
     matrix_set("SSHOT_2",False)
+    matrix_set("SALES",False)
+    matrix_set("STOCK",False)
     matrix_set("DOWNLOAD_COUNT",0)
 obj.finish_procedure()

@@ -9,6 +9,9 @@ if "-" in NOMBRE_EMPRESA:
     sigla = sufijo[1].split("+")
 else:
     sigla = NOMBRE_EMPRESA.split("+")
+
+if "-" in EXTRA:
+    extraDownload = EXTRA.split("-")
     
 def marca_venta_inventario_procedure(num):
     image_hover("selec_proveedor.png")
@@ -67,10 +70,10 @@ def chain_run(counter):
     if not matrix_get("SSHOT_2"):
         obj.screenshot_2(counter)
         matrix_set("SSHOT_2", True)
-    if matrix_get("DOWNLOAD_COUNT") == 0:
+    if not matrix_get("SALES"):
         obj.get_ventas(counter)
     time_wait(5000)
-    if matrix_get("DOWNLOAD_COUNT") == 1:
+    if not matrix_get("STOCK"):
         obj.get_inventario(counter)
     if obj.enable_extraDownload:
         obj.extraDownloads(proveedor=int(sigla[counter][-2:]))
@@ -79,7 +82,7 @@ def chain_run(counter):
 
 #Heinz
 obj = BBR()
-obj.PORTAL = "JUMBO"
+obj.PORTAL = "JUMBO_SI"
 obj.passid = "password"
 obj.delay_days_tolerance = 1
 obj.enable_recaptcha = True
@@ -95,8 +98,6 @@ obj.marca_inv_procedure = marca_venta_inventario_procedure
 #obj.sshot1_procedure = marca_ventas_procedure
 #obj.sshot2_procedure = marca_ventas_procedure
 obj.finish_procedure = finish_method
-if EXTRA != "none" and get_weekday_as_int() == int(AVANZAR):
-    obj.enable_extraDownload = True
 obj.checker_data["mouse_move"] = (115, -10)
 obj.checker_data["screenshot_save_crop"] = (0, 0, 70, 15)
 obj.run = chain_run
@@ -105,10 +106,15 @@ if "-" in NOMBRE_EMPRESA:
     obj.enable_customRename = True
     obj.marca = sufijo[0]
 for x in range(counter,len(sigla)):
+    if EXTRA != "none" and get_weekday_as_int() == int(AVANZAR):
+        obj.enable_extraDownload = True
+        obj.extraDownload = extraDownload[x]
     obj.SIGLA = sigla[x][:2]
     obj.run(x)
     close_explorer()
     matrix_set("SSHOT_1",False)
     matrix_set("SSHOT_2",False)
+    matrix_set("SALES",False)
+    matrix_set("STOCK",False)
     matrix_set("DOWNLOAD_COUNT",0)
 obj.finish_procedure()
