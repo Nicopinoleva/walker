@@ -4,6 +4,13 @@ set_screenshot_directory("/home/seluser/Screenshots/")
 
 portal = "RIPLEY"
 
+def make_filename(*args, **kwargs):
+    kwargs.setdefault("separator", "_")
+    result = ""
+    for arg in args:
+        result += arg + kwargs["separator"]
+    return result[:-1]
+
 def login():
     image_click("loguser.png")
     press(TAB)
