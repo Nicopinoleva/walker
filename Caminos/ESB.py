@@ -15,6 +15,7 @@ class ESB:
         open_explorer(URL_PORTAL)
         log_sshot = "{}_{}".format("PRELOGIN", self.PORTAL)
         image_click("username.png")
+        time_wait(5000)
         type(USERNAME)
         press(TAB)
         time_wait(5000)

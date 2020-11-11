@@ -1,0 +1,42 @@
+set_imagepath("/Sikulix/Imgs/Walmart/")
+set_download_directory("/home/seluser/Downloads/")
+set_screenshot_directory("/home/seluser/Screenshots/")
+
+def login():
+    open_explorer(URL_PORTAL)
+    image_click("Username.png")
+    type(USERNAME)
+    time_wait(5000)
+    press(TAB)
+    type(PASSWORD)
+    press(TAB)
+    press(ENTER)
+    time_wait(5000)
+    result = image_wait_multiple("Credentials.png","Credenciales.png","Expired.png","Retail.png","Retail_new.png")
+    if result in ["Credentials.png","Credenciales.png"]:
+        send_action_simple(1,1)
+        sname = "{}_{}".format("LOGIN", "WALMART")
+        screenshot_save(sname)
+        tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
+        tcp_send("FINISH1")
+        manual_finish()
+    elif result == "Expired.png":
+        send_action_simple(1,7)
+        sname = "{}_{}".format("LOGINEXP", "WALMART")
+        screenshot_save(sname)
+        tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
+        tcp_send("FINISH7")
+        manual_finish()
+    elif result in["Retail.png","Retail_new.png"]:
+        send_action_simple(1,0)
+        tcp_send("FINISH0")
+        manual_finish()
+    else:
+        send_action_simple(9, 3)
+        screenshot_save("Portal_didnt_load")
+        tcp_send("SNDPIC1 /home/seluser/Screenshots/Portal_didnt_load.png")
+        tcp_send("FINISH3")
+        manual_finish()
+
+use_firefox(True)
+login()

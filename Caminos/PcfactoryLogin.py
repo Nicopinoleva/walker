@@ -44,8 +44,10 @@ portal = "PCFACTORY"
 @pcfactory_generic_login(incorrect="badlogin.png", correct="ventas.png", portal=portal)
 def login():
 	image_click("loguser.png")
+	time_wait(5000)
 	type(USERNAME)
 	press(TAB)
+	time_wait(5000)
 	type(PASSWORD)
 	press(ENTER)
 
