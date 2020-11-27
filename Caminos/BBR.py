@@ -242,7 +242,8 @@ class BBR:
                     press(ENTER)
         press(TAB)
 
-    def date_click_dynamic(self, date, x=0, isSecondCalendar = False ,isextraCalendar = False):
+    def date_click_dynamic(self, date, x=0, isSecondCalendar = False, isextraCalendar = False):
+        print("Dia --> {}, Mes--> {}, Año-->{}".format(date[6:],date[4:6],date[:4]))
         hoy = self.issued_day
         if isextraCalendar:
             image_click("dias.png")
@@ -263,14 +264,29 @@ class BBR:
             for x in range(hoy.month - int(date[4:6])):
                 time_wait(100)
                 image_click("left.png")
-        mouse_move(0,15)
-        click()
+        if int(date[4:6]) == hoy.month:
+            image_click("right.png")
+        else:
+            mouse_move(0,15)
+            click() 
         if isSecondCalendar:
             self.date_go_first()
+            if int(date[4:6]) == hoy.month and self.enable_newBBR:
+                press(RIGHT)
+        if isextraCalendar and not self.enable_newBBR:
+            self.date_go_first()
+        time_wait(100)
+        if int(date[6:]) == 1 and not self.enable_newBBR:
+            press(RIGHT)
+            time_wait(100)
+            press(LEFT)
         for x in range(int(date[6:])-1):
             time_wait(100)
             press(RIGHT)
-        press(ENTER)
+        if self.enable_newBBR:
+            press(ENTER)
+        else:
+            press(TAB)
 
     def check_if_updated(self):
         if image_appeared("cerrar.png"):
@@ -349,6 +365,13 @@ class BBR:
             send_action_simple(3, 0)
             matrix_set("DOWNLOAD_STARTED",True)
         self.waiter()
+        if self.custom_date:
+            if self.enable_customRename:
+                name = RUT_EMPRESA +  "_" + self.date1 + "_" + self.date2 + "_" +  self.marca + "_" + self.PORTAL + "_" + self.SIGLA +"_B2B_MENSUAL"
+            else:
+                name = RUT_EMPRESA +  "_" + self.date1 + "_" + self.date2  + "_" + self.SIGLA +  "_" + self.PORTAL + "_B2B_MENSUAL"
+            screenshot_save_crop(name,11,230,1325,700)
+            tcp_send("SNDSHO1 " + str(get_downloads_count()) + "    '" + name + ".png'")
         image_click("boton_azul.png")
         if self.enable_newBBR:
             image_click("fuente_calendario.png")
@@ -523,7 +546,7 @@ class BBR:
             if x in temp:
                 temp = "SUBRUBRO\n"
         print(temp[1])
-        name = temp[:-1]
+        name = temp[:-5]
         if not name[1].isupper():
             name = "SUBRUBRO"
         print(name)
@@ -538,7 +561,7 @@ class BBR:
             image_wait("cerrar.png")
             press(TAB)
             time_wait(500)
-            for x in range(3):
+            for x in range(1):
                 press(DOWN)
                 time_wait(500)
             press(TAB)
@@ -550,13 +573,14 @@ class BBR:
             time_wait(500)
             press(ENTER)
             image_wait("dlprompt.png")
-            type(get_download_directory() + self.marca + str(name) + self.SIGLA + str(down_num) + str(extra_down+1))
+            type(get_download_directory() + self.marca + "-" + str(name) + "-" + self.SIGLA + str(down_num) + str(extra_down+1))
             image_click("save.png")
             time_wait(4000)
-            tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + self.marca + str(name) + self.SIGLA + str(down_num) + str(extra_down+1) + self.files_downloaded_extension + "'")
+            tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + self.marca + "-" + str(name) + "-" + self.SIGLA + str(down_num) + str(extra_down+1) + self.files_downloaded_extension + "'")
             image_click("cerrar.png")
                 
     def extraDownloads(self, proveedor = -1):
+        print("La sigla es {}, y la marca es {}".format(self.SIGLA,self.marca))
         subRubroDict = {}
         rubro = ""
         if "," in self.extraDownload:
@@ -584,19 +608,29 @@ class BBR:
 
     def run(self):
         if not self.login_verify:
-            if DATE != '-':
+            if len(DATE) != 1:
                 self.custom_date = True
                 temp = DATE.split("-")
                 self.date1 = temp[0]
                 self.date2 = temp[1]
             self.login()
+            if self.enable_checker:
+                self.check_if_updated()
             if self.custom_date:
-                # while(True):
-                #     get_history()
-                pass
+                self.get_ventas()
+                while(True):
+                    newDate = tcp_send_recieve("ENDHIS")
+                    print(len(newDate))
+                    if len(newDate) < 6:
+                        break
+                    else:
+                        temp = newDate.split("-")
+                        self.date1 = temp[0][2:]
+                        self.date2 = temp[1]
+                        self.get_ventas()
+                close_explorer()
+                tcp_send("FINISH")
             else:
-                if self.enable_checker:
-                    self.check_if_updated()
                 if not matrix_get("SSHOT_1"):
                     self.screenshot_1()
                     matrix_set("SSHOT_1", True)

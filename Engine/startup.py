@@ -13,29 +13,30 @@ def value_or_zero(lst, index):
 		return lst[index]
 	return "0"
 
-if len(OPTION_ARGS) < 10:
-	raise TooFewArgumentsException("Tiene que enviar al menos 10 argumentos.")
-OPTION_FILENAME = OPTION_ARGS[0]
-RUT_EMPRESA = OPTION_ARGS[1]
-USERNAME = OPTION_ARGS[2]
-PASSWORD = OPTION_ARGS[3]
-NOMBRE_EMPRESA = OPTION_ARGS[4]
-URL_PORTAL = OPTION_ARGS[5]
-OPTION_HOST = OPTION_ARGS[6]
-OPTION_LOG_ID = OPTION_ARGS[7]
-OPTION_RETRIES = int(OPTION_ARGS[8])
-TIMEOUT = OPTION_ARGS[9]
-NUM_LOCALES = value_or_zero(OPTION_ARGS, 10)
-AVANZAR = value_or_zero(OPTION_ARGS, 11)
-OPTION_TRACE_EVERY  = value_or_zero(OPTION_ARGS, 12)
-if OPTION_TRACE_EVERY == 0:
-	OPTION_TRACE_EVERY = 10
-EXTRA = OPTION_ARGS[13]
-NUM_SSHOTS = OPTION_ARGS[14]
-DATE = "-"
-MATRIX = [str(char) for char in OPTION_ARGS[15]]
+# if len(OPTION_ARGS) < 10:
+# 	raise TooFewArgumentsException("Tiene que enviar al menos 10 argumentos.")
 
-IMAGE_BASED_FUNCTIONS_TIMEOUT = int(TIMEOUT) #Timeout hook
+
+
+# OPTION_FILENAME = OPTION_ARGS[0]
+# RUT_EMPRESA = OPTION_ARGS[1]
+# USERNAME = OPTION_ARGS[2]
+# PASSWORD = OPTION_ARGS[3]
+# NOMBRE_EMPRESA = OPTION_ARGS[4]
+# URL_PORTAL = OPTION_ARGS[5]
+# OPTION_HOST = OPTION_ARGS[6]
+# OPTION_LOG_ID = OPTION_ARGS[7]
+# OPTION_RETRIES = int(OPTION_ARGS[8])
+# TIMEOUT = OPTION_ARGS[9]
+# NUM_LOCALES = value_or_zero(OPTION_ARGS, 10)
+# AVANZAR = value_or_zero(OPTION_ARGS, 11)
+# OPTION_TRACE_EVERY  = value_or_zero(OPTION_ARGS, 12)
+# if OPTION_TRACE_EVERY == 0:
+# 	OPTION_TRACE_EVERY = 10
+# EXTRA = OPTION_ARGS[13]
+# NUM_SSHOTS = OPTION_ARGS[14]
+# DATE = OPTION_ARGS[15]
+# MATRIX = [str(char) for char in OPTION_ARGS[16]]
 
 print "Username:", USERNAME
 print "Password:", PASSWORD
@@ -149,7 +150,7 @@ def default_image_missing_handler(e):
 		tcp_send("DUERMO"+ str(get_downloads_count()))
 	common_abort_procedure()
 
-tcp_connect(OPTION_HOST.encode("utf-8"))
+# tcp_connect(OPTION_HOST.encode("utf-8"))
 
 if not "Login" in OPTION_FILENAME:
 #Registro variables guardas en el agente
@@ -168,7 +169,6 @@ if not "Login" in OPTION_FILENAME:
         matrix_register("FILE_5_DOWNLOADED")
         matrix_register("ALL_RUNNING")
         matrix_register("FILES_DOWNLOADED")
-
     else:
         matrix_register("INICIADO")
         matrix_register("LOGIN_CORRECT")

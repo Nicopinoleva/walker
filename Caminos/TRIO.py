@@ -175,6 +175,7 @@ class TRIO:
         image_click("Save.png")
         time_wait(2000)
         tcp_send("SNDFIL" + str(get_downloads_count()) +"   '" + filename + ".csv'")
+        matrix_set("DOWNLOAD_COUNT",matrix_get("DOWNLOAD_COUNT")+1)
 
     def screenshots(self):
         if matrix_get("SSHOT_1"):
@@ -282,7 +283,7 @@ class TRIO:
                 if not matrix_get("DOWNLOAD_STARTED"):
                     self.get_to_dashboard()
                     self.dashboard()
-                self.get_files(0,get_downloads_count(),int(NUM_LOCALES))
+                self.get_files(0,matrix_get("DOWNLOAD_COUNT"),int(NUM_LOCALES))
             tcp_send("FINISH0")
             close_explorer()
         else:

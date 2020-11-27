@@ -79,12 +79,6 @@ if 'WEBDRIVER_DIRECTORY' in locals():
 	_walker.set_webdriver_directory(WEBDRIVER_DIRECTORY)
 if 'STARTUP_FILE' not in locals():
 	raise Exception("No se ha provisto un archivo de startup.")
-# ==== PROGRAM TIMEOUTS ====
-
-IMAGE_BASED_FUNCTIONS_TIMEOUT = 30 #In seconds
-IMAGE_WAIT_TIMEOUT = 60 * 1 #In seconds
-IMAGE_GONE_WAIT_TIMEOUT = 60 * 1 #In seconds
-IMAGE_APPEARED_TIMEOUT = 5 #In seconds
 
 # ==== Image based decorator exception handler ====
 
@@ -97,8 +91,6 @@ def image_based_function(func):
 		except org.sikuli.script.FindFailed:
 			raise ImageNotPresentException(args[0])
 	return inner
-
-# === Java function wrappers ===
 
 # ==== Logging functions ====
 
@@ -176,66 +168,6 @@ def close_explorer():
 	_EXPLORER_OPENED = False
 	_walker.close_explorer()
 
-# === MOUSE FUNCTIONS ===
-
-@image_based_function
-def image_hover(img, timeout=IMAGE_BASED_FUNCTIONS_TIMEOUT):
-	score = _walker.hover(img, timeout)
-	log("INFO", "hovered {}. score: {}".format(img, str(score)))
-
-@image_based_function
-def image_click(img, timeout=IMAGE_BASED_FUNCTIONS_TIMEOUT):
-	score = _walker.image_click(img, timeout)
-	log("INFO", "clicked {}. score: {}".format(img, str(score)))
-
-@image_based_function
-def image_double_click(img, timeout=IMAGE_BASED_FUNCTIONS_TIMEOUT):
-	score = _walker.double_click(img, timeout)
-	log("INFO", "double clicked {}. score: {}".format(img, str(score)))
-
-@image_based_function
-def image_right_click(img, timeout=IMAGE_BASED_FUNCTIONS_TIMEOUT):
-	score = _walker.right_click(img, timeout)
-	log("INFO", "right clicked {}. score: {}".format(img, str(score)))
-
-def mouse_move(x, y):
-	_walker.mouse_move(x, y)
-	log("INFO", "mouse moved " + str(x) + " " + str(y))
-
-def click():
-	_walker.click()
-	log("INFO", "clicked (positional)")
-
-def mouse_get_x():
-	result = _walker.mouse_get_x()
-	log("INFO", "got mouse x = " + str(result))
-	return result
-def mouse_get_y():
-	result = _walker.mouse_get_y()
-	log("INFO", "got mouse y = " + str(result))
-	return result
-
-def mouse_hold():
-	_walker.mouse_down(MOUSE_LEFT)
-	log("INFO", "mouse_hold")
-def mouse_release():
-	_walker.mouse_up(MOUSE_LEFT)
-	log("INFO", "mouse_release")
-def mouse_right_hold():
-	_walker.mouse_down(MOUSE_RIGHT)
-	log("INFO", "mouse_right_hold")
-def mouse_right_release():
-	_walker.mouse_up(MOUSE_RIGHT)
-	log("INFO", "mouse_right_release")
-
-# -mouse shortcuts-
-
-def mouse_select(x, y):
-	#Selecciona una region relativa a la posicion del mouse, moviendose (x, y) pixeles.
-	mouse_hold()
-	mouse_move(x, y)
-	mouse_release()
-
 # === KEYBOARD FUNCTIONS ===
 
 def _log_key(templatestr, key):
@@ -273,54 +205,6 @@ def copy():
 def paste():
 	press_with_ctr("v")
 
-# === WAITING FUNCTIONS ===
-
-def time_wait(millis):
-	secs = millis / 1000.0
-	log("INFO", "sleeping for " + str(secs) + "s")
-	time.sleep(secs)
-	log("INFO", "waited time " + str(secs) + "s")
-
-@image_based_function
-def image_wait(img, timeout=IMAGE_WAIT_TIMEOUT):
-	log("INFO", "waiting for " + img)
-	#Espera hasta que aparezca la imagen img en pantalla. Si no aparece antes del timeout, arroja ImageNotPresent Exception.
-	_walker.image_wait(img, timeout)
-	log("INFO", "waiting success")
-
-@image_based_function
-def image_wait_multiple(*args, **kwargs):
-	#Espera hasta que alguna de las imagenes aparezca, y retorna el string que contiene la imagen que aparecio.
-	#Si ninguna aparece antes del timeout, arroja un string vacio.
-
-	# Example: image_wait_multiple("badlogin.png", "screenloaded.png", "unavailable.png")
-	log("INFO", "waiting for " + str(args))
-	kwargs.setdefault("timeout", IMAGE_WAIT_TIMEOUT)
-	result = _walker.image_wait_multiple(args, kwargs["timeout"])
-	log("INFO", "waiting success, found {}".format(result))
-	return result
-
-@image_based_function
-def image_gone_wait(img, timeout=IMAGE_GONE_WAIT_TIMEOUT):
-	#Espera hasta que la imagen img se haya ido de la pantalla. Si esto no ocurre antes del timeout,
-	#arroja ImageNotGone Exception (implemented in Java).
-	log("INFO", "waiting for gone " + img)
-	_walker.image_gone_wait(img, timeout)
-	log("INFO", "gone success " + img)
-
-# === BOOLEAN FUNCTIONS ===
-
-@image_based_function
-def image_appeared(img, timeout=IMAGE_APPEARED_TIMEOUT):
-	#Retorna true si la imagen img aparecio en pantalla. Si no ocurre antes del timeout, arroja false.
-	#El timeout debe ser corto
-	result = _walker.image_appeared(img, timeout)
-	if result:
-		log("INFO", "image appeared " + img)
-	else:
-		log("INFO", "image not appeared " + img)
-	return result
-
 # === TCP FUNCTIONS ===
 
 def tcp_connect(host):
@@ -342,6 +226,12 @@ def tcp_close():
 	log("INFO", "tcp_close ")
 	_walker.tcp_close()
 
+def tcp_send_recieve(message):
+	log("INFO", "tcp_send " + message)
+	returned_message = _walker.tcp_send_recieve(message)
+	log("INFO", "In Python, the returned string is: " + returned_message)
+	return returned_message
+	
 # === SCREENSHOT FUNCTIONS ===
 
 def screenshot_save(filename):
@@ -367,6 +257,7 @@ def captcha_sb():
         #resuelve el captcha para los portales SB(Preunic,Salcobrand)
         log("INFO", "Resolviendo captcha SB")
         _walker.captcha_sb()
+
 def captcha_google(SITE_KEY):
         #Resuelve recaptcha google
         url = _walker.get_url()
@@ -379,6 +270,7 @@ def captcha_google(SITE_KEY):
         job.join()
         log("INFO", "Respuesta desde anti-captcha: " + job.get_solution_response())
         _walker.recaptchaGoogle(job.get_solution_response(),recaptcha_xpath)
+
 # ==== DATA RETRIEVAL ====
 
 def get_download_directory():
@@ -482,12 +374,159 @@ def run_script(filename):
 def createBoundMethod(func, obj):
 	return types.MethodType(func, obj, obj.__class__)
 
+# ==== DATA RETRIEVAL ====
+tcp_connect(OPTION_ARGS[1].encode("utf-8"))
+OPTION_FILENAME = OPTION_ARGS[0]
+OPTION_ARGS = get_parameters()
+
+# ==== PARAMETER SET ====
+for x in range (len(OPTION_ARGS)):
+	if x == 0:
+		print("Parameter {} --> {}".format(x,OPTION_ARGS[x][2:]))
+	else:
+		print("Parameter {} --> {}".format(x,OPTION_ARGS[x]))
+RUT_EMPRESA = OPTION_ARGS[0][2:]
+USERNAME = OPTION_ARGS[1]
+PASSWORD = OPTION_ARGS[2]
+NOMBRE_EMPRESA = OPTION_ARGS[3]
+URL_PORTAL = OPTION_ARGS[4]
+OPTION_LOG_ID = OPTION_ARGS[5]
+OPTION_RETRIES = int(OPTION_ARGS[6])
+TIMEOUT = OPTION_ARGS[7]
+NUM_LOCALES = OPTION_ARGS[8]
+AVANZAR = OPTION_ARGS[9]
+OPTION_TRACE_EVERY  = OPTION_ARGS[10]
+EXTRA = OPTION_ARGS[11]
+NUM_SSHOTS = OPTION_ARGS[12]
+DATE = OPTION_ARGS[13]
+MATRIX = [str(char) for char in OPTION_ARGS[14]]
+
+IMAGE_BASED_FUNCTIONS_TIMEOUT = int(TIMEOUT) #In seconds
+if len(DATE) > 3:
+	IMAGE_WAIT_TIMEOUT = int(TIMEOUT)*3 #In seconds
+else:
+	IMAGE_WAIT_TIMEOUT = int(TIMEOUT)
+IMAGE_GONE_WAIT_TIMEOUT = int(TIMEOUT) #In seconds
+IMAGE_APPEARED_TIMEOUT = int(TIMEOUT)/6 #In seconds
+
 # ==== EXTERNAL-POWERED FUNCTIONS ====
 
 def get_string_from_image(img):
 	import subprocess
 	output = subprocess.check_output(["python", ABSOLUTE_PATH + "tesseract.py", img])
 	return output
+
+# === MOUSE FUNCTIONS ===
+
+@image_based_function
+def image_hover(img, timeout=IMAGE_BASED_FUNCTIONS_TIMEOUT):
+	score = _walker.hover(img, timeout)
+	log("INFO", "hovered {}. score: {}".format(img, str(score)))
+
+@image_based_function
+def image_click(img, timeout=IMAGE_BASED_FUNCTIONS_TIMEOUT):
+	
+	score = _walker.image_click(img, timeout)
+	log("INFO", "clicked {}. score: {}".format(img, str(score)))
+
+@image_based_function
+def image_double_click(img, timeout=IMAGE_BASED_FUNCTIONS_TIMEOUT):
+	score = _walker.double_click(img, timeout)
+	log("INFO", "double clicked {}. score: {}".format(img, str(score)))
+
+@image_based_function
+def image_right_click(img, timeout=IMAGE_BASED_FUNCTIONS_TIMEOUT):
+	score = _walker.right_click(img, timeout)
+	log("INFO", "right clicked {}. score: {}".format(img, str(score)))
+
+def mouse_move(x, y):
+	_walker.mouse_move(x, y)
+	log("INFO", "mouse moved " + str(x) + " " + str(y))
+
+def click():
+	_walker.click()
+	log("INFO", "clicked (positional)")
+
+def mouse_get_x():
+	result = _walker.mouse_get_x()
+	log("INFO", "got mouse x = " + str(result))
+	return result
+def mouse_get_y():
+	result = _walker.mouse_get_y()
+	log("INFO", "got mouse y = " + str(result))
+	return result
+
+def mouse_hold():
+	_walker.mouse_down(MOUSE_LEFT)
+	log("INFO", "mouse_hold")
+def mouse_release():
+	_walker.mouse_up(MOUSE_LEFT)
+	log("INFO", "mouse_release")
+def mouse_right_hold():
+	_walker.mouse_down(MOUSE_RIGHT)
+	log("INFO", "mouse_right_hold")
+def mouse_right_release():
+	_walker.mouse_up(MOUSE_RIGHT)
+	log("INFO", "mouse_right_release")
+
+# -mouse shortcuts-
+
+def mouse_select(x, y):
+	#Selecciona una region relativa a la posicion del mouse, moviendose (x, y) pixeles.
+	mouse_hold()
+	mouse_move(x, y)
+	mouse_release()
+
+# === WAITING FUNCTIONS ===
+
+def time_wait(millis):
+	secs = millis / 1000.0
+	log("INFO", "sleeping for " + str(secs) + "s")
+	time.sleep(secs)
+	log("INFO", "waited time " + str(secs) + "s")
+
+@image_based_function
+def image_wait(img, timeout=IMAGE_WAIT_TIMEOUT):
+	
+	log("INFO", "waiting for " + img)
+	#Espera hasta que aparezca la imagen img en pantalla. Si no aparece antes del timeout, arroja ImageNotPresent Exception.
+	_walker.image_wait(img, timeout)
+	log("INFO", "waiting success")
+
+@image_based_function
+def image_wait_multiple(*args, **kwargs):
+	#Espera hasta que alguna de las imagenes aparezca, y retorna el string que contiene la imagen que aparecio.
+	#Si ninguna aparece antes del timeout, arroja un string vacio.
+
+	# Example: image_wait_multiple("badlogin.png", "screenloaded.png", "unavailable.png")
+	
+	log("INFO", "waiting for " + str(args))
+	kwargs.setdefault("timeout", IMAGE_WAIT_TIMEOUT)
+	result = _walker.image_wait_multiple(args, kwargs["timeout"])
+	log("INFO", "waiting success, found {}".format(result))
+	return result
+
+@image_based_function
+def image_gone_wait(img, timeout=IMAGE_GONE_WAIT_TIMEOUT):
+	#Espera hasta que la imagen img se haya ido de la pantalla. Si esto no ocurre antes del timeout,
+	#arroja ImageNotGone Exception (implemented in Java).
+	
+	log("INFO", "waiting for gone " + img)
+	_walker.image_gone_wait(img, timeout)
+	log("INFO", "gone success " + img)
+
+# === BOOLEAN FUNCTIONS ===
+
+@image_based_function
+def image_appeared(img, timeout=IMAGE_APPEARED_TIMEOUT):
+	#Retorna true si la imagen img aparecio en pantalla. Si no ocurre antes del timeout, arroja false.
+	#El timeout debe ser corto
+	result = _walker.image_appeared(img, timeout)
+	if result:
+		log("INFO", "image appeared " + img)
+	else:
+		log("INFO", "image not appeared " + img)
+	return result
 
 # ==== CUSTOM FUNCTIONS LOADING ====
 

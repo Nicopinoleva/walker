@@ -1,0 +1,26 @@
+# V1.00.05
+# agent startup
+#
+#  $1 : dir_base
+#  $2 : bus_ipport
+#  $3 : log_id
+#  $4 : docker_id
+#  $5 : test_mode
+#
+if [ x$1 = x ]
+then
+  echo PANIC - No parameters at all
+else
+  export HOME_ETC=$1/etc
+  export HOME_LOG=$1/log
+  echo $(date) 1:$1 2:$2 3:$3 4:$4 5:$5| tee -a $HOME_LOG/agente.log
+  if [ x$3 = x -o x$2 = x -o x$1 = x ]
+  then
+    echo PANIC - Missing parameter | tee -a $HOME_LOG/agente.log
+  elif [ x$4 = x ]
+  then
+    $1/bin/agente $2 $5$3 crypt
+  else
+    $1/bin/agente $2 $5$3:$4 crypt
+  fi
+fi

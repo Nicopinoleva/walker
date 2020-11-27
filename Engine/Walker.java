@@ -469,12 +469,12 @@ public class Walker {
 		tcp_connect(args[0])
 		String[] arguments = getArguments();
         String filename = arguments[0];
-		String MESSAGE_EXECUTING = "Ejecutando " + filename;
+		// String MESSAGE_EXECUTING = "Ejecutando " + filename;
 		PythonInterpreter pyInterp = new PythonInterpreter();
 		try {
 			pyInterp.set("OPTION_ARGS", arguments);
 			pyInterp.set("ABSOLUTE_PATH", abspath);
-			log("INFO", MESSAGE_EXECUTING);
+			// log("INFO", MESSAGE_EXECUTING);
 			pyInterp.execfile(wrapper_filename);
 	    }
 		catch (Exception e) {

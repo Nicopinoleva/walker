@@ -1,0 +1,36 @@
+# Parametros para ejecucion local (sin bus)
+#
+ <rut> rut </rut>               # RUT empresa
+ <ena> sigla </ena>             # Sigla empresa
+ <usr> usuario </usr>"          # Usuario portal
+ <psw> password </psw>          # Password
+ <url> urlPortal </url>         # URL portal
+ <pid> portalID </pid>          # Portal id
+ <pna> portal </pna>            # Portal name
+ <cna> client </cna>            # Client name
+ <xtr> none </xtr>              # Extra information
+ <ssn> 2 </ssn>                 # Screenshots number
+ <stn> 2 </stn>                 # Stores number
+ <hdi> 31 </hdi>                # History days
+ <hda> 01012020-27032020 </hda> # History dates
+ <ips> 104.237.140.131 </ips>   # Worker0 server ip
+ <jar> /Sikulix/Engine/Walker.jar /Sikulix/******.py </jar>  # road
+# NO modificar
+ <try> 4 </try>                # Reintentos
+ <tou> 30 </tou>               # Portal timeout 
+ <ava> 1 </ava>                # Avanzar 
+ <fre> 1 </fre>                # Frecuencia reporte
+ <rus> seluser </rus>          # Remote user
+ <fip> 22122 </fip>            # Files server port
+ <shp> 22122 </shp>            # Sshot server port
+ <spo> 22122 </spo>            # ssh port
+ <met> 900 </met>              # Max exec time
+ <mtx> 25 </mtx>               # Matrix size
+ <mtd> 0000000000000000000000000 </mtd>   # Matrix data
+ <agp> 127.0.0.1:25005 </agp>             # Agente ip:port
+ <jpa> /usr/local/Java13/bin </jpa>       # Java path
+ <dpa> /home/seluser/Downloads  </dpa>    # Download path
+ <spa> /home/seluser/Screenshots </spa>   # Screenshot path
+ <fid> walk@127.0.0.1:/home/seluser/WALKER/files </fid>  # files dest
+ <shd> walk@127.0.0.1:/home/seluser/WALKER/sshot </shd>  # sshot dest
+
