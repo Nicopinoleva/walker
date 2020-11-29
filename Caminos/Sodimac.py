@@ -151,14 +151,14 @@ def multi_run():
         obj.get_to_dashboard()
         obj.dashboard()
     if get_downloads_count() < 144:
-        obj.get_files(62,matrix_get("DOWNLOAD_COUNT"),int(NUM_LOCALES)-17)
+        obj.get_files(62,get_downloads_count(),int(NUM_LOCALES)-17)
     elif get_downloads_count() < 168:
-        obj.get_files(17,matrix_get("DOWNLOAD_COUNT")-144,int(NUM_LOCALES)-77)
+        obj.get_files(17,get_downloads_count()-144,int(NUM_LOCALES)-77)
     elif get_downloads_count() < 176:
-        obj.get_files(298,matrix_get("DOWNLOAD_COUNT")-168,int(NUM_LOCALES)-85)
+        obj.get_files(298,get_downloads_count()-168,int(NUM_LOCALES)-85)
     elif get_downloads_count() < 178:
-        obj.get_files(53,matrix_get("DOWNLOAD_COUNT")-176,int(NUM_LOCALES)-88)
-    if matrix_get("DOWNLOAD_COUNT") != int(NUM_LOCALES)*2:
+        obj.get_files(53,get_downloads_count()-176,int(NUM_LOCALES)-88)
+    if get_downloads_count() != int(NUM_LOCALES)*2:
         obj.run()
     else:
         tcp_send("FINISH0")

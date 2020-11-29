@@ -175,7 +175,7 @@ class TRIO:
         image_click("Save.png")
         time_wait(2000)
         tcp_send("SNDFIL" + str(get_downloads_count()) +"   '" + filename + ".csv'")
-        matrix_set("DOWNLOAD_COUNT",matrix_get("DOWNLOAD_COUNT")+1)
+        # matrix_set("DOWNLOAD_COUNT",matrix_get("DOWNLOAD_COUNT")+1)
 
     def screenshots(self):
         if matrix_get("SSHOT_1"):
