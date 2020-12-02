@@ -347,6 +347,8 @@ class BBR:
             self._portal_loaded = True
             send_action_simple(9, 12)
         image_click("ventas.png")
+        if image_appeared("cerrar.png"):
+            image_click("cerrar.png")
         time_wait(30000)
 
     def get_ventas(self,num=0):
@@ -561,7 +563,7 @@ class BBR:
             image_wait("cerrar.png")
             press(TAB)
             time_wait(500)
-            for x in range(1):
+            for x in range(3):
                 press(DOWN)
                 time_wait(500)
             press(TAB)
@@ -573,10 +575,10 @@ class BBR:
             time_wait(500)
             press(ENTER)
             image_wait("dlprompt.png")
-            type(get_download_directory() + self.marca + "-" + str(name) + "-" + self.SIGLA + str(down_num) + str(extra_down+1))
+            type(get_download_directory() + self.SIGLA + "-" + str(name) + "-" + self.marca + str(down_num) + str(extra_down+1))
             image_click("save.png")
             time_wait(4000)
-            tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + self.marca + "-" + str(name) + "-" + self.SIGLA + str(down_num) + str(extra_down+1) + self.files_downloaded_extension + "'")
+            tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + self.SIGLA + "-" + str(name) + "-" + self.marca + str(down_num) + str(extra_down+1) + self.files_downloaded_extension + "'")
             image_click("cerrar.png")
                 
     def extraDownloads(self, proveedor = -1):
