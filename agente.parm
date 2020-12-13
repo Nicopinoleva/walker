@@ -1,0 +1,52 @@
+# Parametros para ejecucion local (sin bus)
+#
+ <rut> 766106706 </rut>              \# RUT empresa
+ <ena> JU </ena>            \# Sigla empresa
+ <usr> carolina.fernandez@petrizzio.cl </usr>         \# Usuario portal
+ <psw> petri2021 </psw>         \# Password
+ <url> https://www.hitesb2b.com/Hites/BBRe-commerce/access/login.do </url>        \# URL portal
+ <pid> 1006 </pid>         \# Portal id
+ <pna> Jumbo </pna>           \# Portal name
+ <cna> AGROAPICULTURA </cna>           \# Client name
+ <xtr> none </xtr>             \# Extra information
+ <ssn> 2 </ssn>                \# Screenshots number
+ <stn> 2 </stn>                \# Stores number
+ <hdi> 31 </hdi>               \# History days
+ <hda> none </hda>\# History dates
+ <ips> 127.0.0.1 </ips>  \# Worker0 server ip
+ <jar> /Sikulix/Engine/Walker.jar /Sikulix/Hites.py </jar> \# road
+# convert
+ <cft> DIA </cft>        \# Tipo de archivo
+ <cdi> 4214 </cdi>       \# Cuenta_dia
+ <vfm> .csv </vfm>       \# Ventas formato archivo
+ <vor> 0,0,11,1,3,13,19,20,-1,-1,-1,21 </vor> \# Ventas orden
+ <vdm> S1 </vdm>          \# Ventas delimitador
+ <vhd> 1 </vhd>          \# Ventas header
+ <vdf> yyyy-mm-dd </vdf> \# Ventas formato fecha
+ <vcu> 1 </vcu>          \# Ventas conversion unidades
+ <vcm> 1 </vcm>          \# Ventas conversion montos
+ <ifm> .csv </ifm>       \# Inventario formato archivo
+ <ior> 0,0,9,1,3,11,-1,-1,-1,20,21,-1 </ior> \# Inventario orden
+ <idm> S1 </idm>          \# Inventario delimitador
+ <ihd> 1 </ihd>          \# Inventario header
+ <idf> yyyy-mm-dd-al-yyyy-mm-dd </idf> \# Inventario formato fecha
+ <icu> 1 </icu>          \# Inventario conversion unidades
+ <icm> 1 </icm>          \# Inventario conversion montos
+# NO modificar
+ <try> 4 </try>          \# Reintentos
+ <tou> 30 </tou>         \# Portal timeout 
+ <ava> 1 </ava>          \# Avanzar 
+ <fre> 1 </fre>          \# Frecuencia reporte
+ <rus> seluser </rus>    \# Remote user
+ <fip> 22122 </fip>      \# Files server port
+ <shp> 22122 </shp>      \# Sshot server port
+ <spo> 22122 </spo>      \# ssh port
+ <met> 900 </met>        \# Max exec time
+ <mtx> 25 </mtx>         \# Matrix size
+ <mtd> 0000000000000000000000000 </mtd>  \# Matrix data
+ <agp> 127.0.0.1:25005 </agp>            \# Agente ip:port
+ <jpa> /usr/local/Java13/bin </jpa>      \# Java path
+ <dpa> /home/seluser/Downloads  </dpa>   \# Download path
+ <spa> /home/seluser/Screenshots </spa>  \# Screenshot path
+ <fid> walk@127.0.0.1:/home/seluser/WALKER/files </fid> \# files dest
+ <shd> walk@127.0.0.1:/home/seluser/WALKER/sshot </shd> \# sshot dest

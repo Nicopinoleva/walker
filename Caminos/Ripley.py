@@ -204,6 +204,7 @@ def download_stock():
     time_wait(1000)
     tcp_send("SNDFIL" + str(int(matrix_get("DOWNLOAD_COUNT"))+1) + "   '" + inventario_filename + ".csv'")
     send_action_simple(4, 0, int(matrix_get("DOWNLOAD_COUNT"))+1)
+    time_wait(5000)
 
 open_explorer(URL_PORTAL)
 login()
