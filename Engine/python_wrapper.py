@@ -399,7 +399,27 @@ OPTION_TRACE_EVERY  = OPTION_ARGS[10]
 EXTRA = OPTION_ARGS[11]
 NUM_SSHOTS = OPTION_ARGS[12]
 DATE = OPTION_ARGS[13]
-MATRIX = [str(char) for char in OPTION_ARGS[14]]
+##### Zolbit conversion required parameters #####
+FILE_TYPE = OPTION_ARGS[14]
+ACCOUNT_DAY = OPTION_ARGS[15]
+SALES_FILE_FORMAT = OPTION_ARGS[16]
+SALES_ORDER = OPTION_ARGS[17]
+SALES_DELIMITATOR = OPTION_ARGS[18]
+SALES_HEADER = OPTION_ARGS[19]
+SALES_DATE_FORMAT = OPTION_ARGS[20]
+SALES_UNITS_CONVERSION = OPTION_ARGS[21]
+SALES_UNITS_DECIMAL = OPTION_ARGS[21]
+SALES_AMOUNT_CONVERSION = OPTION_ARGS[22]
+SALES_AMOUNT_DECIMAL = OPTION_ARGS[21]
+STOCK_FILE_FORMAT = OPTION_ARGS[23]
+STOCK_ORDER = OPTION_ARGS[24]
+STOCK_DELIMITATOR = OPTION_ARGS[25]
+STOCK_HEADER = OPTION_ARGS[26]
+STOCK_DATE_FORMAT = OPTION_ARGS[27]
+STOCK_UNITS_CONVERSION = OPTION_ARGS[28]
+STOCK_AMOUNT_CONVERSION = OPTION_ARGS[29]
+ENCODING = OPTION_ARGS[21]
+MATRIX = [str(char) for char in OPTION_ARGS[30]]
 
 IMAGE_BASED_FUNCTIONS_TIMEOUT = int(TIMEOUT) #In seconds
 if len(DATE) > 3:
@@ -414,6 +434,12 @@ IMAGE_APPEARED_TIMEOUT = int(TIMEOUT)/6 #In seconds
 def get_string_from_image(img):
 	import subprocess
 	output = subprocess.check_output(["python", ABSOLUTE_PATH + "tesseract.py", img])
+	return output
+
+def get_zolbit_format(retailer_name, file_type, sigla, file_format, order, delimitator, header, date_format, file_path, units_conversion, amount_conversion, file_name):
+	import subprocess
+	output = subprocess.check_output(["python3", ABSOLUTE_PATH + "convertZolbit.py", retailer_name, file_type, sigla, 
+		file_format, order, delimitator, header, date_format, file_path, units_conversion, amount_conversion, file_name])
 	return output
 
 # === MOUSE FUNCTIONS ===
@@ -527,6 +553,16 @@ def image_appeared(img, timeout=IMAGE_APPEARED_TIMEOUT):
 	else:
 		log("INFO", "image not appeared " + img)
 	return result
+
+# === ZIP FUNCTIONS === 
+def unzip(file,extension):
+	from zipfile import ZipFile
+	zf = ZipFile(get_download_directory()+file+'.zip','r')
+	name_in_zip = (zf.namelist())
+	print("Nombre del archivo dentro del zip --> {}".format(name_in_zip))
+	zf.extractall(get_download_directory())
+	zf.close()
+	os.rename(get_download_directory()+name_in_zip[0],get_download_directory()+file+extension)
 
 # ==== CUSTOM FUNCTIONS LOADING ====
 

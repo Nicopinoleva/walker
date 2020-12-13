@@ -347,8 +347,10 @@ class BBR:
             self._portal_loaded = True
             send_action_simple(9, 12)
         image_click("ventas.png")
-        if image_appeared("cerrar.png"):
-            image_click("cerrar.png")
+        time_wait(3000)
+        if not image_appeared("fecha.png"):
+            if image_appeared("cerrar.png"):
+                image_click("cerrar.png")
         time_wait(30000)
 
     def get_ventas(self,num=0):
@@ -404,6 +406,10 @@ class BBR:
         image_click("save.png")
         time_wait(2000)
         send_action_simple(4, 0, num_files=1)
+        # unzip(name1,SALES_FILE_FORMAT)
+        # data=get_zolbit_format(self.PORTAL, FILE_TYPE, self.SIGLA, SALES_FILE_FORMAT, SALES_ORDER, SALES_DELIMITATOR, SALES_HEADER, SALES_DATE_FORMAT, get_download_directory(), 
+        #     SALES_UNITS_CONVERSION, SALES_AMOUNT_CONVERSION, name1+SALES_FILE_FORMAT)
+        # print(data)
         tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + name1 + self.files_downloaded_extension + "'")
         matrix_set("DOWNLOAD_COUNT",1)
         matrix_set("SALES",True)
@@ -445,6 +451,9 @@ class BBR:
         image_click("save.png")
         time_wait(30000)
         send_action_simple(4, 0, num_files=2)
+        # unzip(name2,STOCK_FILE_FORMAT)
+        # get_zolbit_format(self.PORTAL, FILE_TYPE, self.SIGLA, STOCK_FILE_FORMAT, STOCK_ORDER, STOCK_DELIMITATOR, STOCK_HEADER, STOCK_DATE_FORMAT, get_download_directory(), 
+        #     STOCK_UNITS_CONVERSION, STOCK_AMOUNT_CONVERSION, name2+STOCK_FILE_FORMAT)
         tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + name2 + self.files_downloaded_extension + "'")
         matrix_set("DOWNLOAD_COUNT",2)
         matrix_set("STOCK",True)
