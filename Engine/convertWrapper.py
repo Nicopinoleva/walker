@@ -3,6 +3,7 @@
 
 import os
 import csv
+import sys
 from datetime import datetime
 from operator import itemgetter
 
@@ -12,69 +13,86 @@ min_date = '3000-01-01'
 max_date = datetime.strptime(max_date, "%Y-%m-%d")
 min_date = datetime.strptime(min_date, "%Y-%m-%d")
 
-def convertFile (headers, nombre_retailer, tipo_archivo,
-				sigla, formato_archivo, orden_columna,
+def convertFile (headers, encode, tipo_archivo, 
+				formato_archivo, orden_columna,
 				delimitador, header, formato_fecha, ruta,
-				conversion_un, conversion_mon, nombre_archivo):
+				conversion_un, decimal_un, conversion_mon, 
+				decimal_mon, nombre_archivo):
 	columnas = splitList (orden_columna)
 
-
 	# Manual ruta (definida en parametros)
-	# ruta = 'D:/Documents/rpro/ProyectoOpAuto/Codes/Validador/' + nombre_retailer + '/' # Archivo de entrada
-
+	# ruta = 'D:/Documents/rpro/ProyectoOpAuto/Codes/Validador/JUMBO/' # Archivo de entrada
+	
 	# Parametrizar (Carpeta de cliente y nombre del retailer) ruta_in
-	files = os.listdir(ruta)
+	try:
+		files = os.listdir(ruta)
+	except Exception as excep:
+		resultado = exceptionDefinition(excep, 50)
+		return resultado # Problema con ruta de archivo
 	#print(files)
-
 	if not files:	# Comprobacion de existencia de archivos
-		return 2 # No existen archivos en carpeta
+		noExist = str("["+ str(datetime.now().strftime("%H:%M:%S"))+"]"+"[ERR]"+"Error:"+ "60"+" - No existen archivos en carpeta")
+		return noExist
 	
 	newRow = []
 
 	for name in files: # Parametrizar nombres
 		if(nombre_archivo == name):
 			nameIn = ruta + name # Archivo de entrada
-			nameOut = useExtensionCsv (ruta + 'ZOLBIT'+ name) # Archivo de salida
-			print(nameOut)
+			nameOut = useExtensionCsv (ruta + 'Z'+ name) # Archivo de salida
 			deleteOldFiles (nameOut)
-			deleteOldFiles (nameOut.replace ('ZOLBIT','SORTEDZOLBIT'))
+			deleteOldFiles (nameOut.replace ('Z','SORTEDZOLBIT', 1))
+			try:
+				with open (nameOut, 'w', newline = '', encoding = encode) as f_out, open (nameIn, "r", newline = '', encoding = encode) as f_in: # Open in and out files
+					writeHeader = csv.DictWriter (f_out, fieldnames = headers) # Escritura de headers
+					writeHeader.writeheader ( ) # Escritura de headers
+					csv_read = checkDelimiter (f_in, delimitador) #Fix \t delimiter, reader function
+					writeFile = csv.writer (f_out, delimiter = ',')
+					checkHeader (header, csv_read) # Skip header if exist
 
+					for row in csv_read: # Escritura de filas
+						for col in columnas:
+							if (col == -1):
+								newRow.append ('null')
+							else:
+								newRow.append (row[col])
+						
+						if (newRow[0] == ''): #Especial para lider por fechas vacias
+							newRow.clear ( )
+							continue
+						if (cleanNoUnitRow (newRow) == 1): #Especial para lider por ventas e inventarios vacios
+							newRow.clear ( )
+							continue
+						try:
+							newRow = conversionUnMon (newRow, conversion_un, decimal_un, conversion_mon, decimal_mon) # Conviente un y mon
+							newRow = useDate (newRow, formato_fecha) # Formatea fecha
+							writeFile.writerow (newRow) # Escribe nueva fila
+							maxMinDate (newRow) # Obtiene fecha max y min de fila (para nombre final)
+							newRow.clear ( ) # Limpia newRow
+						except Exception as excep:
+							resultado = exceptionDefinition(excep, 40)
+							return resultado # Problema con post procesado de filas
+			except Exception as excep:
+				resultado = exceptionDefinition(excep, 20)
+				return resultado # Problema con apertura de archivos
+			try:
+				newNameOut = renameDate (nameOut) # Obtiene nombre de archivo con fechas reales
+				os.replace (nameOut, newNameOut) # Renombra con fechas reales
+				sortedZolbit (newNameOut, headers, encode) # Ordena archivo Zolbit
+				resetMinMaxDate ( ) # Reset de fechas min y max
+				return (str("["+ str(datetime.now().strftime("%H:%M:%S"))+"]"+"[INFO]"+"Convertido:0 - Ejecutado exitosamente"))
+				#return filanizado # Archivo procesado correctamente
+			except Exception as excep:
+				resultado = exceptionDefinition(excep, 30)
+				return (resultado) # Problema generacion de archivo
+	noEsta = str("["+ str(datetime.now().strftime("%H:%M:%S"))+"]"+"[ERR]"+"Error:"+ "70"+" - No se encuentra archivo")
+	return(noEsta)
 
-			with open (nameOut, 'w', newline = '', encoding = 'ISO-8859-1') as f_out, open (nameIn, "r", newline = '', encoding = 'ISO-8859-1') as f_in: # Open in and out files
-				writeHeader = csv.DictWriter (f_out, fieldnames = headers) # Escritura de headers
-				writeHeader.writeheader ( ) # Escritura de headers
-				csv_read = checkDelimiter (f_in, delimitador) #Fix \t delimiter, reader function
-				writeFile = csv.writer (f_out, delimiter = ',')
-				checkHeader (header, csv_read) # Skip header if exist
-
-				for row in csv_read: # Escritura de filas
-					for col in columnas:
-						if (col == -1):
-							newRow.append ('null')
-						else:
-							newRow.append (row[col])
-					
-					if (newRow[0] == ''): #Especial para lider por fechas vacias
-						newRow.clear ( )
-						continue
-					if (cleanNoUnitRow (newRow) == 1): #Especial para lider por ventas e inventarios vacios
-						newRow.clear ( )
-						continue
-					try:
-						newRow = conversionUnMon (newRow, conversion_un, conversion_mon) # Conviente un y mon
-						newRow = useDate (newRow, formato_fecha) # Formatea fecha
-						print(newRow)
-						writeFile.writerow (newRow) # Escribe nueva fila
-						maxMinDate (newRow) # Obtiene fecha max y min de fila (para nombre final)
-						newRow.clear ( ) # Limpia newRow
-					except:
-						return 4 # Problema con post procesado de filas
-
-			newNameOut = renameDate (nameOut) # Obtiene nombre de archivo con fechas reales
-			os.replace (nameOut, newNameOut) # Renombra con fechas reales
-			sortedZolbit (newNameOut, headers) # Ordena archivo Zolbit
-			resetMinMaxDate ( ) # Reset de fechas min y max
-			return 0 # Archivo procesado correctamente
+def exceptionDefinition (excep, errCode):
+	exc_type, exc_obj, exc_tb = sys.exc_info()
+	fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+	resultadoExcept = "["+str(datetime.now().strftime("%H:%M:%S"))+"]"+"[ERR]"+"Error:"+ str(errCode)+" - "+ str(excep)+ " Modulo: "+ str(fname)+ " Linea: "+ str(exc_tb.tb_lineno)
+	return(resultadoExcept)
 	
 def deleteOldFiles (nameOut):
 	try:
@@ -101,23 +119,25 @@ def checkDelimiter (f_in, delimitador):
 		csv_read = csv.reader (f_in, delimiter = '\t') #Fix \t delimiter
 		return csv_read
 	if (delimitador == 'S1'):
-		csv_read = csv.reader (f_in, delimiter = ',') #Fix \t delimiter
+		csv_read = csv.reader (f_in, delimiter = ',')
 		return csv_read
 	if (delimitador == 'S2'):
-		csv_read = csv.reader (f_in, delimiter = '|') #Fix \t delimiter
+		csv_read = csv.reader (f_in, delimiter = '|')
 		return csv_read
 	else:
 		csv_read = csv.reader (f_in, delimiter = delimitador)
 		return csv_read
 
-def conversionUnMon (newRow, conversion_un, conversion_mon):
-	for i in range (0,len (newRow)):
+def conversionUnMon (newRow, conversion_un, decimal_un, conversion_mon, decimal_mon):
+	for i in range (0, len (newRow)):
 		if (newRow[i] == 'null' or newRow[i] == ''):
 			continue
 		if (i in [7,8,10,11]):
-			newRow[i] = float (newRow[i]) * float (conversion_mon)
+			#print(newRow[i], type(newRow[i]))
+			newRow[i] = (int(float(newRow[i])) * int(conversion_mon)) / (pow (10, int(decimal_mon)))
 		elif (i in [6,9]):
-			newRow[i] = float (newRow[i]) * float (conversion_un)
+			#print(newRow[i], type(newRow[i]))
+			newRow[i] = (int(float(newRow[i])) * int(conversion_un)) / (pow (10, int(decimal_un)))
 	return (newRow)
 
 def useDate (newRow, formato_fecha):
@@ -197,8 +217,8 @@ def resetMinMaxDate ( ):
 	max_date = datetime.strptime (max_date, "%Y-%m-%d")
 	min_date = datetime.strptime (min_date, "%Y-%m-%d")
 
-def sortedZolbit (nameOut, headers):
-	with open (nameOut, 'r', newline='', encoding = 'ISO-8859-1') as csvOut, open (nameOut.replace ('ZOLBIT','SORTEDZOLBIT'),'w', newline='', encoding = 'ISO-8859-1') as csvSorted:
+def sortedZolbit (nameOut, headers, encode):
+	with open (nameOut, 'r', newline='', encoding = encode) as csvOut, open (nameOut.replace ('Z','SORTEDZOLBIT', 1),'w', newline='', encoding = encode) as csvSorted:
 		readerOut = csv.reader (csvOut, delimiter=",")
 		readerOut = sorted (readerOut, key = itemgetter (0,2,3))# Ordena en 3, 2, 0, codigo_plu, codigo_local, fecha_inicio
 		writerSorted = csv.writer (csvSorted)
@@ -208,4 +228,4 @@ def sortedZolbit (nameOut, headers):
 			if (sorted_row == headers):
 				continue
 			writerSorted.writerow (sorted_row)
-	os.replace (nameOut.replace ('ZOLBIT','SORTEDZOLBIT'), nameOut)
+	os.replace (nameOut.replace ('Z','SORTEDZOLBIT', 1), nameOut)

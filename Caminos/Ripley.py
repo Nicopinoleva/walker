@@ -201,7 +201,7 @@ def download_stock():
     inventario_filename = make_filename(RUT_EMPRESA, ayer_slugy, ayer_slugy, ayer_slugy, NOMBRE_EMPRESA, portal, b2b, dia, "INV")
     type(get_download_directory() + inventario_filename)
     press(ENTER)
-    time_wait(1000)
+    time_wait(5000)
     tcp_send("SNDFIL" + str(int(matrix_get("DOWNLOAD_COUNT"))+1) + "   '" + inventario_filename + ".csv'")
     send_action_simple(4, 0, int(matrix_get("DOWNLOAD_COUNT"))+1)
     time_wait(5000)

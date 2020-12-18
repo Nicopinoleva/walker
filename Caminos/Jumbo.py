@@ -41,7 +41,7 @@ def account_special():
 obj = BBR()
 obj.PORTAL = "JUMBO_SI"
 obj.passid = "password"
-obj.delay_days_tolerance = 10
+obj.delay_days_tolerance = 2
 if EXTRA != "none" and get_weekday_as_int() == int(AVANZAR):
     obj.enable_extraDownload = True
     obj.extraDownload = EXTRA
