@@ -353,6 +353,22 @@ class BBR:
                 image_click("cerrar.png")
         time_wait(30000)
 
+    def zolconvert(self,isStock,name):
+        unzip(name,STOCK_FILE_FORMAT)
+        if isStock:
+            data=get_zolbit_format(ENCODING, FILE_TYPE, STOCK_FILE_FORMAT, STOCK_ORDER, STOCK_DELIMITATOR, STOCK_HEADER, STOCK_DATE_FORMAT, get_download_directory(), 
+                STOCK_UNITS_CONVERSION, STOCK_UNITS_DECIMAL, STOCK_AMOUNT_CONVERSION, STOCK_AMOUNT_DECIMAL, name+STOCK_FILE_FORMAT)
+            zipfile('Z'+name,name+STOCK_FILE_FORMAT)
+        else:
+            data=get_zolbit_format(ENCODING, FILE_TYPE, SALES_FILE_FORMAT, SALES_ORDER, SALES_DELIMITATOR, SALES_HEADER, SALES_DATE_FORMAT, get_download_directory(), 
+                SALES_UNITS_CONVERSION, SALES_UNITS_DECIMAL, SALES_AMOUNT_CONVERSION, SALES_AMOUNT_DECIMAL, name+SALES_FILE_FORMAT)
+            zipfile('Z'+name,name+SALES_FILE_FORMAT)
+        print(data)
+        temp=data.split(';')
+        print(temp[1][:2])
+        matrix_set("DOWNLOAD_COUNT",matrix_get("DOWNLOAD_COUNT")+1)
+        tcp_send("SNDFIL " + str(matrix_get("DOWNLOAD_COUNT")) + "    '" + name + self.files_downloaded_extension + " " + temp[1][:2] +"'")
+
     def get_ventas(self,num=0):
         self.to_ventas_panel()
         image_click("fecha.png")
@@ -405,16 +421,8 @@ class BBR:
         time_wait(2000)
         image_click("save.png")
         time_wait(2000)
+        self.zolconvert(False,name1)
         send_action_simple(4, 0, num_files=1)
-        unzip(name1,SALES_FILE_FORMAT)
-        data=get_zolbit_format(ENCODING, FILE_TYPE, SALES_FILE_FORMAT, SALES_ORDER, SALES_DELIMITATOR, SALES_HEADER, SALES_DATE_FORMAT, get_download_directory(), 
-            SALES_UNITS_CONVERSION, SALES_UNITS_DECIMAL, SALES_AMOUNT_CONVERSION, SALES_AMOUNT_DECIMAL, name1+SALES_FILE_FORMAT)
-        print(data)
-        zipfile('Z'+name1,name1+SALES_FILE_FORMAT)
-        tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + name1 + self.files_downloaded_extension + "'")
-        time_wait(2000)
-        tcp_send("SNDZOL " + str(get_downloads_count()) + "    'Z" + name1 + self.files_downloaded_extension + "'")
-        matrix_set("DOWNLOAD_COUNT",1)
         matrix_set("SALES",True)
 
     def get_inventario(self,num=0):
@@ -446,24 +454,17 @@ class BBR:
         image_wait("dlprompt.png")
         time_wait(2000)
         if self.enable_customRename:
-            name2 = RUT_EMPRESA +  "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + self.marca + "_"+self.PORTAL+"_"+self.SIGLA+"_B2B_DIA_INV"
+            name = RUT_EMPRESA +  "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + self.marca + "_"+self.PORTAL+"_"+self.SIGLA+"_B2B_DIA_INV"
         else:
-            name2 = RUT_EMPRESA +  "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + self.SIGLA +  "_"+self.PORTAL+"_B2B_DIA_INV"
-        type(get_download_directory() + name2)
+            name = RUT_EMPRESA +  "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + self.SIGLA +  "_"+self.PORTAL+"_B2B_DIA_INV"
+        type(get_download_directory() + name)
         time_wait(2000)
         image_click("save.png")
         time_wait(30000)
+        self.zolconvert(True,name)
         send_action_simple(4, 0, num_files=2)
-        unzip(name2,STOCK_FILE_FORMAT)
-        data=get_zolbit_format(ENCODING, FILE_TYPE, STOCK_FILE_FORMAT, STOCK_ORDER, STOCK_DELIMITATOR, STOCK_HEADER, STOCK_DATE_FORMAT, get_download_directory(), 
-            STOCK_UNITS_CONVERSION, STOCK_UNITS_DECIMAL, STOCK_AMOUNT_CONVERSION, STOCK_AMOUNT_DECIMAL, name2+STOCK_FILE_FORMAT)
-        print(data)
-        zipfile('Z'+name2,name2+STOCK_FILE_FORMAT)
-        tcp_send("SNDFIL " + str(get_downloads_count()) + "    '" + name2 + self.files_downloaded_extension + "'")
-        time_wait(2000)
-        tcp_send("SNDZOL " + str(get_downloads_count()) + "    'Z" + name2 + self.files_downloaded_extension + "'")
-        matrix_set("DOWNLOAD_COUNT",2)
         matrix_set("STOCK",True)
+        time_wait(2000)
         image_click("cerrar.png")
 
     def screenshot_1(self,num=0):
@@ -519,7 +520,7 @@ class BBR:
         else:
             name = RUT_EMPRESA +  "_" + date_to_string(nueva_fecha,"%Y%m%d") + "_" + date_to_string(fecha2,"%Y%m%d") + "_" + self.SIGLA + "_"+self.PORTAL+"_B2B_MENSUAL"
         screenshot_save_crop(name,11,230,1325,700)
-        tcp_send("SNDSHO2 " + str(get_downloads_count()) + "    '" + name + ".png'")
+        tcp_send("SNDSHO2 " + str(get_downloads_count()) + "    '" + name + ".png'") 
 
     def downloadSpecial(self,down_num,proveedor,extra_down=0):
         image_click("comercial.png")

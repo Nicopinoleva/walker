@@ -31,7 +31,7 @@ def convertFile (headers, encode, tipo_archivo,
 		return resultado # Problema con ruta de archivo
 	#print(files)
 	if not files:	# Comprobacion de existencia de archivos
-		noExist = str("["+ str(datetime.now().strftime("%H:%M:%S"))+"]"+"[ERR]"+"Error:"+ "60"+" - No existen archivos en carpeta")
+		noExist = str("["+ str(datetime.now().strftime("%H:%M:%S"))+"]"+"[ERR]"+"Error;"+ "60"+" - No existen archivos en carpeta")
 		return noExist
 	
 	newRow = []
@@ -80,18 +80,18 @@ def convertFile (headers, encode, tipo_archivo,
 				os.replace (nameOut, newNameOut) # Renombra con fechas reales
 				sortedZolbit (newNameOut, headers, encode) # Ordena archivo Zolbit
 				resetMinMaxDate ( ) # Reset de fechas min y max
-				return (str("["+ str(datetime.now().strftime("%H:%M:%S"))+"]"+"[INFO]"+"Convertido:0 - Ejecutado exitosamente"))
+				return (str("["+ str(datetime.now().strftime("%H:%M:%S"))+"]"+"[INFO]"+"Convertido;0 - Ejecutado exitosamente"))
 				#return filanizado # Archivo procesado correctamente
 			except Exception as excep:
 				resultado = exceptionDefinition(excep, 30)
 				return (resultado) # Problema generacion de archivo
-	noEsta = str("["+ str(datetime.now().strftime("%H:%M:%S"))+"]"+"[ERR]"+"Error:"+ "70"+" - No se encuentra archivo")
+	noEsta = str("["+ str(datetime.now().strftime("%H:%M:%S"))+"]"+"[ERR]"+"Error;"+ "70"+" - No se encuentra archivo")
 	return(noEsta)
 
 def exceptionDefinition (excep, errCode):
 	exc_type, exc_obj, exc_tb = sys.exc_info()
 	fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
-	resultadoExcept = "["+str(datetime.now().strftime("%H:%M:%S"))+"]"+"[ERR]"+"Error:"+ str(errCode)+" - "+ str(excep)+ " Modulo: "+ str(fname)+ " Linea: "+ str(exc_tb.tb_lineno)
+	resultadoExcept = "["+str(datetime.now().strftime("%H:%M:%S"))+"]"+"[ERR]"+"Error;"+ str(errCode)+" - "+ str(excep)+ " Modulo: "+ str(fname)+ " Linea: "+ str(exc_tb.tb_lineno)
 	return(resultadoExcept)
 	
 def deleteOldFiles (nameOut):
