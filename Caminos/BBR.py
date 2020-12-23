@@ -358,16 +358,19 @@ class BBR:
         if isStock:
             data=get_zolbit_format(ENCODING, FILE_TYPE, STOCK_FILE_FORMAT, STOCK_ORDER, STOCK_DELIMITATOR, STOCK_HEADER, STOCK_DATE_FORMAT, get_download_directory(), 
                 STOCK_UNITS_CONVERSION, STOCK_UNITS_DECIMAL, STOCK_AMOUNT_CONVERSION, STOCK_AMOUNT_DECIMAL, name+STOCK_FILE_FORMAT)
-            zipfile('Z'+name,name+STOCK_FILE_FORMAT)
+            print(data)
+            time_wait(5000)
+            zipfile('Z'+name,'Z'+name+STOCK_FILE_FORMAT)
         else:
             data=get_zolbit_format(ENCODING, FILE_TYPE, SALES_FILE_FORMAT, SALES_ORDER, SALES_DELIMITATOR, SALES_HEADER, SALES_DATE_FORMAT, get_download_directory(), 
                 SALES_UNITS_CONVERSION, SALES_UNITS_DECIMAL, SALES_AMOUNT_CONVERSION, SALES_AMOUNT_DECIMAL, name+SALES_FILE_FORMAT)
-            zipfile('Z'+name,name+SALES_FILE_FORMAT)
-        print(data)
+            print(data)
+            time_wait(5000)
+            zipfile('Z'+name,'Z'+name+SALES_FILE_FORMAT)
         temp=data.split(';')
         print(temp[1][:2])
         matrix_set("DOWNLOAD_COUNT",matrix_get("DOWNLOAD_COUNT")+1)
-        tcp_send("SNDFIL " + str(matrix_get("DOWNLOAD_COUNT")) + "    '" + name + self.files_downloaded_extension + " " + temp[1][:2] +"'")
+        tcp_send("SNDFIL " + str(matrix_get("DOWNLOAD_COUNT")) + "    '" + name + self.files_downloaded_extension + "'" + " " + temp[1][:2])
 
     def get_ventas(self,num=0):
         self.to_ventas_panel()
