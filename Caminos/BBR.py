@@ -360,13 +360,13 @@ class BBR:
                 STOCK_UNITS_CONVERSION, STOCK_UNITS_DECIMAL, STOCK_AMOUNT_CONVERSION, STOCK_AMOUNT_DECIMAL, name+STOCK_FILE_FORMAT)
             print(data)
             time_wait(5000)
-            zipfile('Z'+name,'Z'+name+STOCK_FILE_FORMAT)
+            zipper('Z'+name,'Z'+name+STOCK_FILE_FORMAT)
         else:
             data=get_zolbit_format(ENCODING, FILE_TYPE, SALES_FILE_FORMAT, SALES_ORDER, SALES_DELIMITATOR, SALES_HEADER, SALES_DATE_FORMAT, get_download_directory(), 
                 SALES_UNITS_CONVERSION, SALES_UNITS_DECIMAL, SALES_AMOUNT_CONVERSION, SALES_AMOUNT_DECIMAL, name+SALES_FILE_FORMAT)
             print(data)
             time_wait(5000)
-            zipfile('Z'+name,'Z'+name+SALES_FILE_FORMAT)
+            zipper('Z'+name,'Z'+name+SALES_FILE_FORMAT)
         temp=data.split(';')
         print(temp[1][:2])
         matrix_set("DOWNLOAD_COUNT",matrix_get("DOWNLOAD_COUNT")+1)

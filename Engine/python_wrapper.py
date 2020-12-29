@@ -16,6 +16,7 @@ import traceback
 import calendar
 import sys
 import types
+import zipfile
 from zipfile import ZipFile
 
 
@@ -565,11 +566,11 @@ def unzip(file,extension):
     zf.close()
     os.rename(get_download_directory()+name_in_zip[0],get_download_directory()+file+extension)
 
-def zipfile(name,file):
+def zipper(name,file):
     print("Nombre del zip-->{}".format(name))
-    zf = ZipFile(get_download_directory()+name+'.zip','w')
+    zf = zipfile.ZipFile(get_download_directory()+name+'.zip','w',zipfile.ZIP_DEFLATED)
     print("Archivo a zippear-->{}".format(get_download_directory()+file))
-    zf.write(get_download_directory()+file)
+    zf.write(get_download_directory()+file,file)
     print(zf.namelist())
     zf.close()
 
