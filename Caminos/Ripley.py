@@ -211,7 +211,7 @@ def download_stock():
     press(ENTER)
     time_wait(5000)
     data=get_zolbit_format(ENCODING, FILE_TYPE, STOCK_FILE_FORMAT, STOCK_ORDER, STOCK_DELIMITATOR, STOCK_HEADER, STOCK_DATE_FORMAT, get_download_directory(), 
-                STOCK_UNITS_CONVERSION, STOCK_UNITS_DECIMAL, STOCK_AMOUNT_CONVERSION, STOCK_AMOUNT_DECIMAL, name+STOCK_FILE_FORMAT)
+                STOCK_UNITS_CONVERSION, STOCK_UNITS_DECIMAL, STOCK_AMOUNT_CONVERSION, STOCK_AMOUNT_DECIMAL, filename+STOCK_FILE_FORMAT)
     print(data)
     temp=data.split(';')
     print(temp[1][:2])
