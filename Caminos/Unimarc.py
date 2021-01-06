@@ -12,14 +12,18 @@ def pre_inventario_procedure():
 	image_click("prod_acts.png")
 
 def boton_azul_procedure():
+    image_click("csv.png")
     image_click("descargar.png")
-    image_wait("guardar.png", timeout = 60 * 3)
-    image_click("guardar.png")
+    image_wait("listo.png")
+    press(TAB)
+    press(ENTER)
 
 def boton_verde_procedure():
-    image_click("si.png")
-    image_wait("guardar.png", timeout = 60 * 3)
-    image_click("guardar.png")
+    image_click("csv.png")
+    image_click("seleccionar.png")
+    image_wait("listo.png")
+    press(TAB)
+    press(ENTER)
 
 
 def account_special(): 
@@ -51,7 +55,9 @@ def finish_method():
 obj = BBR()
 obj.PORTAL = "UNIMARC"
 obj.passid = "password"
-obj.enable_extra_calendar = True
+obj.enable_newBBR = True
+obj.enable_recaptcha = True
+obj.site_key = "6Le6POkUAAAAAPrhWc5b14fntw6TCU1tRgEKaLnk"
 obj.account_procedure = account_special
 obj.ventas_procedure = boton_azul_procedure
 obj.inventario_procedure = boton_verde_procedure
@@ -60,6 +66,6 @@ obj.pre_inventario_procedure = pre_inventario_procedure
 obj.sshot1_procedure = pre_ventas_procedure
 obj.sshot2_procedure = pre_ventas_procedure
 obj.finish_procedure = finish_method
-obj.checker_data["mouse_move"] = (-100, -6)
-obj.checker_data["screenshot_save_crop"] = (275, 0, 70, 15)
+obj.checker_data["mouse_move"] = (125, -7)
+obj.checker_data["screenshot_save_crop"] = (0, 0, 70, 15)
 obj.run()

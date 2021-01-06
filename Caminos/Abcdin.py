@@ -9,13 +9,17 @@ def pre_ventas_procedure():
 
 def boton_azul_procedure():
     image_click("descargar.png")
-    image_wait("guardar.png")
-    image_click("guardar.png")
+    time_wait(5000)
+    image_wait("listo.png")
+    press(TAB)
+    press(ENTER)
 
 def boton_verde_procedure():
     image_click("si.png")
-    image_wait("guardar.png")
-    image_click("guardar.png")
+    time_wait(5000)
+    image_wait("listo.png")
+    press(TAB)
+    press(ENTER)
 
 def finish_method():
     tcp_send("FINISH0")
@@ -45,6 +49,9 @@ def account_special():
 ABCDin = BBR()
 ABCDin.PORTAL = "ABCDIN"
 ABCDin.passid = "password"
+ABCDin.enable_newBBR = True
+ABCDin.enable_recaptcha = True
+ABCDin.site_key = "6Le6POkUAAAAAPrhWc5b14fntw6TCU1tRgEKaLnk"
 ABCDin.enable_extra_calendar = True
 ABCDin.account_procedure = account_special
 ABCDin.ventas_procedure = boton_azul_procedure
@@ -53,6 +60,6 @@ ABCDin.pre_ventas_procedure = pre_ventas_procedure
 ABCDin.sshot1_procedure = pre_ventas_procedure
 ABCDin.sshot2_procedure = pre_ventas_procedure
 ABCDin.finish_procedure = finish_method
-ABCDin.checker_data["mouse_move"] = (-100, -6)
-ABCDin.checker_data["screenshot_save_crop"] = (386, 0, 70, 15)
+ABCDin.checker_data["mouse_move"] = (190, -6)
+ABCDin.checker_data["screenshot_save_crop"] = (0, 0, 70, 15)
 ABCDin.run()

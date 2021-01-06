@@ -13,13 +13,15 @@ def pre_inventario_procedure():
 
 def boton_azul_procedure():
     image_click("descargar.png")
-    image_wait("cerrar.png", timeout = 60)
-    time_wait(15000)
-    if image_appeared("error_reporte.png"):
-        send_action_simple(9,17)
-        tcp_send("FINISH17")
-        abort("Error reporte portal")
-    image_click("guardar.png")
+    time_wait(5000)
+    image_wait("listo.png")
+    press(TAB)
+    press(ENTER)
+    # if image_appeared("error_reporte.png"):
+    #     send_action_simple(9,17)
+    #     tcp_send("FINISH17")
+    #     abort("Error reporte portal")
+    # image_click("guardar.png")
 
 def account_special(): 
     if image_appeared("bloqueado.png") == True:
@@ -36,8 +38,10 @@ def account_special():
 
 def boton_verde_procedure():
     image_click("si.png")
-    image_wait("cerrar.png",timeout = 60)
-    image_click("guardar.png")
+    time_wait(5000)
+    image_wait("listo.png")
+    press(TAB)
+    press(ENTER)
 
 def finish_method():
     tcp_send("FINISH0")
@@ -45,8 +49,10 @@ def finish_method():
 obj = BBR()
 obj.PORTAL = "CORONA"
 obj.passid = "password"
-obj.delay_days_tolerance = 1
-obj.enable_extra_calendar = True
+obj.enable_checker = False
+obj.enable_newBBR = True
+obj.enable_recaptcha = True
+obj.site_key = "6Le6POkUAAAAAPrhWc5b14fntw6TCU1tRgEKaLnk"
 obj.account_procedure = account_special
 obj.ventas_procedure = boton_azul_procedure
 obj.inventario_procedure = boton_verde_procedure

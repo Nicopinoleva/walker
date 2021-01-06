@@ -13,13 +13,17 @@ def pre_inventario_procedure():
 
 def boton_azul_procedure():
     image_click("descargar.png")
-    image_wait("guardar.png", timeout = 60 * 3)
-    image_click("guardar.png")
+    time_wait(5000)
+    image_wait("listo.png")
+    press(TAB)
+    press(ENTER)
 
 def boton_verde_procedure():
     image_click("si.png")
-    image_wait("guardar.png", timeout = 60 * 3)
-    image_click("guardar.png")
+    time_wait(5000)
+    image_wait("listo.png")
+    press(TAB)
+    press(ENTER)
 
 def account_special(): 
     if image_appeared("bloqueado.png") == True:
@@ -39,9 +43,10 @@ def finish_method():
 
 obj = BBR()
 obj.PORTAL = "LAPOLAR"
-obj.passid = "formLogin:txt_Password"
-obj.enable_error = True
-obj.enable_SalesClick = True
+obj.passid = "password"
+obj.enable_newBBR = True
+obj.enable_recaptcha = True
+obj.site_key = "6Le6POkUAAAAAPrhWc5b14fntw6TCU1tRgEKaLnk"
 obj.account_procedure = account_special
 obj.ventas_procedure = boton_azul_procedure
 obj.inventario_procedure = boton_verde_procedure
@@ -50,6 +55,6 @@ obj.pre_inventario_procedure = pre_inventario_procedure
 obj.sshot1_procedure = pre_ventas_procedure
 obj.sshot2_procedure = pre_ventas_procedure
 obj.finish_procedure = finish_method
-obj.checker_data["mouse_move"] = (240, -5)
+obj.checker_data["mouse_move"] = (200, -5)
 obj.checker_data["screenshot_save_crop"] = (0, 0, 70, 15)
 obj.run()

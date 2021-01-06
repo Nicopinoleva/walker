@@ -13,7 +13,7 @@ tiendas = ["ACCESORIOS DE AUTOMOVILES", "ARRIENDO HERRAMIENTA IMP TALCA", "ARRIE
             "CO 29 VALPARAISO", "CO 30 TALCAHUANO", "CO 40 ANTOFAGASTA", "CO 48 VENTA BODEGA","CO 60 VALLENAR","CO 65 LA FLORIDA", 
             "CO 87 HUECHURABA", "CO TEMUCO CAUPOLICAN", "CAR CENTE HC16 SAN FELIPE", "CAR CENTER HC09 LOS ANGELES", "CAR CENTER HC11 IQUIQUE",
             "CAR CENTER HC12 SAN MIGUEL", "CAR CENTER HC23 SAN BERNARDO", "CAR CENTER HC24 PUNTA ARENAS", "CAR CENTER HC27 BIO BIO",
-            "CAR CENTER HC43 TALCA", "CAR CENTER HC54 NUEVA LA FLORIDA", "CAR CENTER HC66 NUBLE", "CAR CENTER HC726 TOBALABA", "CAR CENTER HC729 OVALLE",
+            "CAR CENTER HC43 TALCA", "CAR CENTER HC54 NUEVA LA FLORIDA", "CAR CENTER HC66 NUBLE", "CAR CENTER HC723 QUILICURA","CAR CENTER HC726 TOBALABA", "CAR CENTER HC727 TALCA COLIN","CAR CENTER HC729 OVALLE",
             "CAR CENTER HC74 EL BOSQUE", "CAR CENTER HC742 LA SERENA", "CAR CENTER HC743 ANTOFAGASTA LA PORTADA", "CAR CENTER HC88 MAIPU", 
             "CAR CENTER HC95 PLAZA VESPUCIO", "CAR CENTER HC96 CERRILLOS", "CAR CENTER HC97 RENACA",
             "CAR CENTER QUILIN","CARPA CONSTITUCION", "CARPA MALL PLAZA CONCEPCION", "CARPA SAN PEDRO DE LA PAZ", 
@@ -75,7 +75,7 @@ imgs_tiendas = ["Tienda.png","AccesoriosDeAutomoviles.png","ArriendoHerramientaI
             "CO30Talcahuano.png","CO40Antofagasta.png","CO48VentaBodega.png","CO60Vallenar.png","CO65LaFlorida.png","CO87Huechuraba.png",
             "COTemucoCaupolican.png","CarCenteHC16SanFelipe.png", "CarCenteHC09LosAngeles.png", "CarCenteHC11Iquique.png",
             "CarCenteHC12SanMiguel.png", "CarCenteHC23SanBernardo.png", "CarCenteHC24PuntaArenas.png", "CarCenteHC27BioBio.png",
-            "CarCenteHC43Talca.png", "CarCenteHC54NuevaLaFlorida.png", "CarCenteHC66Nuble.png", "CarCenteHC726Tobalaba.png", "CarCenteHC729Ovalle.png",
+            "CarCenteHC43Talca.png", "CarCenteHC54NuevaLaFlorida.png", "CarCenteHC66Nuble.png", "CarCenterHC723Quilicura.png","CarCenteHC726Tobalaba.png", "CarCenterHC727TalcaColin.png","CarCenteHC729Ovalle.png",
             "CarCenteHC74ElBosque.png", "CarCenteHC742LaSerena.png", "CarCenteHC743AntofagastaLaPortada.png", "CarCenteHC88Maipu.png", 
             "CarCenteHC95PlazaVespucio.png", "CarCenteHC96Cerrillos.png", "CarCenteHC97Renaca.png",
             "CarCenterQuilin.png","CarpaConstitucion.png", "CarpaMallPlazaConcepcion.png","CarpaSanPedroDeLaPaz.png","CasaInteligente.png",
@@ -151,13 +151,13 @@ def multi_run():
         obj.get_to_dashboard()
         obj.dashboard()
     if get_downloads_count() < 144:
-        obj.get_files(62,get_downloads_count(),int(NUM_LOCALES)-17)
+        obj.get_files(64,get_downloads_count(),int(NUM_LOCALES)-17)
     elif get_downloads_count() < 168:
         obj.get_files(17,get_downloads_count()-144,int(NUM_LOCALES)-77)
     elif get_downloads_count() < 176:
-        obj.get_files(298,get_downloads_count()-168,int(NUM_LOCALES)-85)
+        obj.get_files(300,get_downloads_count()-168,int(NUM_LOCALES)-85)
     elif get_downloads_count() < 178:
-        obj.get_files(53,get_downloads_count()-176,int(NUM_LOCALES)-88)
+        obj.get_files(55,get_downloads_count()-176,int(NUM_LOCALES)-88)
     if get_downloads_count() != int(NUM_LOCALES)*2:
         obj.run()
     else:

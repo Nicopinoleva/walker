@@ -161,7 +161,10 @@ class TRIO:
 
     def download(self):
         time_wait(2500)
-        image_gone_wait("Waiting.png", timeout = int(TIMEOUT)*3)
+        while True:
+            tcp_send("ESPERO")
+            if not image_appeared("Waiting.png"):
+                break
         if self.pop_up:
             image_click("Pop_up_kill_dashboard.png")
         press(PAGE_DOWN)
@@ -183,7 +186,10 @@ class TRIO:
         if matrix_get("SSHOT_1"):
             self.change_units()
         image_click("Consultar.png")
-        image_gone_wait("Waiting.png")
+        while True:
+            tcp_send("ESPERO")
+            if not image_appeared("Waiting.png"):
+                break
         if self.pop_up:
             image_click("Pop_up_kill_dashboard.png")
         time_wait(2500)

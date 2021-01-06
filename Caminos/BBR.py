@@ -181,14 +181,19 @@ class BBR:
         else:
             send_action_simple(1,13)
 
-    def date_go_last(self):
+    def date_go_last(self,isSecondCalendar = True):
         if self.enable_newBBR:
             hoy = self.issued_day
             nueva_fecha = get_previous_month(today())
             dia = get_last_day_of_month(nueva_fecha)
-            for i in range(dia - hoy.day):
-                time_wait(100)
-                press(RIGHT)
+            if isSecondCalendar:
+                for i in range(dia - hoy.day):
+                    time_wait(100)
+                    press(RIGHT)
+            else:
+                for i in range(dia-1):
+                    time_wait(100)
+                    press(RIGHT)
         else:
             time_wait(100)
             press(LEFT)
@@ -211,7 +216,7 @@ class BBR:
     def date_click(self, num_days, isextraCalendar = False):
         if isextraCalendar:
             image_click("dias.png")
-            mouse_move(100,0)
+            mouse_move(95,0)
             click()
             if not image_appeared("left.png"):
                 image_click("dias.png")
@@ -222,7 +227,7 @@ class BBR:
         hoy = self.issued_day
         if hoy.day-num_days <= 0:
             image_click("left.png")
-            self.date_go_last()
+            self.date_go_last(isSecondCalendar=False)
             for i in range(num_days - hoy.day - 1):
                 time_wait(100)
                 press(LEFT)
@@ -289,16 +294,24 @@ class BBR:
             press(TAB)
 
     def check_if_updated(self):
-        if image_appeared("cerrar.png"):
-            image_click("cerrar.png")
+        while True:
+            if image_appeared("cerrar.png"):
+                image_click("cerrar.png")
+            else:
+                break
+            time_wait(1500)
         self.pre_checker_procedure()
         if self.enable_newBBR or self.enable_SalesClick:
             image_click("carga_datos.png")
+        time_wait(5000)
         if not image_appeared("ventas_hover.png"):
             send_action_simple(9,11)
             tcp_send("HIBERN")
             abort("Portal no actualizado")
+        time_wait(5000)
         image_hover("ventas_hover.png")
+        mouse_get_x()
+        mouse_get_y()
         m = self.checker_data["mouse_move"]
         s = self.checker_data["screenshot_save_crop"]
         mouse_move(m[0], m[1])
@@ -351,7 +364,10 @@ class BBR:
         if not image_appeared("fecha.png"):
             if image_appeared("cerrar.png"):
                 image_click("cerrar.png")
-        time_wait(30000)
+        if not self.enable_newBBR:
+            time_wait(30000)
+        else:
+            time_wait(5000)
 
     def zolconvert(self,isStock,name):
         unzip(name,STOCK_FILE_FORMAT)
@@ -377,7 +393,7 @@ class BBR:
         image_click("fecha.png")
         if self.custom_date:
             self.date_click_dynamic(self.date1)
-            image_click("fecha2")
+            image_click("fecha2.png")
             self.date_click_dynamic(self.date2,isSecondCalendar=True)
         else:
             self.date_click(7)
@@ -424,7 +440,7 @@ class BBR:
         time_wait(2000)
         image_click("save.png")
         time_wait(2000)
-        self.zolconvert(False,name1)
+        # self.zolconvert(False,name1)
         send_action_simple(4, 0, num_files=1)
         matrix_set("SALES",True)
 
@@ -436,8 +452,6 @@ class BBR:
             press(RIGHT)
             time_wait(100)
         if self.enable_newBBR:
-            time_wait(100)
-            press(RIGHT)
             time_wait(100)
             press(ENTER)
         time_wait(100)
@@ -464,7 +478,7 @@ class BBR:
         time_wait(2000)
         image_click("save.png")
         time_wait(30000)
-        self.zolconvert(True,name)
+        # self.zolconvert(True,name)
         send_action_simple(4, 0, num_files=2)
         matrix_set("STOCK",True)
         time_wait(2000)
@@ -500,7 +514,7 @@ class BBR:
             press(ENTER)
         time_wait(100)
         press(TAB)
-        image_click("fecha2")
+        image_click("fecha2.png")
         time_wait(1000)
         image_click("left.png")
         self.date_go_last()
