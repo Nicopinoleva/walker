@@ -13,7 +13,6 @@ if __name__ == "__main__":
 	"descripcion_local","venta_unidad","venta_monto",
 	"venta_costo","inventario_unidad",
 	"inventario_monto","contribucion"]
-
 	try:
 		#print(sys.argv)
 		encode = sys.argv[1]
@@ -29,6 +28,7 @@ if __name__ == "__main__":
 		conversion_mon = sys.argv[11]
 		decimal_mon = sys.argv[12]
 		nombre_archivo = sys.argv[13]
+		
 	except Exception as excep:
 		exceptionDefinition(excep, 1)
 		sys.exit(1)

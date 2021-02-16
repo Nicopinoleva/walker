@@ -28,6 +28,9 @@ def account_special():
 ABCDin = BBR()
 ABCDin.PORTAL = "ABCDIN"
 ABCDin.passid = "password"
+ABCDin.enable_newBBR = True
+ABCDin.enable_recaptcha = True
+ABCDin.site_key = "6Le6POkUAAAAAPrhWc5b14fntw6TCU1tRgEKaLnk"
 ABCDin.login_verify = True
 ABCDin.account_procedure = account_special
 ABCDin.run()

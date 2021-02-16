@@ -15,6 +15,7 @@ def boton_azul_procedure():
     image_click("descargar.png")
     time_wait(5000)
     image_wait("listo.png")
+    image_click("listo.png")
     press(TAB)
     press(ENTER)
     # if image_appeared("error_reporte.png"):
@@ -40,6 +41,7 @@ def boton_verde_procedure():
     image_click("si.png")
     time_wait(5000)
     image_wait("listo.png")
+    image_click("listo.png")
     press(TAB)
     press(ENTER)
 

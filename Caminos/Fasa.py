@@ -42,6 +42,7 @@ obj.PORTAL = "FASA"
 obj.passid = "password"
 obj.delay_days_tolerance = 1
 obj.enable_extra_calendar = True
+obj.enable_special_extra_calendar = True
 obj.account_procedure = account_special
 obj.pre_ventas_procedure = pre_ventas_procedure
 obj.pre_inventario_procedure = pre_inventario_procedure

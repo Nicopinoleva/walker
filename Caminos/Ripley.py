@@ -164,7 +164,7 @@ def download_week(num_days):
     type(get_download_directory() + filename)
     press(ENTER)
     time_wait(5000)
-    data=get_zolbit_format(ENCODING, FILE_TYPE, SALES_FILE_FORMAT, SALES_ORDER, SALES_DELIMITATOR, SALES_HEADER, SALES_DATE_FORMAT, get_download_directory(), 
+    data=get_zolbit_format(ENCODING, FILE_TYPE[:2], SALES_FILE_FORMAT, SALES_ORDER, SALES_DELIMITATOR, SALES_HEADER, SALES_DATE_FORMAT, get_download_directory(), 
                 SALES_UNITS_CONVERSION, SALES_UNITS_DECIMAL, SALES_AMOUNT_CONVERSION, SALES_AMOUNT_DECIMAL, filename+SALES_FILE_FORMAT)
     print(data)
     temp=data.split(';')
@@ -173,6 +173,7 @@ def download_week(num_days):
     zipper(filename,filename+SALES_FILE_FORMAT)
     zipper('Z'+filename,'Z'+filename+SALES_FILE_FORMAT)
     tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")+1) + "   '" + filename + ".zip' " + temp[1][:2])
+    # tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")+1) + "   '" + filename + ".csv'")
     send_action_simple(4, 0, matrix_get("DOWNLOAD_COUNT")+1)
     time_wait(1000)
     matrix_set("DOWNLOAD_COUNT",matrix_get("DOWNLOAD_COUNT")+1)
@@ -207,18 +208,20 @@ def download_stock():
     b2b = "B2B"
     dia = "DIA"
     inventario_filename = make_filename(RUT_EMPRESA, ayer_slugy, ayer_slugy, ayer_slugy, NOMBRE_EMPRESA, portal, b2b, dia, "INV")
+    zolname = make_filename(RUT_EMPRESA, ayer_slugy, ayer_slugy, NOMBRE_EMPRESA, portal, b2b, dia, "INV")
     type(get_download_directory() + inventario_filename)
     press(ENTER)
     time_wait(5000)
-    data=get_zolbit_format(ENCODING, FILE_TYPE, STOCK_FILE_FORMAT, STOCK_ORDER, STOCK_DELIMITATOR, STOCK_HEADER, STOCK_DATE_FORMAT, get_download_directory(), 
+    data=get_zolbit_format(ENCODING, FILE_TYPE[2:], STOCK_FILE_FORMAT, STOCK_ORDER, STOCK_DELIMITATOR, STOCK_HEADER, STOCK_DATE_FORMAT, get_download_directory(), 
                 STOCK_UNITS_CONVERSION, STOCK_UNITS_DECIMAL, STOCK_AMOUNT_CONVERSION, STOCK_AMOUNT_DECIMAL, inventario_filename+STOCK_FILE_FORMAT)
     print(data)
     temp=data.split(';')
     print(temp[1][:2])
     time_wait(5000)
     zipper(inventario_filename,inventario_filename+STOCK_FILE_FORMAT)
-    zipper('Z'+inventario_filename,'Z'+inventario_filename+STOCK_FILE_FORMAT)
+    zipper('Z'+inventario_filename,'Z'+zolname+STOCK_FILE_FORMAT)
     tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")+1) + "   '" + inventario_filename + ".zip' " + temp[1][:2])
+    # tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")+1) + "   '" + inventario_filename + ".csv'")
     send_action_simple(4, 0, matrix_get("DOWNLOAD_COUNT")+1)
     matrix_set("DOWNLOAD_COUNT",matrix_get("DOWNLOAD_COUNT")+1)
     time_wait(5000)

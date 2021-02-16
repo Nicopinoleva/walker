@@ -566,13 +566,21 @@ def unzip(file,extension):
     zf.close()
     os.rename(get_download_directory()+name_in_zip[0],get_download_directory()+file+extension)
 
-def zipper(name,file):
-    print("Nombre del zip-->{}".format(name))
-    zf = zipfile.ZipFile(get_download_directory()+name+'.zip','w',zipfile.ZIP_DEFLATED)
-    print("Archivo a zippear-->{}".format(get_download_directory()+file))
-    zf.write(get_download_directory()+file,file)
-    print(zf.namelist())
-    zf.close()
+def zipper(name,file,filelist=[]):
+    try:
+        print("Zip name-->{}".format(name))
+        zf = zipfile.ZipFile(get_download_directory()+name+'.zip','w',zipfile.ZIP_DEFLATED)
+        if len(filelist)==0:
+            print("File to zip-->{}".format(get_download_directory()+file))
+            zf.write(get_download_directory()+file,file)
+        else:
+            for x in range(len(filelist)):
+                print("File to zip-->{}".format(get_download_directory()+filelist[x]))
+                zf.write(get_download_directory()+filelist[x],filelist[x])
+        print(zf.namelist())
+        zf.close()
+    except Exception as e:
+        traceback.print_exc()
 
 # ==== CUSTOM FUNCTIONS LOADING ====
 

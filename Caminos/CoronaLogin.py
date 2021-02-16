@@ -22,5 +22,8 @@ obj = BBR()
 obj.PORTAL = "CORONA"
 obj.passid = "password"
 obj.login_verify = True
+obj.enable_newBBR = True
+obj.enable_recaptcha = True
+obj.site_key = "6Le6POkUAAAAAPrhWc5b14fntw6TCU1tRgEKaLnk"
 obj.account_procedure = account_special
 obj.run() 

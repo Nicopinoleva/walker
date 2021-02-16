@@ -9,6 +9,7 @@ class BBR:
         self.passid = "UNDEFINED"
         self.SIGLA = NOMBRE_EMPRESA
         self.enable_extra_calendar = False
+        self.enable_special_extra_calendar = False
         self.enable_checker = True
         self.enable_error = False
         self.enable_recaptcha = False
@@ -88,8 +89,8 @@ class BBR:
         else:
             image_click("ingresar.png")
         self.account_procedure()
-        result = image_wait_multiple("badlogin.png", "comercial.png", "cerrar.png")
-        if result == "badlogin.png":
+        result = image_wait_multiple("badlogin.png", "comercial.png", "cerrar.png", "baduser.png")
+        if result in ["badlogin.png", "baduser.png"]:
             #Caso de bad login
             send_action_simple(1, 1)
             sname = "{}_{}".format("LOGIN", self.PORTAL)
@@ -141,8 +142,8 @@ class BBR:
         else:
             image_click("ingresar.png")
         self.account_procedure()
-        result = image_wait_multiple("badlogin.png", "comercial.png", "cerrar.png")
-        if result == "badlogin.png":
+        result = image_wait_multiple("badlogin.png", "comercial.png", "cerrar.png", "baduser.png")
+        if result in ["badlogin.png", "baduser.png"]:
             #Caso de bad login
             send_action_simple(1, 1)
             sname = "{}_{}".format("LOGIN", self.PORTAL)
@@ -181,11 +182,13 @@ class BBR:
         else:
             send_action_simple(1,13)
 
-    def date_go_last(self,isSecondCalendar = True):
+    def date_go_last(self,isSecondCalendar = True, isFirstCalendar = False):
         if self.enable_newBBR:
             hoy = self.issued_day
             nueva_fecha = get_previous_month(today())
             dia = get_last_day_of_month(nueva_fecha)
+            if self.enable_special_extra_calendar and not isSecondCalendar and not isFirstCalendar:
+                self.date_go_first()
             if isSecondCalendar:
                 for i in range(dia - hoy.day):
                     time_wait(100)
@@ -213,7 +216,7 @@ class BBR:
             time_wait(100)
             press(LEFT)
 
-    def date_click(self, num_days, isextraCalendar = False):
+    def date_click(self, num_days, isextraCalendar = False, isFirstCalendar = False):
         if isextraCalendar:
             image_click("dias.png")
             mouse_move(95,0)
@@ -227,7 +230,10 @@ class BBR:
         hoy = self.issued_day
         if hoy.day-num_days <= 0:
             image_click("left.png")
-            self.date_go_last(isSecondCalendar=False)
+            if isFirstCalendar:
+                self.date_go_last(isSecondCalendar=False,isFirstCalendar=True)
+            else:
+                self.date_go_last(isSecondCalendar=False)
             for i in range(num_days - hoy.day - 1):
                 time_wait(100)
                 press(LEFT)
@@ -235,9 +241,16 @@ class BBR:
                 press(ENTER)
         else:
             if isextraCalendar:
-                for i in range(num_days - 1):
-                    time_wait(100)
-                    press(LEFT)   
+                if self.enable_special_extra_calendar:
+                    for i in range(num_days - 1):
+                        time_wait(100)
+                        press(LEFT)
+                else:
+                    for i in range(hoy.day-num_days):
+                        time_wait(100)
+                        press(RIGHT)
+                if self.enable_newBBR:
+                    press(ENTER) 
             else:
                 nueva_fecha = subtract_days(hoy, num_days)
                 for i in range(nueva_fecha.day):
@@ -372,13 +385,18 @@ class BBR:
     def zolconvert(self,isStock,name):
         unzip(name,STOCK_FILE_FORMAT)
         if isStock:
-            data=get_zolbit_format(ENCODING, FILE_TYPE, STOCK_FILE_FORMAT, STOCK_ORDER, STOCK_DELIMITATOR, STOCK_HEADER, STOCK_DATE_FORMAT, get_download_directory(), 
+            data=get_zolbit_format(ENCODING, FILE_TYPE[2:], STOCK_FILE_FORMAT, STOCK_ORDER, STOCK_DELIMITATOR, STOCK_HEADER, STOCK_DATE_FORMAT, get_download_directory(), 
                 STOCK_UNITS_CONVERSION, STOCK_UNITS_DECIMAL, STOCK_AMOUNT_CONVERSION, STOCK_AMOUNT_DECIMAL, name+STOCK_FILE_FORMAT)
             print(data)
             time_wait(5000)
-            zipper('Z'+name,'Z'+name+STOCK_FILE_FORMAT)
+            nueva_fecha2 = self.issued_day
+            if self.enable_customRename:
+                stockname = RUT_EMPRESA +  "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + self.marca + "_"+self.PORTAL+"_"+self.SIGLA+"_B2B_DIA_INV"
+            else:
+                stockname = RUT_EMPRESA +  "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + self.SIGLA +  "_"+self.PORTAL+"_B2B_DIA_INV"
+            zipper('Z'+name,'Z'+stockname+STOCK_FILE_FORMAT)
         else:
-            data=get_zolbit_format(ENCODING, FILE_TYPE, SALES_FILE_FORMAT, SALES_ORDER, SALES_DELIMITATOR, SALES_HEADER, SALES_DATE_FORMAT, get_download_directory(), 
+            data=get_zolbit_format(ENCODING, FILE_TYPE[:2], SALES_FILE_FORMAT, SALES_ORDER, SALES_DELIMITATOR, SALES_HEADER, SALES_DATE_FORMAT, get_download_directory(), 
                 SALES_UNITS_CONVERSION, SALES_UNITS_DECIMAL, SALES_AMOUNT_CONVERSION, SALES_AMOUNT_DECIMAL, name+SALES_FILE_FORMAT)
             print(data)
             time_wait(5000)
@@ -393,10 +411,10 @@ class BBR:
         image_click("fecha.png")
         if self.custom_date:
             self.date_click_dynamic(self.date1)
-            image_click("fecha2.png")
+            image_click("fecha2")
             self.date_click_dynamic(self.date2,isSecondCalendar=True)
         else:
-            self.date_click(7)
+            self.date_click(7,isFirstCalendar=True)
         self.pre_ventas_procedure()
         self.marca_procedure(num)
         image_click("generar_informe.png")
@@ -440,7 +458,7 @@ class BBR:
         time_wait(2000)
         image_click("save.png")
         time_wait(2000)
-        # self.zolconvert(False,name1)
+        self.zolconvert(False,name1)
         send_action_simple(4, 0, num_files=1)
         matrix_set("SALES",True)
 
@@ -478,7 +496,7 @@ class BBR:
         time_wait(2000)
         image_click("save.png")
         time_wait(30000)
-        # self.zolconvert(True,name)
+        self.zolconvert(True,name)
         send_action_simple(4, 0, num_files=2)
         matrix_set("STOCK",True)
         time_wait(2000)
@@ -514,6 +532,7 @@ class BBR:
             press(ENTER)
         time_wait(100)
         press(TAB)
+        time_wait(2000)
         image_click("fecha2.png")
         time_wait(1000)
         image_click("left.png")

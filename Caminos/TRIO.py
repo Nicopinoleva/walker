@@ -161,10 +161,7 @@ class TRIO:
 
     def download(self):
         time_wait(2500)
-        while True:
-            tcp_send("ESPERO")
-            if not image_appeared("Waiting.png"):
-                break
+        image_gone_wait("Waiting.png", timeout = int(TIMEOUT)*3)
         if self.pop_up:
             image_click("Pop_up_kill_dashboard.png")
         press(PAGE_DOWN)
@@ -186,10 +183,7 @@ class TRIO:
         if matrix_get("SSHOT_1"):
             self.change_units()
         image_click("Consultar.png")
-        while True:
-            tcp_send("ESPERO")
-            if not image_appeared("Waiting.png"):
-                break
+        image_gone_wait("Waiting.png")
         if self.pop_up:
             image_click("Pop_up_kill_dashboard.png")
         time_wait(2500)
@@ -262,6 +256,8 @@ class TRIO:
             else:
                 filename = "{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut[0],fecha1,fecha1,fecha1,NOMBRE_EMPRESA,self.PORTAL,"B2B","INV")
         else:
+            fecha1 = date_to_string(subtract_days(today(),file_num+1+get_weekday_as_int()),"%Y%m%d")
+            fecha2 = date_to_string(subtract_days(today(),7+get_weekday_as_int()),"%Y%m%d")
             if isinstance(self.rut, basestring):
                 filename = "{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut,fecha2,fecha1,fecha1,NOMBRE_EMPRESA,self.PORTAL,"B2B","INV")
             else:
@@ -270,7 +266,51 @@ class TRIO:
         image_click("Save.png")
         time_wait(5000)
         matrix_set("DOWNLOAD_COUNT",file_num+1)
-        tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")) +"   '" + filename + ".txt'")
+        data=get_zolbit_format(ENCODING, FILE_TYPE[:2], SALES_FILE_FORMAT, SALES_ORDER, SALES_DELIMITATOR, SALES_HEADER, SALES_DATE_FORMAT, get_download_directory(), 
+                SALES_UNITS_CONVERSION, SALES_UNITS_DECIMAL, SALES_AMOUNT_CONVERSION, SALES_AMOUNT_DECIMAL, filename+SALES_FILE_FORMAT)
+        print(data)
+        temp=data.split(';')
+        print(temp[1][:2])
+        time_wait(5000)
+        zipper(filename,filename+SALES_FILE_FORMAT)
+        if self.special_download == "DAILY":
+            if isinstance(self.rut, basestring):
+                filenamezip = "{}_{}_{}_{}_{}_{}_{}".format(self.rut,fecha1,fecha1,NOMBRE_EMPRESA,self.PORTAL,"B2B","INV")
+            else:
+                filenamezip = "{}_{}_{}_{}_{}_{}_{}".format(self.rut[0],fecha1,fecha1,NOMBRE_EMPRESA,self.PORTAL,"B2B","INV")
+            zipper('Z'+filename,'Z'+filenamezip+".csv")
+            tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")) +"   '" + filename + ".txt'")
+        else:
+            if isinstance(self.rut, basestring):
+                filelist = ["Z{}_{}_{}_{}_{}_{}_{}{}".format(self.rut,fecha1,fecha1,NOMBRE_EMPRESA,self.PORTAL,"B2B","INV",".csv"),
+                "Z{}_{}_{}_{}_{}_{}_{}{}".format(self.rut,date_to_string(subtract_days(today(),2+get_weekday_as_int()),"%Y%m%d"),
+                    date_to_string(subtract_days(today(),2+get_weekday_as_int()),"%Y%m%d"),NOMBRE_EMPRESA,self.PORTAL,"B2B","INV",".csv"),
+                "Z{}_{}_{}_{}_{}_{}_{}{}".format(self.rut,date_to_string(subtract_days(today(),3+get_weekday_as_int()),"%Y%m%d"),
+                    date_to_string(subtract_days(today(),3+get_weekday_as_int()),"%Y%m%d"),NOMBRE_EMPRESA,self.PORTAL,"B2B","INV",".csv"),
+                "Z{}_{}_{}_{}_{}_{}_{}{}".format(self.rut,date_to_string(subtract_days(today(),4+get_weekday_as_int()),"%Y%m%d"),
+                    date_to_string(subtract_days(today(),4+get_weekday_as_int()),"%Y%m%d"),NOMBRE_EMPRESA,self.PORTAL,"B2B","INV",".csv"),
+                "Z{}_{}_{}_{}_{}_{}_{}{}".format(self.rut,date_to_string(subtract_days(today(),5+get_weekday_as_int()),"%Y%m%d"),
+                    date_to_string(subtract_days(today(),5+get_weekday_as_int()),"%Y%m%d"),NOMBRE_EMPRESA,self.PORTAL,"B2B","INV",".csv"),
+                "Z{}_{}_{}_{}_{}_{}_{}{}".format(self.rut,date_to_string(subtract_days(today(),6+get_weekday_as_int()),"%Y%m%d"),
+                    date_to_string(subtract_days(today(),6+get_weekday_as_int()),"%Y%m%d"),NOMBRE_EMPRESA,self.PORTAL,"B2B","INV",".csv"),
+                "Z{}_{}_{}_{}_{}_{}_{}{}".format(self.rut,date_to_string(subtract_days(today(),7+get_weekday_as_int()),"%Y%m%d"),
+                    date_to_string(subtract_days(today(),7+get_weekday_as_int()),"%Y%m%d"),NOMBRE_EMPRESA,self.PORTAL,"B2B","INV",".csv")]
+            else:
+                filelist = ["Z{}_{}_{}_{}_{}_{}_{}{}".format(self.rut[0],fecha1,fecha1,NOMBRE_EMPRESA,self.PORTAL,"B2B","INV",".csv"),
+                "Z{}_{}_{}_{}_{}_{}_{}{}".format(self.rut[0],date_to_string(subtract_days(today(),2+get_weekday_as_int()),"%Y%m%d"),
+                    date_to_string(subtract_days(today(),2+get_weekday_as_int()),"%Y%m%d"),NOMBRE_EMPRESA,self.PORTAL,"B2B","INV",".csv"),
+                "Z{}_{}_{}_{}_{}_{}_{}{}".format(self.rut[0],date_to_string(subtract_days(today(),3+get_weekday_as_int()),"%Y%m%d"),
+                    date_to_string(subtract_days(today(),3+get_weekday_as_int()),"%Y%m%d"),NOMBRE_EMPRESA,self.PORTAL,"B2B","INV",".csv"),
+                "Z{}_{}_{}_{}_{}_{}_{}{}".format(self.rut[0],date_to_string(subtract_days(today(),4+get_weekday_as_int()),"%Y%m%d"),
+                    date_to_string(subtract_days(today(),4+get_weekday_as_int()),"%Y%m%d"),NOMBRE_EMPRESA,self.PORTAL,"B2B","INV",".csv"),
+                "Z{}_{}_{}_{}_{}_{}_{}{}".format(self.rut[0],date_to_string(subtract_days(today(),5+get_weekday_as_int()),"%Y%m%d"),
+                    date_to_string(subtract_days(today(),5+get_weekday_as_int()),"%Y%m%d"),NOMBRE_EMPRESA,self.PORTAL,"B2B","INV",".csv"),
+                "Z{}_{}_{}_{}_{}_{}_{}{}".format(self.rut[0],date_to_string(subtract_days(today(),6+get_weekday_as_int()),"%Y%m%d"),
+                    date_to_string(subtract_days(today(),6+get_weekday_as_int()),"%Y%m%d"),NOMBRE_EMPRESA,self.PORTAL,"B2B","INV",".csv"),
+                "Z{}_{}_{}_{}_{}_{}_{}{}".format(self.rut[0],date_to_string(subtract_days(today(),7+get_weekday_as_int()),"%Y%m%d"),
+                    date_to_string(subtract_days(today(),7+get_weekday_as_int()),"%Y%m%d"),NOMBRE_EMPRESA,self.PORTAL,"B2B","INV",".csv")]
+            zipper('Z'+filename,'Z'+filename+".csv",filelist)
+            tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")) +"   '" + filename + ".zip'" + " " + temp[1][:2])
 
     def run(self):
         if not self.login_verify:

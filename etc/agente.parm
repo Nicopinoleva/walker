@@ -1,11 +1,11 @@
 # V1.01.00
 # Parametros para ejecucion local (sin bus)
 #
- <rut> 921390009 </rut>               \#/ RUT empresa
- <ena> UC </ena>             \#/ Sigla empresa
- <usr> mcardenas@sindelen.cl </usr>           \#/ Usuario portal
- <psw> Unimarc22 </psw>         \#/ Password
- <url> https://b2b.smu.cl/Supermercados/BBRe-commerce/access/login.do </url>         \#/ URL portal
+ <rut> 766106706 </rut>               \#/ RFasa.py </jar> 
+ <ena> JU </ena>             \#/ Sigla empresa
+ <usr> 109691127 </usr>           \#/ Usuario portal
+ <psw> septiembre2020 </psw>         \#/ Password
+ <url> https://www.fasab2b.com/FasaCL/BBRe-commerce/access/login.do </url>         \#/ URL portal
  <pid> 1006 </pid>          \#/ Portal id
  <pna> Jumbo </pna>            \#/ Portal name
  <cna> AGROAPICULTURA </cna>            \#/ Client name
@@ -15,7 +15,7 @@
  <hdi> 31 </hdi>                \#/ History days
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
- <jar> /Sikulix/Engine/Walker.jar /Sikulix/Unimarc.py </jar>  \#/ road
+ <jar> /Sikulix/Engine/Walker.jar /Sikulix/Fasa.py </jar>  \#/ road
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo
@@ -44,7 +44,7 @@
  <ava> 1 </ava>           \#/ Avanzar 
  <fre> 1 </fre>           \#/ Frecuencia reporte
  <rus> seluser </rus>     \#/ Remote user
- <fpo> 22122 </fpo>       \#/ Files server port
+ <fip> 22122 </fip>       \#/ Files server port
  <shp> 22122 </shp>       \#/ Sshot server port
  <spo> 22122 </spo>       \#/ ssh port
  <met> 900 </met>         \#/ Max exec time (min)
@@ -55,8 +55,8 @@
  <dpa> /home/seluser/Downloads  </dpa>    \#/ Download path
  <spa> /home/seluser/Screenshots </spa>   \#/ Screenshot path
  <zrp> /home/seluser/WALKER/zolbit </zrp> \#/ zolbitfile remote path
- <fus> walk </fus>
- <fip> 127.0.0.1 </fip>
+ <fus> </fus>
+ <fpo> </fpo>
  <frp> /home/seluser/WALKER/files </frp>  \#/ files remote path
  <fid> walk@127.0.0.1:/home/seluser/WALKER/files </fid>  \#/ files dest
  <shd> walk@127.0.0.1:/home/seluser/WALKER/sshot </shd>  \#/ sshot dest

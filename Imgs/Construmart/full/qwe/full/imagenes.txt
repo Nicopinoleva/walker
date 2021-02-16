@@ -1,0 +1,21 @@
+ error.png
+reload.png
+username.png
+ingresar.png
+badlogin.png
+comercial.png
+cerrar.png
+cerrar2.png
+comercial.png
+dias.png
+left.png
+ventas_hover.png
+waiting.png
+ventas.png
+fecha.png
+fecha2
+generar_informe.png
+boton_azul.png
+boton_verde.png
+dlprompt.png
+save.png

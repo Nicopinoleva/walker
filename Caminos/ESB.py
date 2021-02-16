@@ -244,10 +244,19 @@ class ESB:
                 filename = "{}_{}_{}_{}_{}_{}_{}_{}".format(RUT_EMPRESA, self._fecha_guardada, self._fecha_guardada, NOMBRE_EMPRESA, self.PORTAL, "B2B", "DIA", "BRUTO")
                 type(get_download_directory() + filename)
                 press(ENTER)
-                time_wait(1000)
-                send_action_simple(4, 0, get_downloads_count())
                 time_wait(3000)
-                tcp_send("SNDFIL" + str(get_downloads_count()) +"   '" + filename + ".xls'")
+                data=get_zolbit_format(ENCODING, FILE_TYPE[:2], SALES_FILE_FORMAT, SALES_ORDER, SALES_DELIMITATOR, SALES_HEADER, SALES_DATE_FORMAT, get_download_directory(), 
+                    SALES_UNITS_CONVERSION, SALES_UNITS_DECIMAL, SALES_AMOUNT_CONVERSION, SALES_AMOUNT_DECIMAL, filename+SALES_FILE_FORMAT)
+                print(data)
+                temp=data.split(';')
+                print(temp[1][:2])
+                time_wait(5000)
+                zipper(filename,filename+SALES_FILE_FORMAT)
+                zipper('Z'+filename,'Z'+filename+'.csv')
+                tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")+1) +"   '" + filename + ".zip' " + temp[1][:2])
+                # tcp_send("SNDFIL" + str(get_downloads_count()) +"   '" + filename + ".xls'")
+                send_action_simple(4, 0, matrix_get("DOWNLOAD_COUNT")+1)
+                matrix_set("DOWNLOAD_COUNT",matrix_get("DOWNLOAD_COUNT")+1)
                 break
             elif result == "sin_resultados.png":
                 send_action_simple(3,9,get_downloads_count()+1,int(fecha[0]+fecha[1]))
@@ -301,8 +310,18 @@ class ESB:
         type(get_download_directory() + filename)
         press(ENTER)
         time_wait(20000)
-        send_action_simple(4, 0, get_downloads_count())
-        tcp_send("SNDFIL" + str(get_downloads_count()) +"   '" + filename + ".xls'")
+        data=get_zolbit_format(ENCODING, FILE_TYPE[2:], STOCK_FILE_FORMAT, STOCK_ORDER, STOCK_DELIMITATOR, STOCK_HEADER, STOCK_DATE_FORMAT, get_download_directory(), 
+                STOCK_UNITS_CONVERSION, STOCK_UNITS_DECIMAL, STOCK_AMOUNT_CONVERSION, STOCK_AMOUNT_DECIMAL, filename+STOCK_FILE_FORMAT)
+        print(data)
+        temp=data.split(';')
+        print(temp[1][:2])
+        time_wait(5000)
+        zipper(filename,filename+STOCK_FILE_FORMAT)
+        zipper('Z'+filename,'Z'+filename+'.csv')
+        tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")+1) +"   '" + filename + ".zip' " + temp[1][:2])
+        # tcp_send("SNDFIL" + str(get_downloads_count()) +"   '" + filename + ".xls'")
+        send_action_simple(4, 0, matrix_get("DOWNLOAD_COUNT")+1)
+        matrix_set("DOWNLOAD_COUNT",matrix_get("DOWNLOAD_COUNT")+1)
         tcp_send("FINISH0")
         close_explorer()
 
@@ -315,7 +334,7 @@ class ESB:
             if not matrix_get("SSHOT_2"):
                 self.screenshot()
             self.get_file_dashboard()
-            for x in range (get_downloads_count(),7):
+            for x in range (matrix_get("DOWNLOAD_COUNT"),7):
                 self.get_file(x)
             self.get_inventario()
         else:

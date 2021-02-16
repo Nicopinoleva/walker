@@ -20,6 +20,9 @@ def account_special():
 obj = BBR()
 obj.PORTAL = "UNIMARC"
 obj.passid = "password"
+obj.enable_newBBR = True
+obj.enable_recaptcha = True
+obj.site_key = "6Le6POkUAAAAAPrhWc5b14fntw6TCU1tRgEKaLnk"
 obj.login_verify = True
 obj.account_procedure = account_special
 obj.run()
