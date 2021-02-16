@@ -374,9 +374,9 @@ class BBR:
             send_action_simple(9, 12)
         image_click("ventas.png")
         time_wait(3000)
-        if not image_appeared("fecha.png"):
-            if image_appeared("cerrar.png"):
-                image_click("cerrar.png")
+        # if not image_appeared("fecha.png"):
+        if image_appeared("cerrar.png"):
+            image_click("cerrar.png")
         if not self.enable_newBBR:
             time_wait(30000)
         else:
