@@ -616,7 +616,7 @@ class BBR:
             image_wait("cerrar.png")
             press(TAB)
             time_wait(500)
-            for x in range(3):
+            for x in range(2):
                 press(DOWN)
                 time_wait(500)
             press(TAB)
