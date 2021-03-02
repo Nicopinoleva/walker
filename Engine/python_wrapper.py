@@ -445,6 +445,11 @@ def get_zolbit_format(encoding, file_type, file_format, order, delimitator, head
         units_decimal, amount_conversion, amount_decimal, file_name])
     return output
 
+def get_zolbit_format_trio(file_path):
+    import subprocess
+    output = subprocess.check_output(["python3", ABSOLUTE_PATH + "unify.py", file_path])
+    return output
+
 # === MOUSE FUNCTIONS ===
 
 @image_based_function

@@ -312,6 +312,18 @@ class TRIO:
             zipper('Z'+filename,'Z'+filename+".csv",filelist)
             tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")) +"   '" + filename + ".zip'" + " " + temp[1][:2])
 
+    def zolconvert(self,file_path):
+    	data=get_zolbit_format_trio(file_path)
+    	print(data)
+    	if isinstance(self.rut, basestring):
+            filename = "{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut,self.fecha1,self.fecha2,NOMBRE_EMPRESA,self.PORTAL,"B2B","DIA","INV")
+    	else:
+            filename = "{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut[0],self.fecha1,self.fecha2,NOMBRE_EMPRESA,self.PORTAL,"B2B","DIA","INV")
+        temp=data.split(';')
+        print(temp[1][:2])
+        zipper('Z'+filename,'Z'+filename+SALES_FILE_FORMAT)
+    	tcp_send("SNDFIL" + str(get_downloads_count()) + "    'Z" + filename + ".zip'" + " " + temp[1][:2])
+
     def run(self):
         if not self.login_verify:
             self.login()
@@ -332,6 +344,7 @@ class TRIO:
                     self.get_to_dashboard()
                     self.dashboard()
                 self.get_files(0,get_downloads_count(),int(NUM_LOCALES))
+                self.zolconvert(get_download_directory())
             tcp_send("FINISH0")
             close_explorer()
         else:

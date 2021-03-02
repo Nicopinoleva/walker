@@ -43,7 +43,7 @@ def login():
     image_click("entrar.png")
     time_wait(2000) 
     while(1):
-        result = image_wait_multiple("badlogin.png", "portalcheck.png", "elegir_prove.png")
+        result = image_wait_multiple("badlogin.png", "portalcheck.png", "elegir_prove.png", "baduser.png")
         if result == "badlogin.png":
             #Caso de bad login
             send_action_simple(1, 1)
@@ -66,6 +66,15 @@ def login():
             press(DOWN)
             press(DOWN)
             image_click("entrar.png")
+        elif: result == "baduser.png":
+            send_action_simple(1, 15)
+            sname = make_filename("ERROR", "LOGIN", portal)
+            screenshot_save(sname)
+            tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
+            tcp_send("SNDPIC1 /home/seluser/Screenshots/" + log_sshot + ".png")
+            tcp_send("FINISH15")
+            abort("Credenciales de login erroneas.")
+            break
         else:
             #Caso de timeout
             send_action_simple(9, 3)
