@@ -161,7 +161,11 @@ class TRIO:
 
     def download(self):
         time_wait(2500)
-        image_gone_wait("Waiting.png", timeout = int(TIMEOUT)*3)
+        while True:
+            tcp_send("ESPERO")
+            if not image_appeared("Waiting.png"):
+                break
+            log("INFO", "[" + OPTION_LOG_ID + "] Waiting for report")
         if self.pop_up:
             image_click("Pop_up_kill_dashboard.png")
         press(PAGE_DOWN)
@@ -183,7 +187,11 @@ class TRIO:
         if matrix_get("SSHOT_1"):
             self.change_units()
         image_click("Consultar.png")
-        image_gone_wait("Waiting.png")
+        while True:
+            tcp_send("ESPERO")
+            if not image_appeared("Waiting.png"):
+                break
+            log("INFO", "[" + OPTION_LOG_ID + "] Waiting for report")
         if self.pop_up:
             image_click("Pop_up_kill_dashboard.png")
         time_wait(2500)
@@ -280,6 +288,7 @@ class TRIO:
                 filenamezip = "{}_{}_{}_{}_{}_{}_{}".format(self.rut[0],fecha1,fecha1,NOMBRE_EMPRESA,self.PORTAL,"B2B","INV")
             zipper('Z'+filename,'Z'+filenamezip+".csv")
             tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")) +"   '" + filename + ".txt'")
+            tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")) +"   'Z" + filename + ".zip'" + " " + temp[1][:2])
         else:
             if isinstance(self.rut, basestring):
                 filelist = ["Z{}_{}_{}_{}_{}_{}_{}{}".format(self.rut,fecha1,fecha1,NOMBRE_EMPRESA,self.PORTAL,"B2B","INV",".csv"),

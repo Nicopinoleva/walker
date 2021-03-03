@@ -10,6 +10,7 @@ def substract_day(date, num):
 
 def custom_date_to_string(date):
     return date.strftime("%d-%m-%Y")
+
 def format_date_screenshot(date):
     return date.strftime("%Y%m%d")
 
@@ -66,7 +67,7 @@ def login():
             press(DOWN)
             press(DOWN)
             image_click("entrar.png")
-        elif: result == "baduser.png":
+        elif result == "baduser.png":
             send_action_simple(1, 15)
             sname = make_filename("ERROR", "LOGIN", portal)
             screenshot_save(sname)
@@ -241,6 +242,9 @@ if not matrix_get("SSHOT_1"):
     screenshot("1")
 if not matrix_get("SSHOT_2"):
     screenshot("2")
+if matrix_get("DOWNLOAD_STARTED") == False:
+    send_action_simple(3, 0)
+    matrix_set("DOWNLOAD_STARTED",True)
 if not matrix_get("SALES"):
     for x in range (int(matrix_get("DOWNLOAD_COUNT")),7):
         download_week(x)
