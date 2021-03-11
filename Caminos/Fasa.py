@@ -24,37 +24,32 @@ def login():
     pre_login_screenshot(log_sshot)
     image_click("ingresar.png")
     time_wait(2000)
-    while(True):
-        result = image_wait_multiple("badlogin.png", "comercial.png", "baduser.png")
-        if result == "badlogin.png":
-            #Caso de bad login
-            send_action_simple(1, 1)
-            sname = make_filename("ERROR", "LOGIN", PORTAL)
-            screenshot_save(sname)
-            tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
-            tcp_send("SNDPIC1 /home/seluser/Screenshots/" + log_sshot + ".png")
-            tcp_send("FINISH1")
-            abort("Credenciales de login erroneas.")
-            break
-        elif result == "comercial.png":
-            #Caso de login OK
-            send_action_simple(1, 0)
-            matrix_set("LOGIN_CORRECT",True)
-            break
-        elif result == "baduser.png":
-            send_action_simple(1, 15)
-            sname = make_filename("ERROR", "LOGIN", PORTAL)
-            screenshot_save(sname)
-            tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
-            tcp_send("SNDPIC1 /home/seluser/Screenshots/" + log_sshot + ".png")
-            tcp_send("FINISH15")
-            abort("Credenciales de login erroneas.")
-            break
-        else:
-            #Caso de timeout
-            send_action_simple(9, 3)
-            raise ImageNotPresentException("portalcheck.png")
-            break
+    result = image_wait_multiple("badlogin.png", "comercial.png", "baduser.png")
+    if result == "badlogin.png":
+        #Caso de bad login
+        send_action_simple(1, 1)
+        sname = make_filename("ERROR", "LOGIN", PORTAL)
+        screenshot_save(sname)
+        tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
+        tcp_send("SNDPIC1 /home/seluser/Screenshots/" + log_sshot + ".png")
+        tcp_send("FINISH1")
+        abort("Credenciales de login erroneas.")
+    elif result == "comercial.png":
+        #Caso de login OK
+        send_action_simple(1, 0)
+        matrix_set("LOGIN_CORRECT",True)
+    elif result == "baduser.png":
+        send_action_simple(1, 15)
+        sname = make_filename("ERROR", "LOGIN", PORTAL)
+        screenshot_save(sname)
+        tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
+        tcp_send("SNDPIC1 /home/seluser/Screenshots/" + log_sshot + ".png")
+        tcp_send("FINISH15")
+        abort("Credenciales de login erroneas.")
+    else:
+        #Caso de timeout
+        send_action_simple(9, 3)
+        raise ImageNotPresentException("portalcheck.png")
 
 def pre_login_screenshot(name):
     pass_text("txtPwd")
@@ -111,19 +106,19 @@ def download_file(num_days,is_stock=False):
     type(get_download_directory() + filename)
     press(ENTER)
     time_wait(5000)
-    # if is_stock:
-    #     data=get_zolbit_format(ENCODING, FILE_TYPE[2:], STOCK_FILE_FORMAT, STOCK_ORDER, STOCK_DELIMITATOR, STOCK_HEADER, STOCK_DATE_FORMAT, get_download_directory(),
-    #         STOCK_UNITS_CONVERSION, STOCK_UNITS_DECIMAL, STOCK_AMOUNT_CONVERSION, STOCK_AMOUNT_DECIMAL, inventario_filename+STOCK_FILE_FORMAT)
-    # else:
-    #     data=get_zolbit_format(ENCODING, FILE_TYPE[:2], SALES_FILE_FORMAT, SALES_ORDER, SALES_DELIMITATOR, SALES_HEADER, SALES_DATE_FORMAT, get_download_directory(),
-    #         SALES_UNITS_CONVERSION, SALES_UNITS_DECIMAL, SALES_AMOUNT_CONVERSION, SALES_AMOUNT_DECIMAL, filename+SALES_FILE_FORMAT)
-    # print(data)
-    # temp=data.split(';')
-    # print(temp[1][:2])
-    # zipper(filename,filename+SALES_FILE_FORMAT)
-    # zipper('Z'+filename,'Z'+filename+SALES_FILE_FORMAT)
-    # tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")+1) + "   '" + filename + ".zip' " + temp[1][:2])
-    tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")+1) + "   '" + filename + ".xlsx'")
+    if is_stock:
+        data=get_zolbit_format(ENCODING, FILE_TYPE[2:], STOCK_FILE_FORMAT, STOCK_ORDER, STOCK_DELIMITATOR, STOCK_HEADER, STOCK_DATE_FORMAT, get_download_directory(),
+            STOCK_UNITS_CONVERSION, STOCK_UNITS_DECIMAL, STOCK_AMOUNT_CONVERSION, STOCK_AMOUNT_DECIMAL, filename+STOCK_FILE_FORMAT)
+    else:
+        data=get_zolbit_format(ENCODING, FILE_TYPE[:2], SALES_FILE_FORMAT, SALES_ORDER, SALES_DELIMITATOR, SALES_HEADER, SALES_DATE_FORMAT, get_download_directory(),
+            SALES_UNITS_CONVERSION, SALES_UNITS_DECIMAL, SALES_AMOUNT_CONVERSION, SALES_AMOUNT_DECIMAL, filename+SALES_FILE_FORMAT)
+    print(data)
+    temp=data.split(';')
+    print(temp[1][:2])
+    zipper(filename,filename+SALES_FILE_FORMAT)
+    zipper('Z'+filename,'Z'+filename+'.csv')
+    tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")+1) + "   '" + filename + ".zip' " + temp[1][:2])
+    # tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")+1) + "   '" + filename + ".xlsx'")
     send_action_simple(4, 0, matrix_get("DOWNLOAD_COUNT")+1)
     time_wait(1000)
     matrix_set("DOWNLOAD_COUNT",matrix_get("DOWNLOAD_COUNT")+1)

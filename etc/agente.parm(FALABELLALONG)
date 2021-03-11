@@ -1,21 +1,21 @@
 # V1.01.00
 # Parametros para ejecucion local (sin bus)
 #
- <rut> 766106706 </rut>               \#/ RFasa.py </jar> 
- <ena> JU </ena>             \#/ Sigla empresa
- <usr> 109691127 </usr>           \#/ Usuario portal
- <psw> septiembre2020 </psw>         \#/ Password
- <url> https://www.fasab2b.com/FasaCL/BBRe-commerce/access/login.do </url>         \#/ URL portal
- <pid> 1006 </pid>          \#/ Portal id
- <pna> Jumbo </pna>            \#/ Portal name
- <cna> AGROAPICULTURA </cna>            \#/ Client name
+ <rut> 921390009 </rut>   \#/ Rut 
+ <ena> FA </ena>   \#/ Sigla empresa
+ <usr> 115461931  </usr>      \#/ Usuario portal
+ <psw> falabella3141 </psw>   \#/ Password
+ <url> https://b2b.falabella.com/b2bprd/grafica/html/index.html  \#/ URL portal
+ <pid> 1001 </pid>          \#/ Portal id
+ <pna> Falabella </pna>            \#/ Portal name
+ <cna> SINDELEN </cna>            \#/ Client name
  <xtr> none </xtr>              \#/ Extra information
  <ssn> 2 </ssn>                 \#/ Screenshots number
- <stn> 2 </stn>                 \#/ Stores number
+ <stn> 71 </stn>                 \#/ Stores number
  <hdi> 31 </hdi>                \#/ History days
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
- <jar> /Sikulix/Engine/Walker.jar /Sikulix/Fasa.py </jar>  \#/ road
+ <jar> /Sikulix/Engine/Walker.jar /Sikulix/Falabella.py </jar>  \#/ road
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo
@@ -38,7 +38,7 @@
  <imd> 0 </imd>           \#/ Inventario montos decimales
  <fen> ISO-8859-1 </fen>  \#/ File encoding
 # NO modificar
- <cid> 03280 </cid>
+ <cid>  </cid>
  <try> 4 </try>           \#/ Reintentos
  <tou> 30 </tou>          \#/ Portal timeout 
  <ava> 1 </ava>           \#/ Avanzar 

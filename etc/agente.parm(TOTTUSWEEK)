@@ -1,0 +1,62 @@
+# V1.01.00
+# Parametros para ejecucion local (sin bus)
+#
+ <rut> 788060904 </rut>   \#/ Rut 
+ <ena> TT </ena>   \#/ Sigla empresa
+ <usr> 259337291 </usr>      \#/ Usuario portal
+ <psw> hola.2023 </psw>   \#/ Password
+ <url> https://b2b.tottus.com/b2btoclpr/grafica/html/index.html   \#/ URL portal
+ <pid> 1002 </pid>          \#/ Portal id
+ <pna> Tottus </pna>            \#/ Portal name
+ <cna> GAMA </cna>            \#/ Client name
+ <xtr> WEEKLY </xtr>              \#/ Extra information
+ <ssn> 2 </ssn>                 \#/ Screenshots number
+ <stn> 1 </stn>                 \#/ Stores number
+ <hdi> 31 </hdi>                \#/ History days
+ <hda> none </hda> \#/ History dates
+ <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
+ <jar> /Sikulix/Engine/Walker.jar /Sikulix/Tottus.py </jar>  \#/ road
+# convert
+ <cft> DIA </cft>         \#/ Tipo de archivo
+ <vfm> .csv </vfm>        \#/ Ventas formato archivo
+ <vor> 0,0,11,1,3,13,19,20,-1,-1,-1,21 </vor>  \#/ Ventas orden
+ <vdm> S1 </vdm>           \#/ Ventas delimitador
+ <vhd> 1 </vhd>           \#/ Ventas header
+ <vdf> yyyy-mm-dd </vdf>  \#/ Ventas formato fecha
+ <vuc> 1 </vuc>           \#/ Ventas unidades conversion 
+ <vud> 0 </vud>           \#/ Ventas unidades decimales
+ <vmc> 1 </vmc>           \#/ Ventas montos conversion
+ <vmd> 0 </vmd>           \#/ Ventas montos decimales
+ <ifm> .csv </ifm>        \#/ Inventario formato archivo
+ <ior> 0,0,9,1,3,11,-1,-1,-1,20,21,-1 </ior>  \#/ Inventario orden
+ <idm> S1 </idm>           \#/ Inventario delimitador
+ <ihd> 1 </ihd>           \#/ Inventario header
+ <idf> yyyy-mm-dd-al-yyyy-mm-dd </idf>  \#/ Inventario formato fecha
+ <iuc> 1 </iuc>           \#/ Inventario unidades conversion
+ <iud> 0 </iud>           \#/ Inventario unidades decimales
+ <imc> 1 </imc>           \#/ Inventario montos conversion
+ <imd> 0 </imd>           \#/ Inventario montos decimales
+ <fen> ISO-8859-1 </fen>  \#/ File encoding
+# NO modificar
+ <cid>  </cid>
+ <try> 4 </try>           \#/ Reintentos
+ <tou> 30 </tou>          \#/ Portal timeout 
+ <ava> 1 </ava>           \#/ Avanzar 
+ <fre> 1 </fre>           \#/ Frecuencia reporte
+ <rus> seluser </rus>     \#/ Remote user
+ <fip> 22122 </fip>       \#/ Files server port
+ <shp> 22122 </shp>       \#/ Sshot server port
+ <spo> 22122 </spo>       \#/ ssh port
+ <met> 900 </met>         \#/ Max exec time (min)
+ <mtx> 25 </mtx>          \#/ Matrix size
+ <mtd> 1111000000000000000000000 </mtd>   \#/ Matrix data
+ <agp> 127.0.0.1:25005 </agp>             \#/ Agente ip:port
+ <jpa> /usr/local/Java13/bin </jpa>       \#/ Java path
+ <dpa> /home/seluser/Downloads  </dpa>    \#/ Download path
+ <spa> /home/seluser/Screenshots </spa>   \#/ Screenshot path
+ <zrp> /home/seluser/WALKER/zolbit </zrp> \#/ zolbitfile remote path
+ <fus> </fus>
+ <fpo> </fpo>
+ <frp> /home/seluser/WALKER/files </frp>  \#/ files remote path
+ <fid> walk@127.0.0.1:/home/seluser/WALKER/files </fid>  \#/ files dest
+ <shd> walk@127.0.0.1:/home/seluser/WALKER/sshot </shd>  \#/ sshot dest

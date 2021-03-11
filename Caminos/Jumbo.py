@@ -5,6 +5,16 @@ set_download_directory("/home/seluser/Downloads/")
 set_screenshot_directory("/home/seluser/Screenshots/")
 set_min_similarity(0.75)
 
+def pre_ventas_procedure():
+    image_hover("selec_proveedor.png")
+    mouse_move(200,0)
+    click()
+    time_wait(2000)
+    for x in range (10):
+        press(UP)
+        time_wait(200)
+
+
 def boton_azul_procedure(objectReference):
     if objectReference.custom_date:
         image_click("dias")
@@ -45,6 +55,8 @@ obj.delay_days_tolerance = 1
 if EXTRA != "none" and get_weekday_as_int() == int(AVANZAR):
     obj.enable_extraDownload = True
     obj.extraDownload = EXTRA
+if EXTRA == "FIXPROVEEDOR":
+    obj.pre_ventas_procedure = pre_ventas_procedure
 obj.enable_newBBR = True
 obj.enable_recaptcha = True
 obj.site_key = "6LcVYtEUAAAAALlg52jHvKf9IM8n2FvJfqHSyqxg"
