@@ -30,7 +30,7 @@ def convertFile (headers, encode, tipo_archivo,
 		copyfile ( ruta + nombre_archivo, ruta + "Z" + nombre_archivo )
 		return (str("["+ str(datetime.now().strftime("%H:%M:%S"))+"]"+"[INFO]"+"Convertido;0 - Ejecutado exitosamente (Copiado)"))
 
-	columnas, siglaLoc = splitList (orden_columna)
+	columnas, siglaLoc = splitList (orden_columna) # Crea lista de listas con información de orden de columnas (ej. 7 listas de orden de columna para archivos semanales de TRIO)
 
 	# Data para posiciones en archivos TRIO
 	posDatosTrio = orden_columna.split(",")
@@ -77,7 +77,7 @@ def convertFile (headers, encode, tipo_archivo,
 		nameOut = nameOutAux
 	
 	retailer = getRetailerNombreArchivo(nombre_archivo) # Obtiene retailer desde nombre de archivo
-	ventaInventario = getVentaInventario(nombre_archivo) # Obtiene si es venta o inventario desde nombre de archivo
+	ventaInventario = getVentaInventario(nombre_archivo) # 	
 
 	
 	files = os.listdir(ruta)
@@ -95,7 +95,7 @@ def convertFile (headers, encode, tipo_archivo,
 						writeHeader = csv.DictWriter (f_out, fieldnames = headers) # Escritura de headers
 						writeHeader.writeheader ( ) # Escritura de headers
 						csv_read = checkDelimiter (f_in, delimitador) #Fix \t delimiter, reader function
-						writeFile = csv.writer (f_out, delimiter = ',')
+						writeFile = csv.writer (f_out, delimiter = ',') # Define delimitador de archivo Zolbit
 						checkHeader (header, csv_read) # Skip header if exist
 						try:
 							for row in csv_read: # Escritura de filas
@@ -128,7 +128,7 @@ def convertFile (headers, encode, tipo_archivo,
 								newRow = putSiglaLocal (newRow, row, retailer, ventaInventario, siglaLoc) # Inserta sigla de retailer a codigo local (para diferenciar locales, ej: En SMU, diferenciar unimarc con ok market)
 
 								writeFile.writerow (newRow) # Escribe nueva fila
-								maxMinDate (newRow, nombre_archivo) # Obtiene fecha max y min de fila (para nombre final)
+								maxMinDate (newRow, nombre_archivo) # Obtiene fecha max y min de fila
 								newRow.clear ( ) # Limpia newRow
 						except Exception as excep:
 							resultado = exceptionDefinition(excep, 40)
@@ -569,27 +569,38 @@ def convertXlsHtml (tipo_archivo, formato_archivo, nombre_archivo, ruta):
 	return(nombre_archivo, formato_archivo)
 
 def deleteInterFiles (tipo_archivo, nombre_archivo):
-	if(tipo_archivo in ["DX", "DY", "DP"]): # Elimina archivos intermedios (SB, PR, PF)
+	if(tipo_archivo in ["DX", "DY", "DP", "DF", "MH"]): # Elimina archivos intermedios (SB, PR, PF)
 		#print(nombre_archivo)
 		deleteOldFiles (nombre_archivo)
 
 def csvFromXlsx(tipo_archivo, formato_archivo, nombre_archivo, ruta):
 	#(tipo_archivo, formato_archivo, nombre_archivo, ruta):
-	if(tipo_archivo == "DP" and formato_archivo == ".xlsx"):
-
+	if (formato_archivo == ".xlsx"):
 		formato_archivo_v2 = ".csv"
 		nombre_archivo_v2 = nombre_archivo.replace(formato_archivo, formato_archivo_v2)
 		wb = xlrd.open_workbook(ruta + nombre_archivo)
-		sh = wb.sheet_by_name('B2B')
+
+		# AGREGAR MAS CONDICIONES SI APARECEN MAS ARCHIVOS
+		if (tipo_archivo == "DP" and formato_archivo == ".xlsx"):
+			sh = wb.sheet_by_name('B2B') 	# Nombre de la hoja xlsx
+			skipNoData = 3 					# Filas que se salta hasta llegar al header sobre la data
+			lenghtColumn = 5				# Cantidad de columnas de archivo xlsx
+		elif (tipo_archivo == "DF" and formato_archivo == ".xlsx"):
+			sh = wb.sheet_by_name('Informe')
+			skipNoData = 0
+			lenghtColumn = 8
+		elif (tipo_archivo == "MH" and formato_archivo == ".xlsx"):
+			sh = wb.sheet_by_name('PARA ARMAR 3°')
+			skipNoData = 0
+			lenghtColumn = 11
 		fileCsv = open(ruta + nombre_archivo_v2, 'w')
 		wr = csv.writer(fileCsv, lineterminator='\n')
-		skipNoData = 3 # Salta filas inservibles pcfactory
 		noDecimalValue = []
 
 		for rowNum in range(sh.nrows):
 			if(skipNoData == 0):
 				noDecimalValue = sh.row_values(rowNum)
-				for indice in range(0, 5):
+				for indice in range(0, lenghtColumn):
 					if(sh.row(rowNum)[indice].ctype == 2):
 						noDecimalValue[indice] = str(int(sh.row_values(rowNum)[indice]))
 				wr.writerow(noDecimalValue)
@@ -597,6 +608,7 @@ def csvFromXlsx(tipo_archivo, formato_archivo, nombre_archivo, ruta):
 				skipNoData -= 1
 		fileCsv.close()
 		return (nombre_archivo_v2, formato_archivo_v2)
+
 	return(nombre_archivo, formato_archivo)
 
 def sortedZolbit (nameOut, headers, encode):

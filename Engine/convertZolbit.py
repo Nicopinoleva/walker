@@ -15,19 +15,19 @@ if __name__ == "__main__":
 	"inventario_monto","contribucion"]
 	try:
 		#print(sys.argv)
-		encode = sys.argv[1]
-		tipo_archivo = sys.argv[2]
-		formato_archivo = sys.argv[3]
-		orden_columna = sys.argv[4]
-		delimitador = sys.argv[5]
-		header = sys.argv[6]
-		formato_fecha = sys.argv[7]
-		ruta = sys.argv[8]
-		conversion_un = sys.argv[9]
+		encode = sys.argv[1] # Codificacion de archivos
+		tipo_archivo = sys.argv[2] # Si es trio falabella, si es preunic, si es pc factory, etc
+		formato_archivo = sys.argv[3] # Extension de archivo (.txt .csv)
+		orden_columna = sys.argv[4] # Orden de columnas a leer en archivo en bruto (ver en headers orden de archivo zolbit)
+		delimitador = sys.argv[5] # Tipo de delimitador de datos (comas, pipes, puntos y comas)
+		header = sys.argv[6] # Para saber si tiene headers
+		formato_fecha = sys.argv[7] # Como muestra la fecha de venta el archivo en bruto
+		ruta = sys.argv[8] # Ruta de archivo a procesar
+		conversion_un = sys.argv[9] # Conversiones (numero de decimales y multiplicadores)
 		decimal_un = sys.argv[10]
 		conversion_mon = sys.argv[11]
 		decimal_mon = sys.argv[12]
-		nombre_archivo = sys.argv[13]
+		nombre_archivo = sys.argv[13] # Nombre de archivo a procesar
 		
 	except Exception as excep:
 		exceptionDefinition(excep, 1)

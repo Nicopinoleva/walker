@@ -270,5 +270,4 @@ def unifyConvertZolbit (ruta):
 #ruta = "D:/Documents/rpro/ProyectoOpAuto/Codes/Validador/FALABELLA2/"
 # ruta = "D:/Documents/rpro/ProyectoOpAuto/Codes/Validador/SODIMAC2/"
 ruta = sys.argv[1]
-
 run = unifyConvertZolbit (ruta)

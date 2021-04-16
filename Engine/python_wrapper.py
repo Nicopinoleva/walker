@@ -184,7 +184,7 @@ def press(key):
 
 def type(text):
     _walker.type(text)
-    log("INFO", "typed %s" % str(text))
+    log("INFO", "typed {}".format(text.encode('utf-8')))
 
 def key_hold(key):
     _walker.key_down(key)
@@ -386,7 +386,7 @@ for x in range (len(OPTION_ARGS)):
     if x == 0:
         print("Parameter {} --> {}".format(x,OPTION_ARGS[x][2:]))
     else:
-        print("Parameter {} --> {}".format(x,OPTION_ARGS[x]))
+        print("Parameter {} --> {}".format(x,OPTION_ARGS[x].encode('utf-8')))
 RUT_EMPRESA = OPTION_ARGS[0][2:]
 USERNAME = OPTION_ARGS[1]
 PASSWORD = OPTION_ARGS[2]
