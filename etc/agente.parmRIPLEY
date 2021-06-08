@@ -5,33 +5,35 @@
  <ena> RI </ena>   \#/ Sigla empresa
  <usr> ilan_ventas </usr>      \#/ Usuario portal
  <psw> Ilan@2020 </psw>   \#/ Password
- <url> https://b2b.ripley.cl/b2bWeb/portal/logon.do   \#/ URL portal
+ <url> https://b2b.ripley.cl/b2bWeb/portal/logon.do </url>  \#/ URL portal
  <pid> 1005 </pid>          \#/ Portal id
  <pna> Ripley </pna>            \#/ Portal name
  <cna> ILAN </cna>            \#/ Client name
  <xtr> none </xtr>              \#/ Extra information
  <ssn> 8 </ssn>                 \#/ Screenshots number
  <stn> 2 </stn>                 \#/ Stores number
- <hdi> 31 </hdi>                \#/ History days
+ <hdi> 1 </hdi>                \#/ History days
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Ripley.py </jar>  \#/ road
+ <ssc> </ssc>
+ <ssx> </ssx>
 # convert
- <cft> DIA </cft>         \#/ Tipo de archivo
+ <cft> DID </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo
- <vor> 0,0,11,1,3,13,19,20,-1,-1,-1,21 </vor>  \#/ Ventas orden
+ <vor> 0,0,10,6,7,11,12,13,18,16,17,-1 </vor>  \#/ Ventas orden
  <vdm> S1 </vdm>           \#/ Ventas delimitador
  <vhd> 1 </vhd>           \#/ Ventas header
- <vdf> yyyy-mm-dd </vdf>  \#/ Ventas formato fecha
+ <vdf> dd-mm-yyyy </vdf>  \#/ Ventas formato fecha
  <vuc> 1 </vuc>           \#/ Ventas unidades conversion 
  <vud> 0 </vud>           \#/ Ventas unidades decimales
  <vmc> 1 </vmc>           \#/ Ventas montos conversion
  <vmd> 0 </vmd>           \#/ Ventas montos decimales
  <ifm> .csv </ifm>        \#/ Inventario formato archivo
- <ior> 0,0,9,1,3,11,-1,-1,-1,20,21,-1 </ior>  \#/ Inventario orden
+ <ior> 0,0,10,6,7,11,12,13,18,16,17,-1 </ior>  \#/ Inventario orden
  <idm> S1 </idm>           \#/ Inventario delimitador
  <ihd> 1 </ihd>           \#/ Inventario header
- <idf> yyyy-mm-dd-al-yyyy-mm-dd </idf>  \#/ Inventario formato fecha
+ <idf> dd-mm-yyyy </idf>  \#/ Inventario formato fecha
  <iuc> 1 </iuc>           \#/ Inventario unidades conversion
  <iud> 0 </iud>           \#/ Inventario unidades decimales
  <imc> 1 </imc>           \#/ Inventario montos conversion

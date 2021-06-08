@@ -9,7 +9,9 @@ class BBR:
         self.passid = "UNDEFINED"
         self.SIGLA = NOMBRE_EMPRESA
         self.enable_extra_calendar = False
+        self.enable_extra_calendar_no_first = False
         self.enable_special_extra_calendar = False
+        self.enable_extra_calendar_second = False
         self.enable_checker = True
         self.enable_error = False
         self.enable_recaptcha = False
@@ -265,7 +267,7 @@ class BBR:
         hoy = self.issued_day
         if isextraCalendar:
             image_click("dias.png")
-            mouse_move(100+x, 0)
+            mouse_move(95+x, 0)
             click()
         else:
             time_wait(1000)
@@ -283,15 +285,19 @@ class BBR:
                 time_wait(100)
                 image_click("left.png")
         if int(date[4:6]) == hoy.month and int(date[:4]) == hoy.year:
-            image_click("right.png")
+            image_hover("right.png")
+            mouse_move(-20,0)
+            click()
         else:
             mouse_move(0,15)
-            click() 
+            click()
         if isSecondCalendar:
             self.date_go_first()
-            if int(date[4:6]) == hoy.month and self.enable_newBBR:
+            print(hoy.year)
+            if int(date[4:6]) == hoy.month and self.enable_newBBR and (int(hoy.year) - int(date[:4])) == 0:
+                print("Entre!")
                 press(RIGHT)
-        if isextraCalendar and not self.enable_newBBR:
+        if (isextraCalendar and not self.enable_newBBR) or (isextraCalendar and not isSecondCalendar and self.enable_extra_calendar_no_first):
             self.date_go_first()
         time_wait(100)
         if int(date[6:]) == 1 and not self.enable_newBBR:
@@ -435,8 +441,11 @@ class BBR:
         time_wait(1000)
         if self.enable_extra_calendar:
             if self.custom_date:
-                self.date_click_dynamic(self.date1,isextraCalendar=True)
-                if self.date2 != "none":
+                if not self.enable_extra_calendar_second:
+                    self.date_click_dynamic(self.date1,isextraCalendar=True)
+                    if self.date2 != "none":
+                        self.date_click_dynamic(self.date2,isSecondCalendar=True,isextraCalendar=True,x=270)
+                else:
                     self.date_click_dynamic(self.date2,isSecondCalendar=True,isextraCalendar=True,x=270)
             else:
                 self.date_click(7,isextraCalendar=True)
@@ -616,7 +625,7 @@ class BBR:
             image_wait("cerrar.png")
             press(TAB)
             time_wait(500)
-            for x in range(3):
+            for x in range(2):
                 press(DOWN)
                 time_wait(500)
             press(TAB)
@@ -662,11 +671,15 @@ class BBR:
             matrix_set("EXTRA_CYCLE_COUNT",matrix_get("EXTRA_CYCLE_COUNT")+1)
 
     def run(self):
+    	global DATE
         if not self.login_verify:
             if len(DATE) != 1:
                 self.custom_date = True
                 temp = DATE.split("-")
-                self.date1 = temp[0]
+                if "NH" in temp[0]:
+                    self.date1 = temp[0][2:]
+                else:
+                    self.date1 = temp[0]
                 self.date2 = temp[1]
             self.login()
             if self.enable_checker:
@@ -675,7 +688,8 @@ class BBR:
                 self.get_ventas()
                 while(True):
                     newDate = tcp_send_recieve("ENDHIS")
-                    print(len(newDate))
+                    DATE = newDate
+                    print(DATE)
                     if len(newDate) < 6:
                         break
                     else:

@@ -39,7 +39,7 @@ def login():
     press(TAB)
     press(ENTER)
     time_wait(5000)
-    result = image_wait_multiple("Credentials.png","Credenciales.png","Expired.png","Retail.png","Retail_new.png")
+    result = image_wait_multiple("Credentials.png","Credenciales.png","Expired.png","Expirada.png","Retail.png","Retail_new.png")
     if result in ["Credentials.png","Credenciales.png"]:
         send_action_simple(1,1)
         sname = "{}_{}".format("LOGIN", "WALMART")
@@ -47,7 +47,7 @@ def login():
         tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
         tcp_send("FINISH1")
         abort("Credenciales erroneas")
-    elif result == "Expired.png":
+    elif result in ["Expired.png","Expirada.png"]:
         send_action_simple(1,7)
         sname = "{}_{}".format("LOGINEXP", "WALMART")
         screenshot_save(sname)

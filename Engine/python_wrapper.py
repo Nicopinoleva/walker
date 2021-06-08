@@ -422,7 +422,9 @@ STOCK_AMOUNT_CONVERSION = OPTION_ARGS[30]
 STOCK_AMOUNT_DECIMAL = OPTION_ARGS[31]
 ENCODING = OPTION_ARGS[32]
 DATE = OPTION_ARGS[33]
-MATRIX = [str(char) for char in OPTION_ARGS[34]]
+SSHOT_CXY = OPTION_ARGS[34]
+SSHOT_TXT = OPTION_ARGS[35]
+MATRIX = [str(char) for char in OPTION_ARGS[36]]
 
 IMAGE_BASED_FUNCTIONS_TIMEOUT = int(TIMEOUT) #In seconds
 if len(DATE) > 3:
@@ -431,6 +433,7 @@ else:
     IMAGE_WAIT_TIMEOUT = int(TIMEOUT)
 IMAGE_GONE_WAIT_TIMEOUT = int(TIMEOUT) #In seconds
 IMAGE_APPEARED_TIMEOUT = int(TIMEOUT)/6 #In seconds
+
 
 # ==== EXTERNAL-POWERED FUNCTIONS ====
 
@@ -459,7 +462,6 @@ def image_hover(img, timeout=IMAGE_BASED_FUNCTIONS_TIMEOUT):
 
 @image_based_function
 def image_click(img, timeout=IMAGE_BASED_FUNCTIONS_TIMEOUT):
-    
     score = _walker.image_click(img, timeout)
     log("INFO", "clicked {}. score: {}".format(img, str(score)))
 

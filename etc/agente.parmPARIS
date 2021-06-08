@@ -5,7 +5,7 @@
  <ena> PA </ena>   \#/ Sigla empresa
  <usr> jp_herrera@ilan.cl </usr>      \#/ Usuario portal
  <psw> Sofia440 </psw>   \#/ Password
- <url>  https://www.cenconlineb2b.com/ParisCL/BBRe-commerce/access/login.do   \#/ URL portal
+ <url> https://www.cenconlineb2b.com/ParisCL/BBRe-commerce/access/login.do  </url> \#/ URL portal
  <pid> 1011 </pid>          \#/ Portal id
  <pna> Paris </pna>            \#/ Portal name
  <cna> ILAN </cna>            \#/ Client name
@@ -16,6 +16,8 @@
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Paris.py </jar>  \#/ road
+ <ssc> </ssc>
+ <ssx> </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo

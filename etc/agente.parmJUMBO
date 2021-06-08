@@ -5,7 +5,7 @@
  <ena> JA </ena>   \#/ Sigla empresa
  <usr> jmunoz@argos.cl </usr>      \#/ Usuario portal
  <psw> octubre2020 </psw>   \#/ Password
- <url> https://www.cenconlineb2b.com/SuperCL/BBRe-commerce/access/login.do    \#/ URL portal
+ <url> https://www.cenconlineb2b.com/SuperCL/BBRe-commerce/access/login.do </url>\#/ URL portal
  <pid> 1006 </pid>          \#/ Portal id
  <pna> Jumbo </pna>            \#/ Portal name
  <cna> ARGOS </cna>            \#/ Client name
@@ -16,6 +16,8 @@
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Jumbo.py </jar>  \#/ road
+ <ssc> </ssc>
+ <ssx> </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo

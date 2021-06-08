@@ -29,6 +29,8 @@ first_day_of_previous_month = get_first_day_of_month(get_previous_month(previous
 first_day_of_previous_month_str = date_to_string(first_day_of_previous_month,"%d-%m-%Y")
 last_day_of_previous_month_str = str(get_last_day_of_month(get_previous_month(previous_day(today())))) + "-" + date_to_string(get_first_day_of_month(get_previous_month(previous_day(today()))),"%m-%Y") 
 last_day_of_previous_month_str2 = date_to_string(get_first_day_of_month(get_previous_month(previous_day(today()))),"%Y%m") + str(get_last_day_of_month(get_previous_month(previous_day(today()))))
+date1 = ""
+date2 = ""
 portal = "RIPLEY"
 
 def login():
@@ -139,7 +141,7 @@ def screenshot(sshot):
         tcp_send("SNDSHO2 0    " + sname + ".png")
         matrix_set("SSHOT_2",True)
 
-def download_week(num_days):
+def download_week(num_days,isHist=False):
     ir_a_seccion("consdet.png")
     image_wait("diaria.png")
     image_click("diaria.png")
@@ -147,7 +149,11 @@ def download_week(num_days):
     for x in range(2):
         press(TAB)
         time_wait(100)
-    dia = custom_date_to_string(substract_day(datetime.date.today(),num_days+1))
+    if isHist:
+        print("Dia --> {}, Mes--> {}, Año-->{}".format(date1[6:],date1[4:6],date1[:4]))
+        dia = "{}-{}-{}".format(date1[6:],date1[4:6],date1[:4])
+    else:
+        dia = custom_date_to_string(substract_day(datetime.date.today(),num_days+1))
     time_wait(500)
     type(dia)
     press(TAB)
@@ -167,7 +173,10 @@ def download_week(num_days):
     mouse_move(0, 20)
     click()
     image_wait("dlprompt.png")
-    dia_slugy = format_date_screenshot(substract_day(datetime.date.today(),num_days+1))
+    if isHist:
+        dia_slugy = date1
+    else:
+        dia_slugy = format_date_screenshot(substract_day(datetime.date.today(),num_days+1))
     b2b = "B2B"
     dia = "DIA"
     filename = make_filename(RUT_EMPRESA, dia_slugy, dia_slugy, NOMBRE_EMPRESA, portal, b2b, dia)
@@ -186,7 +195,8 @@ def download_week(num_days):
     # tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")+1) + "   '" + filename + ".csv'")
     send_action_simple(4, 0, matrix_get("DOWNLOAD_COUNT")+1)
     time_wait(1000)
-    matrix_set("DOWNLOAD_COUNT",matrix_get("DOWNLOAD_COUNT")+1)
+    if not isHist:
+        matrix_set("DOWNLOAD_COUNT",matrix_get("DOWNLOAD_COUNT")+1)
 
 def download_stock():
     ir_a_seccion("consdet.png")
@@ -238,19 +248,40 @@ def download_stock():
 
 open_explorer(URL_PORTAL)
 login()
-if not matrix_get("SSHOT_1"):
-    screenshot("1")
-if not matrix_get("SSHOT_2"):
-    screenshot("2")
-if matrix_get("DOWNLOAD_STARTED") == False:
-    send_action_simple(3, 0)
-    matrix_set("DOWNLOAD_STARTED",True)
-if not matrix_get("SALES"):
-    for x in range (int(matrix_get("DOWNLOAD_COUNT")),7):
-        download_week(x)
-    matrix_set("SALES",True)
-if not matrix_get("STOCK"):
-    download_stock()
-    matrix_set("STOCK",True)
+global DATE
+if len(DATE) != 1:
+    temp = DATE.split("-")
+    if "NH" in temp[0]:
+        date1 = temp[0][2:]
+    else:
+        date1 = temp[0]
+    date2 = temp[1]
+    download_week(0,isHist=True)
+    while(True):
+        newDate = tcp_send_recieve("ENDHIS")
+        DATE = newDate
+        print(DATE)
+        if len(newDate) < 6:
+            break
+        else:
+            temp = newDate.split("-")
+            date1 = temp[0][2:]
+            date2 = temp[1]
+            download_week(0,isHist=True)
+else:
+    if not matrix_get("SSHOT_1"):
+        screenshot("1")
+    if not matrix_get("SSHOT_2"):
+        screenshot("2")
+    if matrix_get("DOWNLOAD_STARTED") == False:
+        send_action_simple(3, 0)
+        matrix_set("DOWNLOAD_STARTED",True)
+    if not matrix_get("SALES"):
+        for x in range (int(matrix_get("DOWNLOAD_COUNT")),7):
+            download_week(x)
+        matrix_set("SALES",True)
+    if not matrix_get("STOCK"):
+        download_stock()
+        matrix_set("STOCK",True)
 close_explorer()
 tcp_send("FINISH0")

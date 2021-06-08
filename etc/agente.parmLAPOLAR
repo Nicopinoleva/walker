@@ -5,7 +5,7 @@
  <ena> PA </ena>   \#/ Sigla empresa
  <usr> paolavalladares6@gmail.com </usr>      \#/ Usuario portal
  <psw> ilan2021 </psw>   \#/ Password
- <url> https://b2b.lapolar.cl/LaPolarCL/BBRe-commerce/login.jsf   \#/ URL portal
+ <url> https://b2b.lapolar.cl/LaPolarCL/BBRe-commerce/login.jsf  </url> \#/ URL portal
  <pid> 1010 </pid>          \#/ Portal id
  <pna> Lapolar </pna>            \#/ Portal name
  <cna> ILAN </cna>            \#/ Client name
@@ -16,6 +16,8 @@
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Lapolar.py </jar>  \#/ road
+ <ssc> </ssc>
+ <ssx> </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo

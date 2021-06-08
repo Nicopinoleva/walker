@@ -35,6 +35,7 @@ obj.PORTAL = "PARIS"
 obj.passid = "password"
 obj.enable_special_extra_calendar = True
 obj.enable_extra_calendar = True
+obj.enable_extra_calendar_no_first = True
 obj.enable_newBBR = True
 obj.site_key = "6LcVYtEUAAAAALlg52jHvKf9IM8n2FvJfqHSyqxg"
 obj.enable_recaptcha = True
