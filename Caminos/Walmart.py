@@ -39,7 +39,7 @@ def login():
     press(TAB)
     press(ENTER)
     time_wait(5000)
-    result = image_wait_multiple("Credentials.png","Credenciales.png","Expired.png","Expirada.png","Retail.png","Retail_new.png")
+    result = image_wait_multiple("Credentials.png","Credenciales.png","Blocked.png","Expired.png","Expirada.png","Retail.png","Retail_new.png")
     if result in ["Credentials.png","Credenciales.png"]:
         send_action_simple(1,1)
         sname = "{}_{}".format("LOGIN", "WALMART")
@@ -58,6 +58,13 @@ def login():
         if not matrix_get("LOGIN_CORRECT"):
             send_action_simple(1,0)
             matrix_set("LOGIN_CORRECT",True)
+    elif result == "Blocked.png":
+        send_action_simple(1,15)
+        sname = "{}_{}".format("LOGINBLQ", "WALMART")
+        screenshot_save(sname)
+        tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
+        tcp_send("FINISH15")
+        abort("Credenciales bloqueadas")
     else:
         log("INFO", "Portal didn't load")
         send_action_simple(9,3)
