@@ -5,7 +5,7 @@
  <ena> LI </ena>   \#/ Sigla empresa
  <usr> moyarzun@ilan.cl </usr>      \#/ Usuario portal
  <psw> Sofia343 </psw>   \#/ Password
- <url> https://rllogin.wal-mart.com/rl_security/rl_logon.aspx   \#/ URL portal
+ <url> https://rllogin.wal-mart.com/rl_security/rl_logon.aspx  </url> \#/ URL portal
  <pid> 1004 </pid>          \#/ Portal id
  <pna> Walmart </pna>            \#/ Portal name
  <cna> ILAN </cna>            \#/ Client name
@@ -57,6 +57,8 @@
  <zrp> /home/seluser/WALKER/zolbit </zrp> \#/ zolbitfile remote path
  <fus> </fus>
  <fpo> </fpo>
+ <ssc> </ssc>
+ <ssx> </ssx>
  <frp> /home/seluser/WALKER/files </frp>  \#/ files remote path
  <fid> walk@127.0.0.1:/home/seluser/WALKER/files </fid>  \#/ files dest
  <shd> walk@127.0.0.1:/home/seluser/WALKER/sshot </shd>  \#/ sshot dest
