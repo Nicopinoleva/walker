@@ -1,21 +1,21 @@
 # V1.01.00
 # Parametros para ejecucion local (sin bus)
 #
- <rut> 995862804 </rut>   \#/ Rut 
- <ena> UN </ena>   \#/ Sigla empresa
- <usr> moyarzun@ilan.cl </usr>      \#/ Usuario portal
- <psw> sofia441 </psw>   \#/ Password
- <url> https://b2b.smu.cl/Supermercados/BBRe-commerce/access/login.do  </url> \#/ URL portal
- <pid> 1007 </pid>          \#/ Portal id
- <pna> Unimarc </pna>            \#/ Portal name
- <cna> ILAN </cna>            \#/ Client name
- <xtr> none </xtr>              \#/ Extra information
- <ssn> 2 </ssn>                 \#/ Screenshots number
- <stn> 2 </stn>                 \#/ Stores number
+ <rut> 995862808 </rut>   \#/ Rut 
+ <ena> TT </ena>   \#/ Sigla empresa
+ <usr> 177541192 </usr>      \#/ Usuario portal
+ <psw> Marzo21. </psw>   \#/ Password
+ <url> https://b2b.tottus.com/b2btoclpr/grafica/html/index.html   \#/ URL portal
+ <pid> 1002 </pid>          \#/ Portal id
+ <pna> Tottus </pna>            \#/ Portal name
+ <cna> CCU </cna>            \#/ Client name
+ <xtr> DAILY </xtr>              \#/ Extra information
+ <ssn> 0 </ssn>                 \#/ Screenshots number
+ <stn> 7 </stn>                 \#/ Stores number
  <hdi> 31 </hdi>                \#/ History days
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
- <jar> /Sikulix/Engine/Walker.jar /Sikulix/Unimarc.py </jar>  \#/ road
+ <jar> /Sikulix/Engine/Walker.jar /Sikulix/Tottus.py </jar>  \#/ road
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo
@@ -57,8 +57,6 @@
  <zrp> /home/seluser/WALKER/zolbit </zrp> \#/ zolbitfile remote path
  <fus> </fus>
  <fpo> </fpo>
- <ssc> </ssc>
- <ssx> </ssx>
  <frp> /home/seluser/WALKER/files </frp>  \#/ files remote path
  <fid> walk@127.0.0.1:/home/seluser/WALKER/files </fid>  \#/ files dest
  <shd> walk@127.0.0.1:/home/seluser/WALKER/sshot </shd>  \#/ sshot dest

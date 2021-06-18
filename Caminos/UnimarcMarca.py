@@ -1,6 +1,6 @@
 load_template("/Sikulix/BBR.py")
 
-set_imagepath("/Sikulix/Imgs/UnimarcPromerco/")
+set_imagepath("/Sikulix/Imgs/Unimarc")
 set_download_directory("/home/seluser/Downloads/")
 set_screenshot_directory("/home/seluser/Screenshots/")
 
