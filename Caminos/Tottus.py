@@ -64,6 +64,9 @@ imgs_tiendas = ["Tienda.png","104-nataniel.png","107-puentealtoeyzag.png","114-c
 def jerarquia_method():
     image_click("Jerarquia.png")
     image_click("Division.png")
+    mouse_move(200,0)
+    click()
+    time_wait(500)
     for x in range(int(AVANZAR)):
         press(DOWN)
     press(ENTER)

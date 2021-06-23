@@ -122,10 +122,10 @@ class TRIO:
             click()
         send_action_simple(9,0)
         image_hover("Ventas.png")
-        if self.special_download == "UNDEFINED": 
-            image_click("Analisis.png")
-        else:
+        if self.special_download == "DAILY" or self.special_download == "WEEKLY":
             image_click("Informe_venta.png")
+        else:
+            image_click("Analisis.png")
         if self.pop_up:
             time_wait(2000)
             result = image_wait_multiple("Pop_up_kill.png", "Pop_up_kill2.png", "Pop_up_kill3.png")
@@ -321,6 +321,39 @@ class TRIO:
             zipper('Z'+filename,'Z'+filename+".csv",filelist)
             tcp_send("SNDFIL" + str(matrix_get("DOWNLOAD_COUNT")) +"   '" + filename + ".zip'" + " " + temp[1][:2])
 
+    def get_files_special2(self,file_num):
+        date = subtract_days(today(),file_num+1)
+        fecha1 = date_to_string(subtract_days(today(),file_num+1),"%Y%m%d")
+        fecha2 = date_to_string(subtract_days(today(),7),"%Y%m%d")
+        image_hover("Ventas.png")
+        image_click("Informe_venta_inventario.png")
+        time_wait(1000)
+        if isinstance(self.rut, basestring):
+            filename = "{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut,fecha2,fecha1,fecha1,NOMBRE_EMPRESA,self.PORTAL,"B2B","INV")
+        else:
+            filename = "{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut[0],fecha2,fecha1,fecha1,NOMBRE_EMPRESA,self.PORTAL,"B2B","INV")
+        image_click("Desde.png")
+        time_wait(1000)
+        mouse_move(300,0)
+        click()
+        press_with_ctr("a")
+        press(DELETE)
+        type(date_to_string(date,"%d/%m/%Y"))
+        image_click("Hasta.png")
+        time_wait(1000)
+        mouse_move(300,0)
+        click()
+        press_with_ctr("a")
+        press(DELETE)
+        type(date_to_string(date,"%d/%m/%Y"))
+        image_click("Generar_informe.png")
+        image_wait("Save.png")
+        type(filename)
+        image_click("Save.png")
+        time_wait(2000)
+        tcp_send("SNDFIL" + str(get_downloads_count()) +"   '" + filename + ".csv'")
+        matrix_set("DOWNLOAD_COUNT",matrix_get("DOWNLOAD_COUNT")+1)
+
     def zolconvert(self,file_path):
     	data=get_zolbit_format_trio(file_path)
     	print(data)
@@ -337,12 +370,20 @@ class TRIO:
         if not self.login_verify:
             self.login()
             self.get_to_dashboard()
+            file_num = matrix_get("DOWNLOAD_COUNT")
             if self.special_download == "DAILY":
-                file_num = matrix_get("DOWNLOAD_COUNT")
                 for x in range(file_num,7):
                     self.get_files_special(x)
             elif self.special_download == "WEEKLY":
                 self.get_files_special(0)
+            elif self.special_download == "DAILY2":
+                self.dashboard()
+                if not matrix_get("SSHOT_1"):
+                    self.screenshots()
+                if not matrix_get("SSHOT_2"):
+                    self.screenshots()
+                for x in range(file_num,7):
+                    self.get_files_special2(x)
             else:
                 self.dashboard()
                 if not matrix_get("SSHOT_1"):

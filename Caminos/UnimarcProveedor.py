@@ -42,15 +42,18 @@ def marca_ventas_procedure(num):
         time_wait(200)
 
 def boton_azul_procedure():
-    time_wait(3000)
+    image_click("csv.png")
     image_click("descargar.png")
-    image_wait("guardar.png", timeout = 60 * 3)
-    image_click("guardar.png")
+    image_wait("listo.png")
+    press(TAB)
+    press(ENTER)
 
 def boton_verde_procedure():
-    image_click("si.png")
-    image_wait("guardar.png", timeout = 60 * 3)
-    image_click("guardar.png")
+    image_click("csv.png")
+    image_click("seleccionar.png")
+    image_wait("listo.png")
+    press(TAB)
+    press(ENTER)
 
 def finish_method():
     tcp_send("FINISH0")

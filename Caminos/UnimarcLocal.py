@@ -85,6 +85,8 @@ def account_special():
 def chain_run(counter):
     global DATE
     obj.login()
+    if obj.enable_checker:
+        obj.check_if_updated()
     if len(DATE) != 1:
         obj.custom_date = True
         temp = DATE.split("-")
@@ -105,12 +107,8 @@ def chain_run(counter):
                 temp = newDate.split("-")
                 obj.date1 = temp[0][2:]
                 obj.date2 = temp[1]
-                obj.get_ventas()
-        close_explorer()
-        tcp_send("FINISH")
+                obj.get_ventas(counter)
     else:
-        if obj.enable_checker:
-            obj.check_if_updated()
         if not matrix_get("SSHOT_1"):
             obj.screenshot_1(counter)
             matrix_set("SSHOT_1", True)
@@ -125,7 +123,7 @@ def chain_run(counter):
         close_explorer()
         matrix_set("CYCLE_COUNT",counter+1)
 
-#Heinz
+
 obj = BBR()
 obj.PORTAL = "UNIMARC"
 obj.passid = "password"
