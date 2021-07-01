@@ -329,9 +329,9 @@ class TRIO:
         image_click("Informe_venta_inventario.png")
         time_wait(1000)
         if isinstance(self.rut, basestring):
-            filename = "{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut,fecha2,fecha1,fecha1,NOMBRE_EMPRESA,self.PORTAL,"B2B","INV")
+            filename = "{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut,fecha1,fecha1,fecha1,NOMBRE_EMPRESA,self.PORTAL,"B2B","INV")
         else:
-            filename = "{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut[0],fecha2,fecha1,fecha1,NOMBRE_EMPRESA,self.PORTAL,"B2B","INV")
+            filename = "{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut[0],fecha1,fecha1,fecha1,NOMBRE_EMPRESA,self.PORTAL,"B2B","INV")
         image_click("Desde.png")
         time_wait(1000)
         mouse_move(300,0)
