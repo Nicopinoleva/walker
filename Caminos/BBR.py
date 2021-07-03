@@ -8,6 +8,7 @@ class BBR:
         self.PORTAL = "UNDEFINED"
         self.passid = "UNDEFINED"
         self.SIGLA = NOMBRE_EMPRESA
+        self.custom_bbr = False
         self.enable_extra_calendar = False
         self.enable_extra_calendar_no_first = False
         self.enable_special_extra_calendar = False

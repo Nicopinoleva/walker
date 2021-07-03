@@ -19,6 +19,7 @@ def marca_inventario_procedure(num):
     for x in range (int(sigla[num][-2:])):
         press(DOWN)
         time_wait(200)
+    press(ENTER)
 
 def marca_ventas_procedure(num):
     image_click("mostrar_inv.png")
@@ -40,6 +41,7 @@ def marca_ventas_procedure(num):
     for x in range (int(sigla[num][-2:])):
         press(DOWN)
         time_wait(200)
+    press(ENTER)
 
 def boton_azul_procedure():
     image_click("csv.png")
