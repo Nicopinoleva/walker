@@ -195,10 +195,12 @@ class BBR:
                 for i in range(dia - hoy.day):
                     time_wait(100)
                     press(RIGHT)
+                    print("Num right--> ",i)
             else:
                 for i in range(dia-1):
                     time_wait(100)
                     press(RIGHT)
+                    print("Num right--> ",i)
         else:
             time_wait(100)
             press(LEFT)
@@ -207,6 +209,7 @@ class BBR:
             for i in range(31):
                 time_wait(100)
                 press(RIGHT)
+                print("Num right--> ",i)
 
     def date_go_first(self):
         hoy = self.issued_day
@@ -217,9 +220,11 @@ class BBR:
         for i in range(hoy.day-1):
             time_wait(100)
             press(LEFT)
+            print("Num left--> ",i)
 
     def date_click(self, num_days, isextraCalendar = False, isFirstCalendar = False):
-        if isextraCalendar:
+        print("numero de dias a restar--> ",num_days)
+        if isextraCalendar and not isFirstCalendar:
             image_click("dias.png")
             mouse_move(95,0)
             click()
@@ -237,6 +242,7 @@ class BBR:
             else:
                 self.date_go_last(isSecondCalendar=False)
             for i in range(num_days - hoy.day - 1):
+                print("Num left--> ",i)
                 time_wait(100)
                 press(LEFT)
             if self.enable_newBBR:
@@ -245,27 +251,31 @@ class BBR:
             if isextraCalendar:
                 if self.enable_special_extra_calendar:
                     for i in range(num_days - 1):
+                        print("Num left--> ",i)
                         time_wait(100)
                         press(LEFT)
                 else:
                     for i in range(hoy.day-num_days):
+                        print("Num right--> ",i)
                         time_wait(100)
                         press(RIGHT)
                 if self.enable_newBBR:
                     press(ENTER) 
             else:
                 nueva_fecha = subtract_days(hoy, num_days)
+                print("fecha -->",nueva_fecha)
                 for i in range(nueva_fecha.day):
+                    print("Num right--> ",i)
                     press(RIGHT)
                     time_wait(100)
                 if self.enable_newBBR:
                     press(ENTER)
         press(TAB)
 
-    def date_click_dynamic(self, date, x=0, isSecondCalendar = False, isextraCalendar = False):
+    def date_click_dynamic(self, date, x=0, isFirstCalendar = True, isSecondCalendar = False, isextraCalendar = False):
         print("Dia --> {}, Mes--> {}, Año-->{}".format(date[6:],date[4:6],date[:4]))
         hoy = self.issued_day
-        if isextraCalendar:
+        if isextraCalendar and not isFirstCalendar:
             image_click("dias.png")
             mouse_move(95+x, 0)
             click()
@@ -367,7 +377,7 @@ class BBR:
                 break
             log("INFO", "[" + OPTION_LOG_ID + "] Waiting for report")
 
-    def to_ventas_panel(self):
+    def to_ventas_panel(self,venta_or_corp=False):
         if image_appeared("cerrar.png"):
             image_click("cerrar.png")
         time_wait(1000)
@@ -378,7 +388,10 @@ class BBR:
         if not self._portal_loaded:
             self._portal_loaded = True
             send_action_simple(9, 12)
-        image_click("ventas.png")
+        if venta_or_corp:
+            image_click("corporativo_ventas.png")
+        else:
+            image_click("ventas.png")
         time_wait(3000)
         # if not image_appeared("fecha.png"):
         if image_appeared("cerrar.png"):
@@ -413,14 +426,29 @@ class BBR:
         tcp_send("SNDFIL " + str(matrix_get("DOWNLOAD_COUNT")) + "    '" + name + self.files_downloaded_extension + "'" + " " + temp[1][:2])
 
     def get_ventas(self,num=0):
-        self.to_ventas_panel()
-        image_click("fecha.png")
+        self.to_ventas_panel(venta_or_corp=self.custom_bbr)
+        if self.custom_bbr:
+            image_click("fecha_corp.png")
+        else:
+            image_click("fecha.png")
         if self.custom_date:
             self.date_click_dynamic(self.date1)
             image_click("fecha2")
             self.date_click_dynamic(self.date2,isSecondCalendar=True)
         else:
-            self.date_click(7,isFirstCalendar=True)
+            if self.custom_bbr:
+                nueva_fecha = self.issued_day-timedelta(days=num)
+                nueva_fecha2 = self.issued_day-timedelta(days=num)
+                time_wait(5000)
+                mouse_move(-20,35)
+                click()
+                self.date_click_dynamic(date_to_string(nueva_fecha,"%Y%m%d"))
+                image_click("fecha_corp.png")
+                mouse_move(-20,65)
+                click()
+                self.date_click_dynamic(date_to_string(nueva_fecha,"%Y%m%d"),isFirstCalendar=True,isextraCalendar=True)
+            else:
+                self.date_click(7,isFirstCalendar=True)
         self.pre_ventas_procedure()
         self.marca_procedure(num)
         image_click("generar_informe.png")
@@ -437,7 +465,10 @@ class BBR:
             tcp_send("SNDSHO1 " + str(get_downloads_count()) + "    '" + name + ".png'")
         image_click("boton_azul.png")
         if self.enable_newBBR:
-            image_click("fuente_calendario.png")
+            if self.custom_bbr:
+                image_click("periodo.png")
+            else:
+                image_click("fuente_calendario.png")
         time_wait(1000)
         if self.enable_extra_calendar:
             if self.custom_date:
@@ -451,8 +482,12 @@ class BBR:
                 self.date_click(7,isextraCalendar=True)
         self.ventas_procedure()
         image_wait("dlprompt.png")
-        nueva_fecha = self.issued_day-timedelta(days=6)
-        nueva_fecha2 = self.issued_day
+        if self.custom_bbr:
+            nueva_fecha = self.issued_day-timedelta(days=num)
+            nueva_fecha2 = self.issued_day-timedelta(days=num)
+        else:
+            nueva_fecha = self.issued_day-timedelta(days=6)
+            nueva_fecha2 = self.issued_day
         if self.custom_date:
             if self.enable_customRename:
                 name1 = RUT_EMPRESA + "_" + self.date1 + "_" + self.date2 + "_" + self.marca +  "_" + self.PORTAL + "_" + self.SIGLA +"_B2B_DIA"
@@ -516,7 +551,10 @@ class BBR:
         self.sshot1_procedure()
         self.marca_procedure(num)
         if not self.enable_newBBR:
-            image_click("fecha.png")
+            if self.custom_bbr:
+                image_click("fecha_corp.png")
+            else:
+                image_click("fecha.png")
             image_wait("left.png")
             press(TAB)
         image_click("generar_informe.png")
@@ -531,8 +569,13 @@ class BBR:
         tcp_send("SNDSHO1 " + str(get_downloads_count()) + "    '" + name + ".png'")
 
     def screenshot_2(self,num=0):
-        self.to_ventas_panel()
-        image_click("fecha.png")
+        self.to_ventas_panel(venta_or_corp=self.custom_bbr)
+        if self.custom_bbr:
+            image_click("fecha_corp.png")
+            mouse_move(-20,35)
+            click()
+        else:
+            image_click("fecha.png")
         time_wait(1000)
         image_click("left.png")
         if not self.enable_newBBR:
@@ -542,7 +585,12 @@ class BBR:
         time_wait(100)
         press(TAB)
         time_wait(2000)
-        image_click("fecha2.png")
+        if self.custom_bbr:
+            image_click("fecha_corp.png")
+            mouse_move(-20,65)
+            click()
+        else:
+            image_click("fecha2.png")
         time_wait(1000)
         image_click("left.png")
         self.date_go_last()
@@ -707,7 +755,14 @@ class BBR:
                     self.screenshot_2()
                     matrix_set("SSHOT_2", True)
                 if not matrix_get("SALES"):
-                    self.get_ventas()
+                    if self.custom_bbr:
+                        for x in range (matrix_get("DOWNLOAD_COUNT"),7):
+                            print("valor ciclo --> ", x)
+                            self.get_ventas(num=x)
+                            matrix_set("DOWNLOAD_COUNT",x+1)
+                        matrix_set("SALES",True)
+                    else:
+                        self.get_ventas()
                 time_wait(5000)
                 if not matrix_get("STOCK"):
                     self.get_inventario()
