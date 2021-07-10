@@ -15,7 +15,9 @@
  <hdi> 31 </hdi>                \#/ History days
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
- <jar> /Sikulix/Engine/Walker.jar /Sikulix/Fasa.py </jar>  \#/ road
+ <jar> /Skulix/Engine/Walker.jar /Sikulix/Fasa.py </jar>  \#/ road
+ <ssc> none </ssc>
+ <ssx> none </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo

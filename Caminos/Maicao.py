@@ -9,6 +9,7 @@ fechaIni = previous_day(today())
 fechaFin = previous_day(today())
 fechaDia = int(previous_day(today()).day)
 fechaMes = int(previous_day(today()).month)
+sshot_cords = SSHOT_CXY.split(",")
 
 @generic_login(incorrect="1bad_login.png", correct="1descargas.png", portal=PORTAL)
 def login():
@@ -36,7 +37,7 @@ def screenshot():
     send_action_simple(9, 0)
     if not matrix_get("SSHOT_1"):
         filename = "{}_{}_{}_{}_{}".format(PORTAL, "B2B", "VTA", RUT_EMPRESA, "ANUAL")
-        screenshot_save_crop_with_points(filename, 10, 250, 1260, 430)
+        screenshot_save_crop_with_points(filename, coords_sshot[0], coords_sshot[1], coords_sshot[2], coords_sshot[3])
         send_action_simple(9, 0)
         tcp_send("SNDSHO1 "+str(get_downloads_count())+"     " + filename + ".png")
         matrix_set("SSHOT_1", True)
@@ -208,4 +209,3 @@ if matrix_get("DOWNLOAD_COUNT") == 1:
     get_inventario()
 tcp_send("FINISH0")
 close_explorer()
-

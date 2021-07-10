@@ -5,7 +5,7 @@
  <ena> EA </ena>   \#/ Sigla empresa
  <usr> jp_herrera@ilan.cl </usr>      \#/ Usuario portal
  <psw> Sofia440 </psw>   \#/ Password
- <url> https://www.cenconlineb2b.com/EasyCL/BBRe-commerce/access/login.do    \#/ URL portal
+ <url> https://www.cenconlineb2b.com/EasyCL/BBRe-commerce/access/login.do  </url>  \#/ URL portal
  <pid> 1008 </pid>          \#/ Portal id
  <pna> Construmart </pna>            \#/ Portal name
  <cna> ILAN </cna>            \#/ Client name
@@ -16,6 +16,8 @@
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Easy.py </jar>  \#/ road
+ <ssc> 11,230,1325,700 </ssc>
+ <ssx> 205,-10,70,20 </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo

@@ -5,7 +5,7 @@
  <ena> PF </ena>   \#/ Sigla empresa
  <usr> HPSAMSUNG </usr>      \#/ Usuario portal
  <psw> molinari4ever123 </psw>   \#/ Password
- <url> https://b2b.pcfactory.cl/   \#/ URL portal
+ <url> https://b2b.pcfactory.cl/  </url> \#/ URL portal
  <pid> 1009 </pid>          \#/ Portal id
  <pna> Pcfactory </pna>            \#/ Portal name
  <cna> HEWLETTPACKARD </cna>            \#/ Client name
@@ -16,6 +16,8 @@
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Pcfactory.py </jar>  \#/ road
+ <ssc> </ssc>
+ <ssx> </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo

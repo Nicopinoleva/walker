@@ -33,6 +33,4 @@ obj.site_key = "6Le6POkUAAAAAPrhWc5b14fntw6TCU1tRgEKaLnk"
 obj.ventas_procedure = boton_azul_procedure
 obj.inventario_procedure = boton_verde_procedure
 obj.finish_procedure = finish_method
-obj.checker_data["mouse_move"] = (137, -6)
-obj.checker_data["screenshot_save_crop"] = (0, 0, 70, 15)
 obj.run()

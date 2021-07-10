@@ -16,7 +16,7 @@
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Ripley.py </jar>  \#/ road
- <ssc> </ssc>
+ <ssc> 180,287,1348,618 </ssc>
  <ssx> </ssx>
 # convert
  <cft> DID </cft>         \#/ Tipo de archivo

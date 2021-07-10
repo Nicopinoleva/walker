@@ -16,6 +16,8 @@
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Sodimac.py </jar>  \#/ road
+ <ssc> 0,0,1360,1020 </ssc>
+ <ssx> </ssx>
 # convert
  <cft> DTDT </cft>         \#/ Tipo de archivo
  <vfm> .txt </vfm>        \#/ Ventas formato archivo

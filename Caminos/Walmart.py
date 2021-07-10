@@ -6,6 +6,7 @@ set_screenshot_directory("/home/seluser/Screenshots/")
 
 img_num = 0
 spanish_special = False
+text_sshot = SSHOT_TXT.split(",")
 files_downloaded = int(matrix_get("FILES_DOWNLOADED"))
 imgs_language = ["Spanish.png", "Mis_reportes.png", "Buscar.png", "Iniciar_busqueda.png", "Modificar.png", "Tiempo.png",
 			"Rango_1.png", "Fecha_pos.png", "Esta_entre.png", "Modificar_2.png", "Fecha_1.png", "Y.png", 
@@ -259,7 +260,7 @@ def file_exec(file_to_run):
         send_action_simple(3,0,files_downloaded,file_to_run+1)
         time_wait(2000)
         sname = "{}_{}_{}".format("Job","id",str(file_to_run+1))
-        screenshot_save_crop(sname,682,518,63,9)
+        screenshot_save_crop(sname,text_sshot[0], text_sshot[1], text_sshot[2], text_sshot[3])
         time_wait(1500)
         tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
         matrix_set("FILE_" + str(file_to_run+1) + "_RUNNING",True)

@@ -16,6 +16,8 @@
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Tottus.py </jar>  \#/ road
+ <ssc> 0,0,1360,1020 </ssc>
+ <ssx> </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo
@@ -57,8 +59,6 @@
  <zrp> /home/seluser/WALKER/zolbit </zrp> \#/ zolbitfile remote path
  <fus> </fus>
  <fpo> </fpo>
- <ssc> </ssc>
- <ssx> </ssx>
  <frp> /home/seluser/WALKER/files </frp>  \#/ files remote path
  <fid> walk@127.0.0.1:/home/seluser/WALKER/files </fid>  \#/ files dest
  <shd> walk@127.0.0.1:/home/seluser/WALKER/sshot </shd>  \#/ sshot dest

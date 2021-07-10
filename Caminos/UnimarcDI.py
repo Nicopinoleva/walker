@@ -103,7 +103,7 @@ obj.sshot2_procedure = pre_ventas_procedure
 #### Se remplaza por la funcion de detalle inventario
 obj.get_inventario = get_detalle_inventario
 ####
-obj.checker_data["mouse_move"] = (150, -7)
-obj.checker_data["screenshot_save_crop"] = (0, 0, 70, 15)
+# obj.checker_data["mouse_move"] = (150, -7)
+# obj.checker_data["screenshot_save_crop"] = (0, 0, 70, 15)
 obj.finish_procedure = finish_method
 obj.run()

@@ -5,7 +5,7 @@
  <ena> CV </ena>   \#/ Sigla empresa
  <usr> rparra@petrizzio.cl  </usr>      \#/ Usuario portal
  <psw> cruzverde9 </psw>   \#/ Password
- <url> https://b2b.cruzverde.cl/BBRe-commerce/access/login.do   \#/ URL portal
+ <url> https://b2b.cruzverde.cl/BBRe-commerce/access/login.do </url>  \#/ URL portal
  <pid> 1016 </pid>          \#/ Portal id
  <pna> Cruzverde </pna>            \#/ Portal name
  <cna> PETRIZZIO </cna>            \#/ Client name
@@ -16,6 +16,8 @@
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Cruzverde.py </jar>  \#/ road
+ <ssc> 11,230,1325,700 </ssc>
+ <ssx> 130,-6,70,15 </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo

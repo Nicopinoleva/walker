@@ -29,8 +29,10 @@ class BBR:
         self.date2 = ""
         self.extraDownload = ""
         self.checker_data = {}
-        self.checker_data["mouse_move"] = (240, -5) #(x, y)
-        self.checker_data["screenshot_save_crop"] = (0, 0, 70, 15) #(xoffset, yoffset, w, h)
+        self.coords_check = SSHOT_TXT.split(",")
+        self.coords_sshot = SSHOT_CXY.split(",")
+        self.checker_data["mouse_move"] = (int(self.coords_check[0]), int(self.coords_check[1])) #(x, y)
+        self.checker_data["screenshot_save_crop"] = (0, 0, int(self.coords_check[2]), int(self.coords_check[3])) #(xoffset, yoffset, w, h)
         self.issued_day = today()-timedelta(days=1)
         self.files_downloaded_extension = ".zip"
         self.account_procedure = self.account_procedure_method
@@ -505,7 +507,8 @@ class BBR:
         time_wait(2000)
         self.zolconvert(False,name1)
         send_action_simple(4, 0, num_files=1)
-        matrix_set("SALES",True)
+        if not self.custom_bbr:
+            matrix_set("SALES",True)
 
     def get_inventario(self,num=0):
         self.to_ventas_panel()
@@ -566,7 +569,7 @@ class BBR:
             name = RUT_EMPRESA +  "_" + date_to_string(date,"%Y%m%d") + "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" +  self.marca + "_" + self.PORTAL + "_"+ self.SIGLA +"_B2B_MENSUAL"
         else:
             name = RUT_EMPRESA +  "_" + date_to_string(date,"%Y%m%d") + "_" + date_to_string(nueva_fecha2,"%Y%m%d") + "_" + self.SIGLA +  "_"+self.PORTAL+"_B2B_MENSUAL"
-        screenshot_save_crop(name,11,230,1325,700)
+        screenshot_save_crop(name,int(self.coords_sshot[0]),int(self.coords_sshot[1]),int(self.coords_sshot[2]),int(self.coords_sshot[3]))
         tcp_send("SNDSHO1 " + str(get_downloads_count()) + "    '" + name + ".png'")
 
     def screenshot_2(self,num=0):
@@ -613,7 +616,7 @@ class BBR:
             name = RUT_EMPRESA +  "_" + date_to_string(nueva_fecha,"%Y%m%d") + "_" + date_to_string(fecha2,"%Y%m%d") + "_" +  self.marca + "_" + self.PORTAL + "_" + self.SIGLA +"_B2B_MENSUAL"
         else:
             name = RUT_EMPRESA +  "_" + date_to_string(nueva_fecha,"%Y%m%d") + "_" + date_to_string(fecha2,"%Y%m%d") + "_" + self.SIGLA + "_"+self.PORTAL+"_B2B_MENSUAL"
-        screenshot_save_crop(name,11,230,1325,700)
+        screenshot_save_crop(name,int(self.coords_sshot[0]),int(self.coords_sshot[1]),int(self.coords_sshot[2]),int(self.coords_sshot[3]))  
         tcp_send("SNDSHO2 " + str(get_downloads_count()) + "    '" + name + ".png'") 
 
     def downloadSpecial(self,down_num,proveedor,extra_down=0):

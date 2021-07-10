@@ -4,6 +4,7 @@ class TRIO:
         self.special_download = "UNDEFINED"
         self.pop_up = False
         self.login_verify = False
+        self.sshot_cords = SSHOT_CXY.split(",")
         self.jerarquia_procedure = self.jerarquia_procedure_method
         self.tiendas = []
         self.imgs_tiendas = []
@@ -200,7 +201,7 @@ class TRIO:
                 filename = "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut,self.fecha1,self.fecha2,self.fecha2,"U",self.PORTAL,NOMBRE_EMPRESA,"B2B","DIA","INV")
             else:
                 filename = "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut[0],self.fecha1,self.fecha2,self.fecha2,"U",self.PORTAL,NOMBRE_EMPRESA,"B2B","DIA","INV")
-            screenshot_save_crop(filename,0,0,1360,1020)
+            screenshot_save_crop(filename,int(self.sshot_cords[0]),int(self.sshot_cords[1]),int(self.sshot_cords[2]),int(self.sshot_cords[3]))
             tcp_send("SNDSHO1 " + str(get_downloads_count()) + "     " + filename + ".png")
             matrix_set("SSHOT_1", True)
         elif not matrix_get("SSHOT_2"):
@@ -208,7 +209,7 @@ class TRIO:
                 filename = "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut,self.fecha1,self.fecha2,self.fecha2,"M",self.PORTAL,NOMBRE_EMPRESA,"B2B","DIA","INV")
             else:
                 filename = "{}_{}_{}_{}_{}_{}_{}_{}_{}_{}".format(self.rut[0],self.fecha1,self.fecha2,self.fecha2,"M",self.PORTAL,NOMBRE_EMPRESA,"B2B","DIA","INV")
-            screenshot_save_crop(filename,0,0,1360,1020)
+            screenshot_save_crop(filename,int(self.sshot_cords[0]),int(self.sshot_cords[1]),int(self.sshot_cords[2]),int(self.sshot_cords[3]))
             tcp_send("SNDSHO2 " + str(get_downloads_count()) + "     " + filename + ".png")
             matrix_set("SSHOT_2", True)
 

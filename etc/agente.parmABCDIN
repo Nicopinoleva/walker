@@ -3,9 +3,9 @@
 #
  <rut> 766106706 </rut>   \#/ Rut 
  <ena> DN </ena>   \#/ Sigla empresa
- <usr> cristobal.zelaya@clarochile.cl </usr>      \#/ Usuario portal
+ <usr> cristobal.zelaya@clarochile.cl </usr> \#/ Usuario portal
  <psw> claro2023 </psw>   \#/ Password
- <url> https://portalb2b.abcdin.cl/    \#/ URL portal
+ <url> https://portalb2b.abcdin.cl/   </url> \#/ URL portal
  <pid> 1012 </pid>          \#/ Portal id
  <pna> Abcdin </pna>            \#/ Portal name
  <cna> HBC </cna>            \#/ Client name
@@ -16,6 +16,8 @@
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Abcdin.py </jar>  \#/ road
+ <ssc> 11,230,1325,700 </ssc>
+ <ssx> 190,-6,70,15 </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo

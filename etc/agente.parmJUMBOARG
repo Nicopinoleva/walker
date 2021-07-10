@@ -5,7 +5,7 @@
  <ena> JA </ena>   \#/ Sigla empresa
  <usr> miguel.angel@kraftheinz.com </usr>      \#/ Usuario portal
  <psw> Kraftheinz.2020 </psw>   \#/ Password
- <url> https://www.cenconlineb2b.com/SuperAR/BBRe-commerce/access/login.do    \#/ URL portal
+ <url> https://www.cenconlineb2b.com/SuperAR/BBRe-commerce/access/login.do  </url>  \#/ URL portal
  <pid> 1022 </pid>          \#/ Portal id
  <pna> JumboArg </pna>            \#/ Portal name
  <cna> ARGOS </cna>            \#/ Client name
@@ -16,6 +16,8 @@
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/JumboArg.py </jar>  \#/ road
+ <ssc> 11,230,1325,700 </ssc>
+ <ssx> 120,-5,72,15 </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo

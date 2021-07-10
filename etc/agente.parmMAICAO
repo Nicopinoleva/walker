@@ -5,7 +5,7 @@
  <ena> MA </ena>   \#/ Sigla empresa
  <usr> 76468405 </usr>      \#/ Usuario portal
  <psw> E76468405 </psw>   \#/ Password
- <url> http://wc1.difarma.cl:9090/apex/f?p=102:1   \#/ URL portal
+ <url> http://wc1.difarma.cl:9090/apex/f?p=102:1 </url>  \#/ URL portal
  <pid> 1021 </pid>          \#/ Portal id
  <pna> Maicao </pna>            \#/ Portal name
  <cna> KBINTERNATIONAL </cna>            \#/ Client name
@@ -16,6 +16,8 @@
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Maicao.py </jar>  \#/ road
+ <ssc> 10,250,1260,430 </ssc>
+ <ssx> </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo

@@ -67,6 +67,6 @@ obj.sshot2_procedure = pre_ventas_procedure
 obj.get_inventario = get_detalle_inventario
 ####
 obj.finish_procedure = finish_method
-obj.checker_data["mouse_move"] = (-100, -6)
-obj.checker_data["screenshot_save_crop"] = (386, 0, 70, 15)
+# obj.checker_data["mouse_move"] = (-100, -6)
+# obj.checker_data["screenshot_save_crop"] = (386, 0, 70, 15)
 obj.run()

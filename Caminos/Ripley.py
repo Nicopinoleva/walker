@@ -32,6 +32,7 @@ last_day_of_previous_month_str2 = date_to_string(get_first_day_of_month(get_prev
 date1 = ""
 date2 = ""
 portal = "RIPLEY"
+coords_sshot = SSHOT_CXY.split(",")
 
 def login():
     log_sshot = "{}_{}".format("PRELOGIN", portal) 
@@ -132,12 +133,12 @@ def screenshot(sshot):
     image_click("criterios.png")
     if sshot == "1":
         sname = "RIPLEY_B2B_VTA_"+RUT_EMPRESA+"_"+date_to_string(primer_dia_mes,"%Y%m%d")+"_"+date_to_string(yesterday,"%Y%m%d")+"_"+NOMBRE_EMPRESA+ "_MENSUAL" 
-        screenshot_save_crop_with_points(sname, 180, 287, 1348, 618)
+        screenshot_save_crop_with_points(sname, coords_sshot[0], coords_sshot[1], coords_sshot[2], coords_sshot[3])
         tcp_send("SNDSHO1 0    " + sname + ".png")
         matrix_set("SSHOT_1",True)
     else:
         sname = "RIPLEY_B2B_VTA_"+RUT_EMPRESA+"_"+date_to_string(first_day_of_previous_month,"%Y%m%d")+"_"+last_day_of_previous_month_str2+"_"+NOMBRE_EMPRESA+ "_MENSUAL"
-        screenshot_save_crop_with_points(sname, 180, 287, 1348, 618)
+        screenshot_save_crop_with_points(sname, coords_sshot[0], coords_sshot[1], coords_sshot[2], coords_sshot[3])
         tcp_send("SNDSHO2 0    " + sname + ".png")
         matrix_set("SSHOT_2",True)
 

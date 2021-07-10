@@ -62,6 +62,6 @@ ABCDin.pre_ventas_procedure = pre_ventas_procedure
 ABCDin.sshot1_procedure = pre_ventas_procedure
 ABCDin.sshot2_procedure = pre_ventas_procedure
 ABCDin.finish_procedure = finish_method
-ABCDin.checker_data["mouse_move"] = (190, -6)
-ABCDin.checker_data["screenshot_save_crop"] = (0, 0, 70, 15)
+# ABCDin.checker_data["mouse_move"] = (190, -6)
+# ABCDin.checker_data["screenshot_save_crop"] = (0, 0, 70, 15)
 ABCDin.run()

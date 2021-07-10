@@ -91,8 +91,8 @@ obj.marca_inv_procedure = marca_inventario_procedure
 #obj.sshot1_procedure = marca_ventas_procedure
 #obj.sshot2_procedure = marca_ventas_procedure
 obj.finish_procedure = finish_method
-obj.checker_data["mouse_move"] = (-100, -6)
-obj.checker_data["screenshot_save_crop"] = (275, 0, 70, 15)
+# obj.checker_data["mouse_move"] = (-100, -6)
+# obj.checker_data["screenshot_save_crop"] = (275, 0, 70, 15)
 obj.run = chain_run
 counter = matrix_get("CYCLE_COUNT")
 for x in range(counter,len(sigla)):

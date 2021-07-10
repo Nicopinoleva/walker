@@ -5,6 +5,7 @@ class ESB:
         self.mantenedor_procedure = self.mantenedor_procedure_img
         self._fecha_guardada = "0000000"
         self._fecha_inventario = "0000000"
+        self.coords_sshot = SSHOT_CXY.split(",") 
         self.files_downloaded_extension = ".xls"
         self.login_verify = False
 
@@ -162,7 +163,7 @@ class ESB:
             fecha1 = date_to_string(get_first_day_of_month(date2),"%Y%m%d")
             fecha2 = date_to_string(get_first_day_of_month(date2),"%Y%m") + str(get_last_day_of_month(date2)) 
         filename = "{}_{}_{}_{}_{}_{}_{}".format(self.PORTAL, "B2B", "VTA", RUT_EMPRESA, fecha1, fecha2, "MENSUAL")
-        screenshot_save_crop(filename, 94, 245, 1152, 355)
+        screenshot_save_crop(filename, self.coords_sshot[0], self.coords_sshot[1], self.coords_sshot[2], self.coords_sshot[3])
         if not matrix_get("SSHOT_1"):
             tcp_send("SNDSHO1 " + str(get_downloads_count()) + "     " + filename + ".png")
             matrix_set("SSHOT_1", True)

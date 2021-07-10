@@ -64,6 +64,6 @@ obj.account_procedure = account_special
 obj.ventas_procedure = createBoundMethod(boton_azul_procedure,obj)
 obj.inventario_procedure = boton_verde_procedure
 obj.finish_procedure = finish_method
-obj.checker_data["mouse_move"] = (115, -10)
-obj.checker_data["screenshot_save_crop"] = (0, 0, 70, 20)
+# obj.checker_data["mouse_move"] = (115, -10)
+# obj.checker_data["screenshot_save_crop"] = (0, 0, 70, 20)
 obj.run()

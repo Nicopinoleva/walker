@@ -5,7 +5,7 @@
  <ena> HI </ena>   \#/ Sigla empresa
  <usr> carolina.fernandez@petrizzio.cl  </usr>      \#/ Usuario portal
  <psw> petri2080 </psw>   \#/ Password
- <url> https://www.hitesb2b.com/Hites/BBRe-commerce/access/login.do  \#/ URL portal
+ <url> https://www.hitesb2b.com/Hites/BBRe-commerce/access/login.do </url> \#/ URL portal
  <pid> 1014 </pid>          \#/ Portal id
  <pna> Hites </pna>            \#/ Portal name
  <cna> PETRIZZIO </cna>            \#/ Client name
@@ -16,6 +16,8 @@
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Hites.py </jar>  \#/ road
+ <ssc> 11,230,1325,700 </ssc>
+ <ssx> 206,-5,72,15 </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo

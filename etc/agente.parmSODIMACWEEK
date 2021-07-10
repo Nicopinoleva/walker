@@ -5,7 +5,7 @@
  <ena> SO </ena>   \#/ Sigla empresa
  <usr> 256217872  </usr>      \#/ Usuario portal
  <psw> WOK2021! </psw>   \#/ Password
- <url> https://b2b.sodimac.com/b2bsocopr/grafica/html/index.html  \#/ URL portal
+ <url> https://b2b.sodimac.com/b2bsocopr/grafica/html/index.html </url> \#/ URL portal
  <pid> 1003 </pid>          \#/ Portal id
  <pna> Sodimac </pna>            \#/ Portal name
  <cna> GROUPESEB </cna>            \#/ Client name
@@ -16,6 +16,8 @@
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Sodimac.py </jar>  \#/ road
+ <ssc> 0,0,1360,1020 </ssc>
+ <ssx> </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo

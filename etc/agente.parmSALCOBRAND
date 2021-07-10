@@ -5,7 +5,7 @@
  <ena> SB </ena>   \#/ Sigla empresa
  <usr> ilan </usr>      \#/ Usuario portal
  <psw> 77756630 </psw>   \#/ Password
- <url> https://portalempresas.sb.cl/login.php   \#/ URL portal
+ <url> https://portalempresas.sb.cl/login.php </url>  \#/ URL portal
  <pid> 1004 </pid>          \#/ Portal id
  <pna> Salcobrand </pna>            \#/ Portal name
  <cna> ILAN </cna>            \#/ Client name
@@ -16,6 +16,8 @@
  <hda> none </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Salcobrand.py </jar>  \#/ road
+ <ssc> 94,245,1152,355 </ssc>
+ <ssx>  </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo
