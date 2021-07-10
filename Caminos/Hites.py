@@ -24,6 +24,19 @@ def boton_verde_procedure():
 def finish_method():
     tcp_send("FINISH0")
 
+def account_special(): 
+    if image_appeared("expirado.png") == True:
+        send_action_simple(1,7)
+        sname = "{}_{}".format("LOGINEXP", "HITES")
+        log_sshot = "{}_{}".format("PRELOGIN", "HITES")
+        screenshot_save(sname)
+        tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
+        tcp_send("SNDPIC1 /home/seluser/Screenshots/" + log_sshot + ".png")
+        tcp_send("FINISH7")
+        abort("Credencial login expirada.")
+    else:
+        pass 
+
 obj = BBR()
 obj.PORTAL = "HITES"
 obj.passid = "password"

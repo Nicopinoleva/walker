@@ -35,6 +35,15 @@ def account_special():
         tcp_send("SNDPIC1 /home/seluser/Screenshots/" + log_sshot + ".png")
         tcp_send("FINISH15")
         abort("Credencial login bloqueada.")
+    elif image_appeared("expirado.png") == True:
+        send_action_simple(1,7)
+        sname = "{}_{}".format("LOGINEXP", "CORONA")
+        log_sshot = "{}_{}".format("PRELOGIN", "CORONA")
+        screenshot_save(sname)
+        tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
+        tcp_send("SNDPIC1 /home/seluser/Screenshots/" + log_sshot + ".png")
+        tcp_send("FINISH7")
+        abort("Credencial login expirada.")
     else:
         pass 
 

@@ -133,12 +133,12 @@ def screenshot(sshot):
     image_click("criterios.png")
     if sshot == "1":
         sname = "RIPLEY_B2B_VTA_"+RUT_EMPRESA+"_"+date_to_string(primer_dia_mes,"%Y%m%d")+"_"+date_to_string(yesterday,"%Y%m%d")+"_"+NOMBRE_EMPRESA+ "_MENSUAL" 
-        screenshot_save_crop_with_points(sname, coords_sshot[0], coords_sshot[1], coords_sshot[2], coords_sshot[3])
+        screenshot_save_crop_with_points(sname, int(coords_sshot[0]), int(coords_sshot[1]), int(coords_sshot[2]), int(coords_sshot[3]))
         tcp_send("SNDSHO1 0    " + sname + ".png")
         matrix_set("SSHOT_1",True)
     else:
         sname = "RIPLEY_B2B_VTA_"+RUT_EMPRESA+"_"+date_to_string(first_day_of_previous_month,"%Y%m%d")+"_"+last_day_of_previous_month_str2+"_"+NOMBRE_EMPRESA+ "_MENSUAL"
-        screenshot_save_crop_with_points(sname, coords_sshot[0], coords_sshot[1], coords_sshot[2], coords_sshot[3])
+        screenshot_save_crop_with_points(sname, int(coords_sshot[0]), int(coords_sshot[1]), int(coords_sshot[2]), int(coords_sshot[3]))
         tcp_send("SNDSHO2 0    " + sname + ".png")
         matrix_set("SSHOT_2",True)
 
