@@ -43,6 +43,7 @@ obj.passid = "password"
 obj.enable_newBBR = True
 obj.site_key = "6Le6POkUAAAAAPrhWc5b14fntw6TCU1tRgEKaLnk"
 obj.enable_recaptcha = True
+obj.account_procedure = account_special
 obj.ventas_procedure = boton_azul_procedure
 obj.inventario_procedure = boton_verde_procedure
 obj.pre_ventas_procedure = pre_ventas_inventario_procedure
