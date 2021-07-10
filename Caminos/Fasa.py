@@ -14,8 +14,7 @@ def make_filename(*args, **kwargs):
 
 def login():
     log_sshot = "{}_{}".format("PRELOGIN", PORTAL) 
-    image_click("loguser.png")
-    press(TAB)
+    image_wait("loguser.png")
     time_wait(5000)
     type(USERNAME)
     press(TAB)
