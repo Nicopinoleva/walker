@@ -260,7 +260,7 @@ def file_exec(file_to_run):
         send_action_simple(3,0,files_downloaded,file_to_run+1)
         time_wait(2000)
         sname = "{}_{}_{}".format("Job","id",str(file_to_run+1))
-        screenshot_save_crop(sname,text_sshot[0], text_sshot[1], text_sshot[2], text_sshot[3])
+        screenshot_save_crop(sname,int(text_sshot[0]), int(text_sshot[1]), int(text_sshot[2]), int(text_sshot[3]))
         time_wait(1500)
         tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
         matrix_set("FILE_" + str(file_to_run+1) + "_RUNNING",True)
