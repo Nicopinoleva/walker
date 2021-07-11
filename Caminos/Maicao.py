@@ -37,7 +37,7 @@ def screenshot():
     send_action_simple(9, 0)
     if not matrix_get("SSHOT_1"):
         filename = "{}_{}_{}_{}_{}".format(PORTAL, "B2B", "VTA", RUT_EMPRESA, "ANUAL")
-        screenshot_save_crop_with_points(filename, coords_sshot[0], coords_sshot[1], coords_sshot[2], coords_sshot[3])
+        screenshot_save_crop_with_points(filename, int(sshot_cords[0]), int(sshot_cords[1]), int(sshot_cords[2]), int(sshot_cords[3])
         send_action_simple(9, 0)
         tcp_send("SNDSHO1 "+str(get_downloads_count())+"     " + filename + ".png")
         matrix_set("SSHOT_1", True)
