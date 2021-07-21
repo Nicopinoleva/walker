@@ -170,9 +170,9 @@ def download_week(num_days,isHist=False):
     press(SPACE)
     image_click("buscar.png")
     image_wait("upempresa.png")
-    image_hover("upempresa.png")
-    mouse_move(0, 20)
-    click()
+    image_click("upempresa.png")
+    press(TAB)
+    press(ENTER)
     image_wait("dlprompt.png")
     if isHist:
         dia_slugy = date1
@@ -221,9 +221,9 @@ def download_stock():
     press(SPACE)
     image_click("buscar.png")
     image_wait("upempresa.png")
-    image_hover("upempresa.png")
-    mouse_move(0, 20)
-    click()
+    image_click("upempresa.png")
+    press(TAB)
+    press(ENTER)
     image_wait("dlprompt.png")
     ayer_slugy = format_date_screenshot(yesterday)
     b2b = "B2B"

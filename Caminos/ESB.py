@@ -163,7 +163,7 @@ class ESB:
             fecha1 = date_to_string(get_first_day_of_month(date2),"%Y%m%d")
             fecha2 = date_to_string(get_first_day_of_month(date2),"%Y%m") + str(get_last_day_of_month(date2)) 
         filename = "{}_{}_{}_{}_{}_{}_{}".format(self.PORTAL, "B2B", "VTA", RUT_EMPRESA, fecha1, fecha2, "MENSUAL")
-        screenshot_save_crop(filename, self.coords_sshot[0], self.coords_sshot[1], self.coords_sshot[2], self.coords_sshot[3])
+        screenshot_save_crop(filename, int(self.coords_sshot[0]), int(self.coords_sshot[1]), int(self.coords_sshot[2]), int(self.coords_sshot[3]))
         if not matrix_get("SSHOT_1"):
             tcp_send("SNDSHO1 " + str(get_downloads_count()) + "     " + filename + ".png")
             matrix_set("SSHOT_1", True)

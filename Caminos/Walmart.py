@@ -1,4 +1,5 @@
 import shutil
+from xlwt import Workbook
 
 set_imagepath("/Sikulix/Imgs/Walmart/")
 set_download_directory("/home/seluser/Downloads/")
@@ -9,11 +10,11 @@ spanish_special = False
 text_sshot = SSHOT_TXT.split(",")
 files_downloaded = int(matrix_get("FILES_DOWNLOADED"))
 imgs_language = ["Spanish.png", "Mis_reportes.png", "Buscar.png", "Iniciar_busqueda.png", "Modificar.png", "Tiempo.png",
-			"Rango_1.png", "Fecha_pos.png", "Esta_entre.png", "Modificar_2.png", "Fecha_1.png", "Y.png", 
-                        "Submitir.png" , "Renombre.png", "Ejecutar.png", "Solicitud_submitida.png", "Estado.png", 
-                        "Error_datos.png", "Formateo.png", "English.png", "My_reports.png", "Search.png", "Beggin_search.png", "Modify.png", 
-                        "Times.png", "Range_1.png", "Pos_date.png", "Is_between.png", "Modify_2.png", "Date_1.png", "And.png", 
-                        "Submit.png", "Rename.png", "Run_now.png", "Query_submitted.png", "Status.png", "Data_error.png", "Formater.png"]
+                "Rango_1.png", "Fecha_pos.png", "Esta_entre.png", "Modificar_2.png", "Fecha_1.png", "Y.png", 
+                "Submitir.png" , "Renombre.png", "Ejecutar.png", "Solicitud_submitida.png", "Estado.png", 
+                "Error_datos.png", "Formateo.png", "English.png", "My_reports.png", "Search.png", "Beggin_search.png", "Modify.png", 
+                "Times.png", "Range_1.png", "Pos_date.png", "Is_between.png", "Modify_2.png", "Date_1.png", "And.png", 
+                "Submit.png", "Rename.png", "Run_now.png", "Query_submitted.png", "Status.png", "Data_error.png", "Formater.png"]
 fechas = [[date_to_string(previous_day(today()),"%Y%m%d"), date_to_string(subtract_days(today(),7),"%Y%m%d"), date_to_string(get_first_day_of_month(previous_day(today())),"%Y%m%d"),
           date_to_string(get_previous_month(previous_day(today())),"%Y%m%d"), date_to_string(get_previous_month(previous_day(today())),"%Y%m") + 
           str(get_last_day_of_month(get_previous_month(previous_day(today()))))],
@@ -72,33 +73,34 @@ def login():
         tcp_send("FAILED3")
         abort()
     time_wait(2000)
-    result = image_wait_multiple("Apps.png","Aplicaciones.png","Apps_new_EN.png","Apps_new_ES.png")
-    if result in ["Apps_new_EN.png","Apps_new_ES.png"]:
-        new_view(result)
-        language_check()
-    else:
-        language_check()
-        if image_appeared("Aplicaciones.png"):
-            spanish_special = True
-            image_click("Aplicaciones.png")
+    if EXTRA != "report":
+        result = image_wait_multiple("Apps.png","Aplicaciones.png","Apps_new_EN.png","Apps_new_ES.png")
+        if result in ["Apps_new_EN.png","Apps_new_ES.png"]:
+            new_view(result)
+            language_check()
         else:
-            image_click("Apps.png")
-        time_wait(2000)
-        if not image_appeared("Decision_support.png"):
-            press_with_ctr("f")
-            type("Soporte") 
-            press_with_ctr("a")
-            press(DELETE)
-            time_wait(2000)
-            if image_appeared("Soporte_decision.png"):
-                image_click("Soporte_decision.png")
+            language_check()
+            if image_appeared("Aplicaciones.png"):
+                spanish_special = True
+                image_click("Aplicaciones.png")
             else:
-                log("INFO", "Portal didn't load")
-                send_action_simple(9,3)
-                tcp_send("FAILED3")
-                abort()
-        else:
-            image_click("Decision_support.png")
+                image_click("Apps.png")
+            time_wait(2000)
+            if not image_appeared("Decision_support.png"):
+                press_with_ctr("f")
+                type("Soporte") 
+                press_with_ctr("a")
+                press(DELETE)
+                time_wait(2000)
+                if image_appeared("Soporte_decision.png"):
+                    image_click("Soporte_decision.png")
+                else:
+                    log("INFO", "Portal didn't load")
+                    send_action_simple(9,3)
+                    tcp_send("FAILED3")
+                    abort()
+            else:
+                image_click("Decision_support.png")
 
 def language_check():
     global img_num
@@ -323,7 +325,84 @@ def finish():
     tcp_send("FINISH0")
     manual_finish()
 
+def get_report():
+    image_click("madridmx.png")
+    time_wait(15000)
+    image_click("ventaInventario.png")
+    mouse_move(55,-30)
+    click()
+    image_click("launch.png")
+    time_wait(15000)
+    image_click("analyze.png")
+    time_wait(3000)
+    while True:
+            tcp_send("ESPERO")
+            if not image_appeared("loading.png"):
+                break
+            log("INFO", "[" + OPTION_LOG_ID + "] Waiting for report")
+    image_click("supply.png")
+    mouse_move(-80,20)
+    mouse_hold()
+    mouse_move(285,0)
+    mouse_release()
+    time_wait(2000)
+    press_with_ctr("c")
+    time_wait(2000)
+    print(get_clipboard())
+    temp = get_clipboard().replace(" ","").split(",")
+    temp1 = temp[0].split("of")
+    temp2 = temp[1].split("of")
+    cols = temp1[1]
+    rows = temp2[1]
+    print("number of columns --> {} and rows --> {}".format(cols,rows))
+    mouse_move(-280,0)
+    mouse_get_x()
+    mouse_get_y()
+    mouse_move(500,130)
+    click()
+    time_wait(2000)
+    mouse_get_x()
+    mouse_get_y()
+    #cols 2 fixed and 3 to 5 of 26, Rows 1 to 23 of 377
+    book = Workbook()
+    sheet = book.add_sheet(date_to_string(today()))
+    for x in range(int(rows)):
+        print("x es --> ",x)
+        for y in range(int(cols)):
+            print("y es --> ",y)
+            if y == 0:
+                press(LEFT)
+                press(LEFT)
+            elif y == 1:
+                press(LEFT)
+            elif y == 2:
+                pass
+            elif y > 2 and y < 4:
+                for z in range(y-2):
+                    press(RIGHT)
+            else:
+                for a in range(2):
+                    press(RIGHT)
+            press_with_ctr("c")
+            time_wait(400)
+            print(get_clipboard())
+            sheet.write(x,y,get_clipboard())
+            click()
+            if x >= 21:
+                press(UP)
+        for b in range(int(cols)):
+            press(LEFT)
+        if x < 21:
+            mouse_move(0,25)
+        click()
+    book.save(date_to_string(today())+".xls")
+
+
 use_firefox(True)
 login()
-run_cycle()
-get_files()
+if EXTRA == "report":
+    get_report()
+    finish()
+else:
+    run_cycle() 
+    get_files()

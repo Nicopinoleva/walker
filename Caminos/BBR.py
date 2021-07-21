@@ -215,6 +215,7 @@ class BBR:
                 print("Num right--> ",i)
 
     def date_go_first(self):
+        print("Ir a primer dia")
         hoy = self.issued_day
         time_wait(100)
         press(RIGHT)
@@ -310,7 +311,7 @@ class BBR:
             if int(date[4:6]) == hoy.month and self.enable_newBBR and (int(hoy.year) - int(date[:4])) == 0:
                 print("Entre!")
                 press(RIGHT)
-        if (isextraCalendar and not self.enable_newBBR) or (isextraCalendar and not isSecondCalendar and self.enable_extra_calendar_no_first):
+        if (isextraCalendar) or (isextraCalendar and not isSecondCalendar and self.enable_extra_calendar_no_first):
             self.date_go_first()
         time_wait(100)
         if int(date[6:]) == 1 and not self.enable_newBBR:
@@ -435,9 +436,19 @@ class BBR:
         else:
             image_click("fecha.png")
         if self.custom_date:
-            self.date_click_dynamic(self.date1)
-            image_click("fecha2")
-            self.date_click_dynamic(self.date2,isSecondCalendar=True)
+            if self.custom_bbr:
+                time_wait(5000)
+                mouse_move(-20,35)
+                click()
+                self.date_click_dynamic(self.date1)
+                image_click("fecha_corp.png")
+                mouse_move(-20,65)
+                click()
+                self.date_click_dynamic(self.date2,isextraCalendar=True)
+            else:
+                self.date_click_dynamic(self.date1)
+                image_click("fecha2")
+                self.date_click_dynamic(self.date2,isSecondCalendar=True)
         else:
             if self.custom_bbr:
                 nueva_fecha = self.issued_day-timedelta(days=num)

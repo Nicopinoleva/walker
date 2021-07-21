@@ -30,6 +30,19 @@ def boton_verde_procedure():
 def finish_method():
     tcp_send("FINISH0")
 
+def account_special(): 
+    if image_appeared("desactivado.png") == True:
+        send_action_simple(1,15)
+        sname = "{}_{}".format("LOGINBLQ", "PARIS")
+        log_sshot = "{}_{}".format("PRELOGIN", "PARIS")
+        screenshot_save(sname)
+        tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
+        tcp_send("SNDPIC1 /home/seluser/Screenshots/" + log_sshot + ".png")
+        tcp_send("FINISH16")
+        abort("Credencial login desactivada.")
+    else:
+        pass
+
 obj = BBR()
 obj.PORTAL = "PARIS"
 obj.passid = "password"
