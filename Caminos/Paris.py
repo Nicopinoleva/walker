@@ -32,8 +32,8 @@ def finish_method():
 
 def account_special(): 
     if image_appeared("desactivado.png") == True:
-        send_action_simple(1,15)
-        sname = "{}_{}".format("LOGINBLQ", "PARIS")
+        send_action_simple(1,16)
+        sname = "{}_{}".format("LOGINDSC", "PARIS")
         log_sshot = "{}_{}".format("PRELOGIN", "PARIS")
         screenshot_save(sname)
         tcp_send("SNDPIC1 /home/seluser/Screenshots/" + sname + ".png")
@@ -50,6 +50,7 @@ obj.enable_special_extra_calendar = True
 obj.enable_extra_calendar = True
 obj.enable_extra_calendar_no_first = True
 obj.enable_newBBR = True
+obj.account_procedure = account_special
 obj.site_key = "6LcVYtEUAAAAALlg52jHvKf9IM8n2FvJfqHSyqxg"
 obj.enable_recaptcha = True
 obj.ventas_procedure = boton_azul_procedure

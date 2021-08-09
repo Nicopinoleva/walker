@@ -328,11 +328,11 @@ def finish():
 def get_report():
     image_click("madridmx.png")
     time_wait(15000)
-    image_click("ventaInventario.png")
-    mouse_move(55,-30)
+    image_click("ventaInventarioLau.png")
+    mouse_move(75,-40)
     click()
     image_click("launch.png")
-    time_wait(15000)
+    time_wait(20000)
     image_click("analyze.png")
     time_wait(3000)
     while True:
@@ -343,7 +343,7 @@ def get_report():
     image_click("supply.png")
     mouse_move(-80,20)
     mouse_hold()
-    mouse_move(285,0)
+    mouse_move(277,0)
     mouse_release()
     time_wait(2000)
     press_with_ctr("c")
@@ -352,13 +352,32 @@ def get_report():
     temp = get_clipboard().replace(" ","").split(",")
     temp1 = temp[0].split("of")
     temp2 = temp[1].split("of")
+    temp3 = temp2[0].split("to")
     cols = temp1[1]
     rows = temp2[1]
-    print("number of columns --> {} and rows --> {}".format(cols,rows))
-    mouse_move(-280,0)
+    rows_screen = temp3[1]
+    print("number of columns --> {} and rows --> {}, rows ens --> {}".format(cols,rows,rows_screen))
+    # image_click("supply.png")
+    # book1 = Workbook(encoding='latin-1')
+    # sheet1 = book1.add_sheet("test")
+    # for x in range(int(cols)):
+    #     if x == 0:
+    #         screenshot_save_crop("col"+str(x),mouse_get_x()-23,mouse_get_y()+40,125,87)
+    #     elif x == 1:
+    #         screenshot_save_crop("col"+str(x),mouse_get_x()+190,mouse_get_y()+40,125,87)
+    #     else:
+    #         screenshot_save_crop("col"+str(x),mouse_get_x()+370+(150*(x-2)),mouse_get_y()+40,125,87)
+    #     sheet1.write(0,x,get_string_from_image(get_screenshot_directory()+"col"+str(x)+".png"))
+    # book1.save("test.xls")
+    press(PAGE_DOWN)
+    file_name = date_to_string(today())
+    screenshot_save(file_name)
+    time_wait(1000)
+    tcp_send("SNDSHO1 " + str(get_downloads_count()) + "    '" + file_name + ".png'")
+    mouse_move(-277,0)
     mouse_get_x()
     mouse_get_y()
-    mouse_move(500,130)
+    mouse_move(500,15)
     click()
     time_wait(2000)
     mouse_get_x()
@@ -366,7 +385,7 @@ def get_report():
     #cols 2 fixed and 3 to 5 of 26, Rows 1 to 23 of 377
     book = Workbook()
     sheet = book.add_sheet(date_to_string(today()))
-    for x in range(int(rows)):
+    for x in range(int(rows)-1):
         print("x es --> ",x)
         for y in range(int(cols)):
             print("y es --> ",y)
@@ -384,18 +403,22 @@ def get_report():
                 for a in range(2):
                     press(RIGHT)
             press_with_ctr("c")
-            time_wait(400)
+            time_wait(200)
             print(get_clipboard())
             sheet.write(x,y,get_clipboard())
+            time_wait(100)
             click()
-            if x >= 21:
-                press(UP)
+            # if x >= int(rows_screen)-2:
+            #     press(UP)
         for b in range(int(cols)):
             press(LEFT)
-        if x < 21:
+        if x < int(rows_screen)-3:
             mouse_move(0,25)
+        else:
+            press(DOWN)
         click()
-    book.save(date_to_string(today())+".xls")
+    book.save("/home/seluser/Downloads/"+file_name+".xls")
+    tcp_send("SNDFIL" + str(get_downloads_count()) + "   '/home/seluser/Downloads/" + file_name + ".xls'")
 
 
 use_firefox(True)
