@@ -20,6 +20,7 @@ class BBR:
         self.enable_SalesClick = False
         self.enable_customRename = False
         self.enable_extraDownload = False
+        self.enable_locked_calendar = False
         self._portal_loaded = False
         self.login_verify = False
         self.custom_date = False
@@ -27,6 +28,7 @@ class BBR:
         self.marca = ""
         self.date1 = ""
         self.date2 = ""
+        self.date_lock = ""
         self.extraDownload = ""
         self.checker_data = {}
         self.coords_check = SSHOT_TXT.split(",")
@@ -214,17 +216,23 @@ class BBR:
                 press(RIGHT)
                 print("Num right--> ",i)
 
-    def date_go_first(self):
+    def date_go_first(self,date = None):
         print("Ir a primer dia")
         hoy = self.issued_day
         time_wait(100)
         press(RIGHT)
         time_wait(100)
         press(LEFT)
-        for i in range(hoy.day-1):
-            time_wait(100)
-            press(LEFT)
-            print("Num left--> ",i)
+        if(self.enable_locked_calendar and self.date_lock[:4]==date[:4]):
+            for i in range(int(self.date_lock[6:])-1):
+                time_wait(100)
+                press(LEFT)
+                print("Num left--> ",i)
+        else:
+            for i in range(hoy.day-1):
+                time_wait(100)
+                press(LEFT)
+                print("Num left--> ",i)
 
     def date_click(self, num_days, isextraCalendar = False, isFirstCalendar = False):
         print("numero de dias a restar--> ",num_days)
@@ -291,9 +299,16 @@ class BBR:
                 image_click("year.png")
                 time_wait(100)
         if int(date[4:6]) - hoy.month > 0:
-            for x in range(int(date[4:6]) - hoy.month):
-                time_wait(100)
-                image_click("right.png")
+            if (self.enable_locked_calendar and self.date_lock[:4]==date[:4]):
+                for x in range(int(date[4:6]) - hoy.month - (int(self.date_lock[4:6])-hoy.month)):
+                    time_wait(100)
+                    image_click("right.png")
+                    print("Num right--> ",i)
+            else:
+                for x in range(int(date[4:6]) - hoy.month):
+                    time_wait(100)
+                    image_click("right.png")
+                    print("Num right--> ",i)
         elif int(date[4:6]) - hoy.month < 0:
             for x in range(hoy.month - int(date[4:6])):
                 time_wait(100)
@@ -306,21 +321,28 @@ class BBR:
             mouse_move(0,15)
             click()
         if isSecondCalendar:
-            self.date_go_first()
+            self.date_go_first(date)
             print(hoy.year)
             if int(date[4:6]) == hoy.month and self.enable_newBBR and (int(hoy.year) - int(date[:4])) == 0:
                 print("Entre!")
                 press(RIGHT)
-        if (isextraCalendar) or (isextraCalendar and not isSecondCalendar and self.enable_extra_calendar_no_first):
-            self.date_go_first()
+        if (isextraCalendar) or (isextraCalendar and not isSecondCalendar and self.enable_extra_calendar_no_first) or (self.enable_locked_calendar and self.date_lock[:4]==date[:4] and not isSecondCalendar):
+            self.date_go_first(date)
         time_wait(100)
         if int(date[6:]) == 1 and not self.enable_newBBR:
             press(RIGHT)
             time_wait(100)
             press(LEFT)
-        for x in range(int(date[6:])-1):
-            time_wait(100)
-            press(RIGHT)
+        if (self.enable_locked_calendar and self.date_lock[:6]==date[:6]):
+            for x in range(int(date[6:])-int(self.date_lock[6:])):
+                time_wait(100)
+                press(RIGHT)
+                print("numero right->",x)
+        else:
+            for x in range(int(date[6:])-1):
+                time_wait(100)
+                press(RIGHT)
+                print("numero right->",x)
         if self.enable_newBBR:
             press(ENTER)
         else:
@@ -734,7 +756,7 @@ class BBR:
             matrix_set("EXTRA_CYCLE_COUNT",matrix_get("EXTRA_CYCLE_COUNT")+1)
 
     def run(self):
-    	global DATE
+        global DATE
         if not self.login_verify:
             if len(DATE) != 1:
                 self.custom_date = True

@@ -3,8 +3,8 @@
 #
  <rut> 766106706 </rut>   \#/ Rut 
  <ena> JA </ena>   \#/ Sigla empresa
- <usr> jmunoz@argos.cl </usr>      \#/ Usuario portal
- <psw> octubre2020 </psw>   \#/ Password
+ <usr> alvaro.gonzalez@hbclatina.cl </usr>      \#/ Usuario portal
+ <psw> Downy2021 </psw>   \#/ Password
  <url> https://www.cenconlineb2b.com/SuperCL/BBRe-commerce/access/login.do </url>\#/ URL portal
  <pid> 1006 </pid>          \#/ Portal id
  <pna> Jumbo </pna>            \#/ Portal name
@@ -12,12 +12,12 @@
  <xtr> none </xtr>              \#/ Extra information
  <ssn> 2 </ssn>                 \#/ Screenshots number
  <stn> 2 </stn>                 \#/ Stores number
- <hdi> 31 </hdi>                \#/ History days
- <hda> none </hda> \#/ History dates
+ <hdi> 7 </hdi>                \#/ History days
+ <hda> 01112020-05012022 </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Jumbo.py </jar>  \#/ road
- <ssc> </ssc>
- <ssx> </ssx>
+ <ssc> 11,230,1325,700 </ssc>
+ <ssx> 115,-10,70,20 </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo

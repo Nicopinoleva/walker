@@ -12,17 +12,21 @@ else:
 
 def marca_inventario_procedure(num):
     image_click("prod_acts.png")
-    image_double_click("selec_proveedor.png")
+    image_hover("selec_formato.png")
+    mouse_get_x()
+    mouse_get_y()
+    mouse_move(120,0)
+    mouse_get_x()
+    mouse_get_y()
+    click()
     time_wait(2000)
     for x in range (10):
         press(UP)
         time_wait(200)
-        press(TAB)
-        click()
-        time_wait(1000)
     for x in range (int(sigla[num][-2:])):
         press(DOWN)
         time_wait(200)
+    press(ENTER)
 
 def marca_ventas_procedure(num):
     image_click("mostrar_inv.png")

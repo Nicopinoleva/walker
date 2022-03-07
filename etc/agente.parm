@@ -1,23 +1,23 @@
 # V1.01.00
 # Parametros para ejecucion local (sin bus)
 #
- <rut> 788060904 </rut>   \#/ Rut 
- <ena> LI </ena>   \#/ Sigla empresa
- <usr> edgar.salazar@chobani.com </usr>      \#/ Usuario portal
- <psw> Chobi2001 </psw>   \#/ Password
- <url> https://rllogin.wal-mart.com/rl_security/rl_logon.aspx  </url> \#/ URL portal
- <pid> 1004 </pid>          \#/ Portal id
- <pna> Walmart </pna>            \#/ Portal name
- <cna> ILAN </cna>            \#/ Client name
- <xtr> report </xtr>              \#/ Extra information
+ <rut> 922160007 </rut>   \#/ Rut 
+ <ena> HI </ena>   \#/ Sigla empresa
+ <usr> eduardo.lobo@bata.com  </usr>      \#/ Usuario portal
+ <psw> Bata.2021 </psw>   \#/ Password
+ <url> https://www.hitesb2b.com/Hites/BBRe-commerce/access/login.do </url> \#/ URL portal
+ <pid> 1014 </pid>          \#/ Portal id
+ <pna> Hites </pna>            \#/ Portal name
+ <cna> BATA  </cna>            \#/ Client name
+ <xtr> none </xtr>              \#/ Extra information
  <ssn> 2 </ssn>                 \#/ Screenshots number
- <stn> 3 </stn>                 \#/ Stores number
- <hdi> 31 </hdi>                \#/ History days
- <hda> none </hda> \#/ History dates
+ <stn> 2 </stn>                 \#/ Stores number
+ <hdi> 7 </hdi>                \#/ History days
+ <hda> 09082019-05012022 </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
- <jar> /Sikulix/Engine/Walker.jar /Sikulix/Walmart.py </jar>  \#/ road
- <ssc> </ssc>
- <ssx> 682,518,63,9 </ssx>
+ <jar> /Sikulix/Engine/Walker.jar /Sikulix/Hites.py </jar>  \#/ road
+ <ssc> 11,230,1325,700 </ssc>
+ <ssx> 206,-5,72,15 </ssx>
 # convert
  <cft> DIA </cft>         \#/ Tipo de archivo
  <vfm> .csv </vfm>        \#/ Ventas formato archivo

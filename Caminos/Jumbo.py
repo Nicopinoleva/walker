@@ -13,6 +13,7 @@ def pre_ventas_procedure():
     for x in range (10):
         press(UP)
         time_wait(200)
+    press(ENTER)
 
 
 def boton_azul_procedure(objectReference):

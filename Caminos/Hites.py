@@ -51,6 +51,8 @@ obj.pre_inventario_procedure = pre_ventas_inventario_procedure
 obj.sshot1_procedure = pre_ventas_inventario_procedure
 obj.sshot2_procedure = pre_ventas_inventario_procedure
 obj.finish_procedure = finish_method
+obj.enable_locked_calendar = True
+obj.date_lock = "20180216"
 # obj.checker_data["mouse_move"] = (0, 0)
 # obj.checker_data["screenshot_save_crop"] = (206, -5, 72, 15)
 obj.run()
