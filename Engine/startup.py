@@ -154,7 +154,7 @@ def default_image_missing_handler(e):
 
 if not "Login" in OPTION_FILENAME:
 #Registro variables guardas en el agente
-    if OPTION_FILENAME == "/Sikulix/Walmart.py":
+    if OPTION_FILENAME == "/Sikulix/Walmart.py" or OPTION_FILENAME == "/Sikulix/WalmartMexico.py":
         matrix_register("INICIADO")
         matrix_register("LOGIN_CORRECT")
         matrix_register("FILE_1_RUNNING")

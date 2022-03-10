@@ -21,6 +21,7 @@ class BBR:
         self.enable_customRename = False
         self.enable_extraDownload = False
         self.enable_locked_calendar = False
+        self.enable_extra_locked_calendar = False
         self._portal_loaded = False
         self.login_verify = False
         self.custom_date = False
@@ -29,6 +30,7 @@ class BBR:
         self.date1 = ""
         self.date2 = ""
         self.date_lock = ""
+        self.date_lock_extra = ""
         self.extraDownload = ""
         self.checker_data = {}
         self.coords_check = SSHOT_TXT.split(",")
@@ -216,18 +218,24 @@ class BBR:
                 press(RIGHT)
                 print("Num right--> ",i)
 
-    def date_go_first(self,date = None):
+    def date_go_first(self,date = None, isSecondCalendar = False, isextraCalendarLocked=False):
         print("Ir a primer dia")
+        print("Second_first--> {}, Extra_first--> {}".format(isSecondCalendar,isextraCalendarLocked))
         hoy = self.issued_day
         time_wait(100)
         press(RIGHT)
         time_wait(100)
         press(LEFT)
-        if(self.enable_locked_calendar and self.date_lock[:4]==date[:4]):
+        if(self.custom_date and self.enable_locked_calendar and self.date_lock[:6]==date[:6]):
             for i in range(int(self.date_lock[6:])-1):
                 time_wait(100)
                 press(LEFT)
                 print("Num left--> ",i)
+            if(isextraCalendarLocked and self.date_lock_extra[:4]==date[:4]):
+                for i in range(int(self.date_lock[6:])-int(self.date_lock_extra[6:])):
+                    time_wait(100)
+                    press(RIGHT)
+                    print("Num right--> ",i)
         else:
             for i in range(hoy.day-1):
                 time_wait(100)
@@ -284,8 +292,9 @@ class BBR:
                     press(ENTER)
         press(TAB)
 
-    def date_click_dynamic(self, date, x=0, isFirstCalendar = True, isSecondCalendar = False, isextraCalendar = False):
+    def date_click_dynamic(self, date, x=0, isFirstCalendar = True, isSecondCalendar = False, isextraCalendar = False, isextraCalendarLocked = False):
         print("Dia --> {}, Mes--> {}, Año-->{}".format(date[6:],date[4:6],date[:4]))
+        print("Second--> {},extra -->{}".format(isSecondCalendar,isextraCalendar))
         hoy = self.issued_day
         if isextraCalendar and not isFirstCalendar:
             image_click("dias.png")
@@ -299,16 +308,16 @@ class BBR:
                 image_click("year.png")
                 time_wait(100)
         if int(date[4:6]) - hoy.month > 0:
-            if (self.enable_locked_calendar and self.date_lock[:4]==date[:4]):
+            if (self.enable_locked_calendar and self.date_lock[:6]==date[:6]):
                 for x in range(int(date[4:6]) - hoy.month - (int(self.date_lock[4:6])-hoy.month)):
                     time_wait(100)
                     image_click("right.png")
-                    print("Num right--> ",i)
+                    print("Num right--> ",x)
             else:
                 for x in range(int(date[4:6]) - hoy.month):
                     time_wait(100)
                     image_click("right.png")
-                    print("Num right--> ",i)
+                    print("Num right--> ",x)
         elif int(date[4:6]) - hoy.month < 0:
             for x in range(hoy.month - int(date[4:6])):
                 time_wait(100)
@@ -321,12 +330,12 @@ class BBR:
             mouse_move(0,15)
             click()
         if isSecondCalendar:
-            self.date_go_first(date)
+            self.date_go_first(date,isSecondCalendar,isextraCalendarLocked)
             print(hoy.year)
             if int(date[4:6]) == hoy.month and self.enable_newBBR and (int(hoy.year) - int(date[:4])) == 0:
                 print("Entre!")
                 press(RIGHT)
-        if (isextraCalendar) or (isextraCalendar and not isSecondCalendar and self.enable_extra_calendar_no_first) or (self.enable_locked_calendar and self.date_lock[:4]==date[:4] and not isSecondCalendar):
+        if (isextraCalendar) or (isextraCalendar and not isSecondCalendar and self.enable_extra_calendar_no_first) or (self.enable_locked_calendar and self.date_lock[:6]==date[:6] and not isSecondCalendar):
             self.date_go_first(date)
         time_wait(100)
         if int(date[6:]) == 1 and not self.enable_newBBR:

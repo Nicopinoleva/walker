@@ -21,7 +21,7 @@ def boton_azul_procedure(objectReference):
         image_click("dias")
         mouse_move(370,0)
         click()
-        objectReference.date_click_dynamic(objectReference.date2,isSecondCalendar=True)
+        objectReference.date_click_dynamic(objectReference.date2,isSecondCalendar=True,isextraCalendarLocked=True)
     image_click("descargar.png")
     image_wait("listo.png")
     press(TAB)
@@ -60,6 +60,10 @@ if EXTRA == "FIXPROVEEDOR":
     obj.pre_ventas_procedure = pre_ventas_procedure
 obj.enable_newBBR = True
 obj.enable_recaptcha = True
+obj.enable_locked_calendar = True
+obj.enable_extra_locked_calendar = True
+obj.date_lock = "20200109"
+obj.date_lock_extra = "20200108"
 obj.site_key = "6LcVYtEUAAAAALlg52jHvKf9IM8n2FvJfqHSyqxg"
 obj.account_procedure = account_special
 obj.ventas_procedure = createBoundMethod(boton_azul_procedure,obj)

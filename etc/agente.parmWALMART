@@ -1,10 +1,10 @@
 # V1.01.00
 # Parametros para ejecucion local (sin bus)
 #
- <rut> 788060904 </rut>   \#/ Rut 
+ <rut> 767672608 </rut>   \#/ Rut 
  <ena> LI </ena>   \#/ Sigla empresa
- <usr> moyarzun@ilan.cl </usr>      \#/ Usuario portal
- <psw> Sofia343 </psw>   \#/ Password
+ <usr> kvelasquez@tribufood.cl </usr>      \#/ Usuario portal
+ <psw> Tribu2022 </psw>   \#/ Password
  <url> https://rllogin.wal-mart.com/rl_security/rl_logon.aspx  </url> \#/ URL portal
  <pid> 1004 </pid>          \#/ Portal id
  <pna> Walmart </pna>            \#/ Portal name
@@ -12,8 +12,8 @@
  <xtr> none </xtr>              \#/ Extra information
  <ssn> 2 </ssn>                 \#/ Screenshots number
  <stn> 3 </stn>                 \#/ Stores number
- <hdi> 31 </hdi>                \#/ History days
- <hda> none </hda> \#/ History dates
+ <hdi> 7 </hdi>                \#/ History days
+ <hda> 26042020-06032022 </hda> \#/ History dates
  <ips> 127.0.0.1 </ips>   \#/ Worker0 server ip
  <jar> /Sikulix/Engine/Walker.jar /Sikulix/Walmart.py </jar>  \#/ road
  <ssc> </ssc>

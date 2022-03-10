@@ -345,8 +345,8 @@ def date_to_string(date, template="%d-%m-%Y"):
     return date.strftime(template)
 
 def string_to_date(date, template="%d-%m-%Y"):
-    #Returns the date as string using the given template.
-    return date.strptime(template)
+    #Returns the string as date using the given template.
+    return datetime.datetime.strptime(date,template)
 
 def get_previous_month(d):
     #Retorna la fecha correspondiente al mes anterior. Se pierde la informacion del dia.

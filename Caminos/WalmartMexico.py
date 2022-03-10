@@ -26,7 +26,6 @@ fechas = [[date_to_string(previous_day(today()),"%Y%m%d"), date_to_string(subtra
           #1 día atrás,7 días atrás,primer día del mes actual,primer día del mes anterior,último dia mes anterior
 files_names = ["{}_{}_{}_{}_{}_{}_{}".format(RUT_EMPRESA,fechas[0][1],fechas[0][0],NOMBRE_EMPRESA,"LIDER","B2B","DIA"),
         "{}_{}_{}_{}_{}_{}_{}_{}_{}".format(RUT_EMPRESA,fechas[0][0],fechas[0][0],fechas[0][0],NOMBRE_EMPRESA,"LIDER","B2B","DIA","INV"),
-        "{}_{}_{}_{}_{}_{}_{}_{}_{}".format(RUT_EMPRESA,fechas[0][0],fechas[0][0],fechas[0][0],NOMBRE_EMPRESA,"LIDER","B2B","DIA","CD"),
         "{}_{}_{}_{}_{}_{}_{}_{}".format(RUT_EMPRESA,fechas[0][2],fechas[0][0],NOMBRE_EMPRESA,"LIDER","B2B","MENSUAL","SSHOTS"),
         "{}_{}_{}_{}_{}_{}_{}_{}".format(RUT_EMPRESA,fechas[0][3],fechas[0][4],NOMBRE_EMPRESA,"LIDER","B2B","MENSUAL","SSHOTS")]
 
@@ -153,20 +152,8 @@ def get_to_dashboard(file_to_run):
         if file_to_run == 0:
             sales_file()
         else:
-            stock_CD_file(file_to_run)
-    elif file_to_run == 2:
-        type("RPRO CD")
-        press(ENTER)
-        press_with_ctr("a")
-        press(DELETE)
-        press_with_ctr("f")
-        time_wait(5000)
-        type("RPRO CD")
-        time_wait(2000)
-        image_right_click("RPRO_CD.png")
-        dashboard()
-        stock_CD_file(file_to_run)
-    elif file_to_run > 2:
+            stock_file()
+    elif file_to_run >= 2:
         type("RPRO SS")
         press(ENTER)
         press_with_ctr("a")
@@ -214,21 +201,18 @@ def sales_file():
     type(fechas[1][0])#1 día atrás formamto mm-dd-yyyy
     file_exec_rename(fechas[1][1],fechas[1][0],"_VTA")
     
-def stock_CD_file(file_to_run):
+def stock_file():
     time_wait(1000)
     type(fechas[1][0])#1 día atrás formamto mm-dd-yyyy
     press(TAB)
     press(DELETE)
     time_wait(1000)
     type(fechas[1][0])#1 día atrás formamto mm-dd-yyyy
-    if file_to_run == 1:
-        file_exec_rename(fechas[1][0],fechas[1][0],"_INV")
-    else:
-        file_exec_rename(fechas[1][0],fechas[1][0],"_CD")
+    file_exec_rename(fechas[1][0],fechas[1][0],"_INV")
 
 def screenshot_file(file_to_run):
     time_wait(1000)
-    if file_to_run == 3:
+    if file_to_run == 2:
         type(fechas[1][2])#primer día del mes actual formato mm-dd-yyyy
         press(TAB)
         press(DELETE)
@@ -343,10 +327,10 @@ def get_report():
     image_click("analyze.png")
     time_wait(3000)
     while True:
-            tcp_send("ESPERO")
-            if not image_appeared("loading.png"):
-                break
-            log("INFO", "[" + OPTION_LOG_ID + "] Waiting for report")
+        tcp_send("ESPERO")
+        if not image_appeared("loading.png"):
+            break
+        log("INFO", "[" + OPTION_LOG_ID + "] Waiting for report")
     image_click("supply.png")
     mouse_move(-80,20)
     mouse_hold()
