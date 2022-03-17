@@ -116,7 +116,7 @@ class ESB:
         image_click("busqueda.png")
         date1 = previous_day(today())
         date2 = get_previous_month(date1)
-        time_wait(5000)
+        time_wait(60000)
         press(TAB)
         if not matrix_get("SSHOT_1"):
             time_wait(1000)
